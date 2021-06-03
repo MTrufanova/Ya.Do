@@ -1,0 +1,6 @@
+framework module Pods_Ya_Do_Ya_DoUITests {
+  umbrella header "Pods-Ya.Do-Ya.DoUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
