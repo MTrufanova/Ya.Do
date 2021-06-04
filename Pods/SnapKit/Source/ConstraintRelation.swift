@@ -20,22 +20,21 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
-
+// swiftlint:disable all
 #if os(iOS) || os(tvOS)
     import UIKit
 #else
     import AppKit
 #endif
 
-
-internal enum ConstraintRelation : Int {
+internal enum ConstraintRelation: Int {
     case equal = 1
     case lessThanOrEqual
     case greaterThanOrEqual
-    
+
     internal var layoutRelation: LayoutRelation {
         get {
-            switch(self) {
+            switch self {
             case .equal:
                 return .equal
             case .lessThanOrEqual:
