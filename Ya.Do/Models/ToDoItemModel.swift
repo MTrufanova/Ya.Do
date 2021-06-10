@@ -11,9 +11,9 @@ struct ToDoItem {
     let taskId: String?
     let text: String
     let priority: Priority?
-    let date: String?
+    let date: Date?
 
-    init(taskId: String?, text: String, priority: Priority?, date: String?) {
+    init(taskId: String?, text: String, priority: Priority?, date: Date?) {
         self.taskId = taskId ?? UUID().uuidString
         self.text = text
         self.priority = priority
@@ -39,7 +39,7 @@ extension ToDoItem {
             var id: String?
             var taskText: String?
             var priority: Priority?
-            var date: String?
+            var date: Date?
             
             if let ids = item["taskId"] as? String {
                 id = ids
@@ -50,8 +50,8 @@ extension ToDoItem {
             if let taskPriority = item["priority"] as? Priority {
                 priority = taskPriority
             }
-            if let dateTask = item["timestamp"] as? String {
-                date = dateTask
+            if let dateTask = item["timestamp"] as? Double {
+                date = Date(timeIntervalSince1970: dateTask)
             }
             tasksItem.append(ToDoItem(taskId: id, text: taskText ?? "", priority: priority, date: date))
         }
@@ -63,9 +63,9 @@ extension ToDoItem {
     }
     var json: Any {
         if priority == Priority.normal {
-            return ["task": ["taskId": taskId ?? "", "taskText": text, "priority": nil, "timestamp": date]]
+            return ["task": ["taskId": taskId ?? "", "taskText": text, "priority": nil, "timestamp": date?.timeIntervalSince1970]]
         } else {
-            return ["task": ["taskId": taskId ?? "", "taskText": text, "priority": priority ?? Priority.normal, "timestamp": date ?? " "]]
+            return ["task": ["taskId": taskId ?? "", "taskText": text, "priority": priority ?? Priority.normal, "timestamp": date?.timeIntervalSince1970 ?? " "]]
         }
        
     }
