@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -92,6 +92,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		46020F5B266F72FD008BE13B /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				4669530C266A191800EFEFD4 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		46020F6E266FDB02008BE13B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				46967B952668FC35003DBDFF /* StartViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		469A4B542668D49800854663 = {
 			isa = PBXGroup;
 			children = (
@@ -118,9 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				469A4B602668D49800854663 /* AppDelegate.swift */,
-				4669530C266A191800EFEFD4 /* Localizable.strings */,
 				469A4B622668D49800854663 /* SceneDelegate.swift */,
-				46967B952668FC35003DBDFF /* StartViewController.swift */,
+				46020F5B266F72FD008BE13B /* Localization */,
+				46020F6E266FDB02008BE13B /* Controllers */,
 				469A4B692668D49C00854663 /* Assets.xcassets */,
 				469A4B6B2668D49C00854663 /* LaunchScreen.storyboard */,
 				469A4B6E2668D49C00854663 /* Info.plist */,
@@ -176,12 +192,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 469A4B872668D49C00854663 /* Build configuration list for PBXNativeTarget "Ya.Do" */;
 			buildPhases = (
-				466952FC2669250500EFEFD4 /* ShellScript */,
 				C0715C7EAFE0FF0685C65B1E /* [CP] Check Pods Manifest.lock */,
+				466952FC2669250500EFEFD4 /* ShellScript */,
 				469A4B592668D49800854663 /* Sources */,
 				469A4B5A2668D49800854663 /* Frameworks */,
 				469A4B5B2668D49800854663 /* Resources */,
-				E1410AB7AA86B78C7585B1CB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -219,7 +234,6 @@
 				469A4B7A2668D49C00854663 /* Sources */,
 				469A4B7B2668D49C00854663 /* Frameworks */,
 				469A4B7C2668D49C00854663 /* Resources */,
-				23953939D07C12A1ECBE9C28 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -324,23 +338,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		23953939D07C12A1ECBE9C28 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		466952FC2669250500EFEFD4 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -400,23 +397,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1410AB7AA86B78C7585B1CB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do/Pods-Ya.Do-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do/Pods-Ya.Do-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ya.Do/Pods-Ya.Do-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

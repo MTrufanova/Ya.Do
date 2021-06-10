@@ -7,7 +7,6 @@ target 'Ya.Do' do
 
   # Pods for Ya.Do
 
- 	pod 'SnapKit'
 	pod 'SwiftLint'
 
   target 'Ya.DoTests' do
