@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = SwiftLint;
+			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
@@ -58,7 +59,7 @@
 		08591B08062C2076584A5532CFA8955F /* Pods-Ya.DoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.DoTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		0B5CE6FC31581F84D184FBBB00951449 /* Pods-Ya.Do-Ya.DoUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Ya.Do-Ya.DoUITests-dummy.m"; sourceTree = "<group>"; };
 		1314A9604296245A92C92C66CDB7A3F3 /* Pods-Ya.Do-Ya.DoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Ya.Do-Ya.DoUITests.modulemap"; sourceTree = "<group>"; };
-		29D4E977C201B8767E0E29B33895C4E7 /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Ya_Do_Ya_DoUITests.framework; path = "Pods-Ya.Do-Ya.DoUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29D4E977C201B8767E0E29B33895C4E7 /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do_Ya_DoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E3DCA2463D65237D0CFCCEBB0699B43 /* Pods-Ya.Do-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.Do-acknowledgements.plist"; sourceTree = "<group>"; };
 		38C9AE9719CDA6127DCF331ABB7D033C /* Pods-Ya.Do-Ya.DoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do-Ya.DoUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
@@ -74,16 +75,16 @@
 		7D52688ED51AA848D793BA020C7DC4C4 /* Pods-Ya.DoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.DoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7EAB1DA481EDDC005A251D3A5E6BE4CD /* SwiftLint.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.release.xcconfig; sourceTree = "<group>"; };
 		806D0BBDC123B8D20C3A0930ED6F5925 /* Pods-Ya.DoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Ya.DoTests-dummy.m"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B438EFA429506F6E8FC982846AB80F80 /* Pods-Ya.DoTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.DoTests-Info.plist"; sourceTree = "<group>"; };
 		B5E973B60207EAD5FA5589E6B87991FD /* Pods-Ya.Do-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Ya.Do-acknowledgements.markdown"; sourceTree = "<group>"; };
-		B6893A6B61B7CED68250510EE7497EEF /* Pods_Ya_DoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Ya_DoTests.framework; path = "Pods-Ya.DoTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6893A6B61B7CED68250510EE7497EEF /* Pods_Ya_DoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_DoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7EE7C4C40BE1CFDC2F3ECCBD6AEB5FC /* Pods-Ya.Do.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do.release.xcconfig"; sourceTree = "<group>"; };
 		BC78E67D493BC91A8614218B979AAB20 /* Pods-Ya.DoTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Ya.DoTests-umbrella.h"; sourceTree = "<group>"; };
 		D30E136716458B6CDCF2EDE83DFF03B7 /* Pods-Ya.DoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Ya.DoTests.modulemap"; sourceTree = "<group>"; };
 		D3C44141E5CBCF41F1E05047A96DD182 /* Pods-Ya.Do-Ya.DoUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Ya.Do-Ya.DoUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		DC6CB79F4EA41F65AE963F8E2340760F /* Pods-Ya.Do.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do.debug.xcconfig"; sourceTree = "<group>"; };
-		E4AEB69C767EBCC80528105F43425E0C /* Pods_Ya_Do.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Ya_Do.framework; path = "Pods-Ya.Do.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4AEB69C767EBCC80528105F43425E0C /* Pods_Ya_Do.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F963A22BCCACA04DE670F3DDCBE5F84C /* Pods-Ya.Do-Ya.DoUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.Do-Ya.DoUITests-Info.plist"; sourceTree = "<group>"; };
 		FF13AD0AFE7BE7CF0ADA259699AF455D /* Pods-Ya.Do-Ya.DoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do-Ya.DoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -214,7 +215,6 @@
 			children = (
 				7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */,
 			);
-			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -332,7 +332,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -749,7 +749,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -804,7 +804,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
