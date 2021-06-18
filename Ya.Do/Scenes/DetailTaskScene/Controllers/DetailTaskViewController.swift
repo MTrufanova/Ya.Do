@@ -17,8 +17,6 @@ class DetailTaskViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.9647058824, blue: 0.9490196078, alpha: 1)
         contentView.taskTextView.delegate = self
         cancelButtonAction()
         contentView.calendarSwitch.addTarget(self, action: #selector(switchAction(calendarSwitch:)), for: .valueChanged)
@@ -31,13 +29,13 @@ class DetailTaskViewController: UIViewController {
         self.contentView.dateButton.isHidden = true
     }
     // MARK: - Action for Button
-    @objc func saveButtonAction() {
+    @objc private func saveButtonAction() {
         guard let taskText = contentView.taskTextView.text else {return}
-        let date: Date?
-        let priority: Priority
-        guard contentView.dateButton.titleLabel?.text != "" else { date = nil
+        let deadline: Date?
+        let priority: ToDoItem.Priority
+        guard contentView.dateButton.titleLabel?.text != "" else { deadline = nil
             return }
-        date = contentView.datePicker.date
+        deadline = contentView.datePicker.date
 
         switch contentView.prioritySegment.selectedSegmentIndex {
         case 0:
@@ -48,18 +46,18 @@ class DetailTaskViewController: UIViewController {
             priority = .high
         }
 
-        fileCache.addTask(ToDoItem(text: taskText, priority: priority, date: date))
-        fileCache.saveAllTasks(at: "default.json")
+        fileCache.addItem(ToDoItem(text: taskText, priority: priority, deadline: deadline))
+        fileCache.saveAllItems(to: "default.json")
         dismissModal()
     }
     func cancelButtonAction() {
         contentView.cancelButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
     }
-    @objc func dismissModal() {
-    self.dismiss(animated: true, completion: nil)
+    @objc private func dismissModal() {
+        self.dismiss(animated: true, completion: nil)
     }
 
-    @objc func dateButtonAction() {
+    @objc private func dateButtonAction() {
         if contentView.calendarView.isHidden == true {
             UIView.animate(withDuration: 0.5) {
                 self.contentView.calendarView.isHidden = false
@@ -73,48 +71,46 @@ class DetailTaskViewController: UIViewController {
         }
     }
 
-    @objc func deleteButtonAction() {
+    @objc private func deleteButtonAction() {
         contentView.taskTextView.text = ""
         contentView.prioritySegment.selectedSegmentIndex = 1
         contentView.calendarSwitch.isOn = false
         switchAction(calendarSwitch: contentView.calendarSwitch)
-        let buttonColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.2)
+        let buttonColor = UIColor(named: "grayText")
         contentView.deleteButton.setTitleColor(buttonColor, for: .normal)
-        contentView.datePicker.date = tomorrow
+        contentView.datePicker.date = Date.tomorrow
         guard let id = task?.id else { return  }
-        fileCache.removeTask(at: id)
-        fileCache.saveAllTasks(at: "default.json")
+        fileCache.removeItem(at: id)
+        fileCache.saveAllItems(to: "default.json")
     }
-
     // MARK: - SwitchAction
-    @objc func switchAction(calendarSwitch: UISwitch) {
+    @objc private func switchAction(calendarSwitch: UISwitch) {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         let dateTitle = formatter.string(from: contentView.datePicker.date)
         if calendarSwitch.isOn {
-                self.contentView.dateButton.isHidden = false
-                self.contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
+            self.contentView.dateButton.isHidden = false
+            self.contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
         } else {
-                self.contentView.dateButton.setTitle("", for: .normal)
+            self.contentView.dateButton.setTitle("", for: .normal)
         }
     }
 
-    @objc func datePickerAction() {
-        let dateTitle = stringDateFormatter(from: contentView.datePicker.date)
+    @objc private func datePickerAction() {
+        let dateTitle = Date.stringDateFormatter(from: contentView.datePicker.date)
         contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
     }
-
 }
 
 extension DetailTaskViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentView.taskTextView.text = ""
-        contentView.taskTextView.textColor = .black
+        contentView.taskTextView.textColor = UIColor(named: "navTitle")
     }
 
     func textViewDidChange(_ textView: UITextView) {
         contentView.saveButton.isEnabled = true
-        contentView.saveButton.setTitleColor(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1), for: .normal)
-        contentView.deleteButton.setTitleColor(#colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1), for: .normal)
+        contentView.saveButton.setTitleColor(UIColor(named: "blueTitle"), for: .normal)
+        contentView.deleteButton.setTitleColor(UIColor(named: "redTitle"), for: .normal)
     }
 }

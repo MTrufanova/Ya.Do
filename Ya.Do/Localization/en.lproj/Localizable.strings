@@ -6,3 +6,11 @@
   
 */
 "version" = "Version";
+"task" = "Task";
+"cancel" = "Cancel";
+"save" = "Save";
+"placeholder" = "What needs to be done?";
+"priority" = "Priority";
+"no" = "no";
+"done" = "Done by";
+"delete" = "Delete";
