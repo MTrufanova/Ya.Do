@@ -9,8 +9,15 @@ import UIKit
 
 class MainTaskCell: UITableViewCell {
     static let identifier = "MainTaskCell"
+    var buttonTap: () -> () = { }
+    
+    let checkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "circle"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     //checkmark.circle.fill
-    //circle
     lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: "", textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
     
     lazy var deadlineLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 15, weight: .regular), textLabel: "", textAlignment: .left, color: UIColor(named: "grayText") ?? UIColor())
@@ -18,9 +25,18 @@ class MainTaskCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupTitleDateStack()
+        
+        checkButton.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
+        setupLayout()
     }
     
+    @objc func didTapCheckButton() {
+        buttonTap()
+    }
+    private func setupLayout() {
+        setupCheckButtonLayout()
+        setupTitleDateStack()
+    }
     func setupTitleDateStack() {
         titleDateStackView = UIStackView(arrangedSubviews: [taskTitleLabel, deadlineLabel])
         titleDateStackView.axis = .vertical
@@ -30,34 +46,35 @@ class MainTaskCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             titleDateStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            titleDateStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+            titleDateStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 52),
             titleDateStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
         
     }
     
-    private func setupLayout() {
-        
+    private func setupCheckButtonLayout() {
+        contentView.addSubview(checkButton)
+        NSLayoutConstraint.activate([
+        checkButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+        checkButton.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
     }
     
-     func setupCell() {
+    
+    func setupCell() {
         taskTitleLabel.text =  "Hello"//item.text
         //guard let deadline = item.deadline else { return }
         deadlineLabel.text = "14141"//Date.stringDateFormatter(from: deadline)
+        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
     }
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
     }
-    
 }
