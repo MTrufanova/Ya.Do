@@ -18,8 +18,8 @@ class StartViewController: UIViewController {
 
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.2039215686, green: 0.2, blue: 0.2, alpha: 1)
-        label.font = .systemFont(ofSize: 20, weight: .heavy)
+        label.textColor = UIColor(named: "startButton")
+        label.font = Fonts.heavy20
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -27,18 +27,18 @@ class StartViewController: UIViewController {
 
     lazy var releaseLabel: UILabel = {
         let label = UILabel()
-        label.textColor = #colorLiteral(red: 0.2039215686, green: 0.2, blue: 0.2, alpha: 1)
-        label.font = .systemFont(ofSize: 16, weight: .regular)
+        label.textColor = UIColor(named: "startButton")
+        label.font = Fonts.regular16
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    // MARK: - удалить после создания mainVC!
+    
     lazy var startButton: UIButton = {
         let button = UIButton()
         button.setTitle("Create task", for: .normal)
         button.layer.cornerRadius = 25
-        button.backgroundColor = #colorLiteral(red: 0.2039215686, green: 0.2, blue: 0.2, alpha: 1)
+        button.backgroundColor = UIColor(named: "startButton")
         button.setTitleColor(.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(pushTaskVC), for: .touchUpInside)

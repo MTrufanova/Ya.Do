@@ -9,19 +9,19 @@ import UIKit
 
 class DetailView: UIView {
     // MARK: - For NavBar
-    lazy var titleLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .semibold), textLabel: NSLocalizedString("task", comment: ""), textAlignment: .center, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var titleLabel: UILabel = UILabel.createLabel(font: Fonts.semibold17, textLabel: Title.navTitleDetailVC, textAlignment: .center, color: UIColor(named: "navTitle") ?? UIColor())
     
-    lazy var cancelButton: UIButton = createNavButton(title: NSLocalizedString("cancel", comment: ""), font: .systemFont(ofSize: 17, weight: .regular), color: UIColor(named: "blueTitle") ?? UIColor())
+    lazy var cancelButton: UIButton = createNavButton(title: Title.cancelButton, font: Fonts.regular17, color: UIColor(named: "blueTitle") ?? UIColor())
     
-    lazy var saveButton: UIButton = createNavButton(title: NSLocalizedString("save", comment: ""), font: .systemFont(ofSize: 17, weight: .semibold), color: UIColor(named: "grayText") ?? UIColor())
+    lazy var saveButton: UIButton = createNavButton(title: Title.saveButton, font: Fonts.semibold17, color: UIColor(named: "grayText") ?? UIColor())
     
     // MARK: - UI
     lazy var taskTextView: UITextView = {
         let textView = UITextView()
-        textView.text = NSLocalizedString("placeholder", comment: "")
+        textView.text = Title.textViewPlaceholder
         textView.layer.cornerRadius = 16
         textView.textColor = UIColor(named: "grayText")
-        textView.font = .systemFont(ofSize: 17, weight: .regular)
+        textView.font = Fonts.regular17
         textView.backgroundColor = UIColor(named: "mainViews")
         textView.contentInset = UIEdgeInsets(top: 17, left: 16, bottom: 12, right: 16)
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,17 +30,18 @@ class DetailView: UIView {
     // MARK: - UI FOR PRIORITY VIEW
     lazy var priorityView: UIView = createViewForStack()
     
-    lazy var priorityLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: NSLocalizedString("priority", comment: ""), textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var priorityLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.priority, textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
+    
     lazy var prioritySegment: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["one", "two", "three"])
-        let font: UIFont = .systemFont(ofSize: 15)
+        let font: UIFont = Fonts.system15
         segment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         let largeConfig = UIImage.SymbolConfiguration(weight: .bold)
         let arrowImage = UIImage(systemName: "arrow.down", withConfiguration: largeConfig)?.withTintColor(#colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1), renderingMode: .alwaysOriginal)
         let markImage = UIImage(systemName: "exclamationmark.2", withConfiguration: largeConfig)?.withTintColor(UIColor(named: "redTitle") ?? UIColor(), renderingMode: .alwaysOriginal)
         segment.selectedSegmentIndex = 1
         segment.setImage(arrowImage, forSegmentAt: 0)
-        segment.setTitle(NSLocalizedString("no", comment: ""), forSegmentAt: 1)
+        segment.setTitle(Title.noForSegment, forSegmentAt: 1)
         segment.setImage(markImage, forSegmentAt: 2)
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment
@@ -51,12 +52,12 @@ class DetailView: UIView {
     // MARK: - DEADLINE VIEW
     lazy var deadlineView: UIView = createViewForStack()
     
-    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: NSLocalizedString("done", comment: ""), textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.doneBy, textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
     
     lazy var dateButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor(named: "blueTitle"), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 13, weight: .semibold)
+        button.titleLabel?.font = Fonts.semibold13
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -83,8 +84,8 @@ class DetailView: UIView {
     lazy var deleteButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "mainViews")
-        button.setTitle(NSLocalizedString("delete", comment: ""), for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 17, weight: .regular)
+        button.setTitle(Title.delete, for: .normal)
+        button.titleLabel?.font = Fonts.regular17
         button.layer.cornerRadius = 16
         button.setTitleColor(UIColor(named: "grayText"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false

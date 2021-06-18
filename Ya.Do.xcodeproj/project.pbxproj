@@ -22,6 +22,8 @@
 		469A4B6D2668D49C00854663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 469A4B6B2668D49C00854663 /* LaunchScreen.storyboard */; };
 		469A4B782668D49C00854663 /* Ya_DoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B772668D49C00854663 /* Ya_DoTests.swift */; };
 		469A4B832668D49C00854663 /* Ya_DoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B822668D49C00854663 /* Ya_DoUITests.swift */; };
+		46E9535A267C9A6300DB67AF /* Titles enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E95359267C9A6300DB67AF /* Titles enum.swift */; };
+		46E95365267C9F9900DB67AF /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E95364267C9F9900DB67AF /* Fonts.swift */; };
 		BDDE55F7CEF33298955D164C /* Pods_Ya_Do_Ya_DoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554D4C0821B07D803CF8716A /* Pods_Ya_Do_Ya_DoUITests.framework */; };
 		DB3A67A55CBA560A4C8072DE /* Pods_Ya_Do.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83247C07AF65B9749D194BD9 /* Pods_Ya_Do.framework */; };
 		FB1866B2F332887FF5BD2214 /* Pods_Ya_DoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B68351A0FA7AF5ACE2858DA /* Pods_Ya_DoTests.framework */; };
@@ -69,6 +71,8 @@
 		469A4B7E2668D49C00854663 /* Ya.DoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Ya.DoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		469A4B822668D49C00854663 /* Ya_DoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ya_DoUITests.swift; sourceTree = "<group>"; };
 		469A4B842668D49C00854663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46E95359267C9A6300DB67AF /* Titles enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Titles enum.swift"; sourceTree = "<group>"; };
+		46E95364267C9F9900DB67AF /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		554D4C0821B07D803CF8716A /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do_Ya_DoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		72121BD4C2D6A1F06045061A /* Pods-Ya.DoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ya.DoTests.debug.xcconfig"; path = "Target Support Files/Pods-Ya.DoTests/Pods-Ya.DoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7E56EA1902B2B08727E7E8B2 /* Pods-Ya.Do-Ya.DoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ya.Do-Ya.DoUITests.release.xcconfig"; path = "Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -208,6 +212,7 @@
 			children = (
 				469A4B602668D49800854663 /* AppDelegate.swift */,
 				469A4B622668D49800854663 /* SceneDelegate.swift */,
+				46E95358267C990800DB67AF /* Titles+Fonts */,
 				4680B359267C7AD8000CEA75 /* Extensions */,
 				46020FF726768470008BE13B /* Scenes */,
 				46020F8E2671FB51008BE13B /* Models */,
@@ -237,6 +242,15 @@
 				469A4B842668D49C00854663 /* Info.plist */,
 			);
 			path = Ya.DoUITests;
+			sourceTree = "<group>";
+		};
+		46E95358267C990800DB67AF /* Titles+Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				46E95359267C9A6300DB67AF /* Titles enum.swift */,
+				46E95364267C9F9900DB67AF /* Fonts.swift */,
+			);
+			path = "Titles+Fonts";
 			sourceTree = "<group>";
 		};
 		70D53270DCDB951799D4E6D8 /* Frameworks */ = {
@@ -488,9 +502,11 @@
 				4680B35C267C7AD8000CEA75 /* UILabel+Ext.swift in Sources */,
 				46020FF326768404008BE13B /* DetailView.swift in Sources */,
 				46020FEE267683EF008BE13B /* DetailTaskViewController.swift in Sources */,
+				46E9535A267C9A6300DB67AF /* Titles enum.swift in Sources */,
 				46967B962668FC35003DBDFF /* StartViewController.swift in Sources */,
 				469A4B612668D49800854663 /* AppDelegate.swift in Sources */,
 				46020FA02671FBE0008BE13B /* FileCache.swift in Sources */,
+				46E95365267C9F9900DB67AF /* Fonts.swift in Sources */,
 				469A4B632668D49800854663 /* SceneDelegate.swift in Sources */,
 				4680B35D267C7AD8000CEA75 /* Date+Ext.swift in Sources */,
 			);

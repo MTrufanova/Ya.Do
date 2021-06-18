@@ -76,7 +76,7 @@ class DetailTaskViewController: UIViewController {
         contentView.prioritySegment.selectedSegmentIndex = 1
         contentView.calendarSwitch.isOn = false
         switchAction(calendarSwitch: contentView.calendarSwitch)
-        let buttonColor = UIColor(displayP3Red: 0, green: 0, blue: 0, alpha: 0.2)
+        let buttonColor = UIColor(named: "grayText")
         contentView.deleteButton.setTitleColor(buttonColor, for: .normal)
         contentView.datePicker.date = Date.tomorrow
         guard let id = task?.id else { return  }
