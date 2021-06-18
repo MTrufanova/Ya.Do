@@ -116,14 +116,18 @@ class DetailView: UIView {
         addSubview(cancelButton)
         addSubview(saveButton)
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 17),
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
             
-            cancelButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 17),
-            cancelButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            cancelButton.topAnchor.constraint(equalTo: self.topAnchor),
+            cancelButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            cancelButton.widthAnchor.constraint(equalToConstant: 108),
+            cancelButton.heightAnchor.constraint(equalToConstant: 56),
             
-            saveButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 17),
-            saveButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            saveButton.topAnchor.constraint(equalTo: self.topAnchor),
+            saveButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            saveButton.widthAnchor.constraint(equalToConstant: 118),
+            saveButton.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
     // MARK: - textViewLayout
@@ -238,6 +242,8 @@ class DetailView: UIView {
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = font
         button.setTitleColor(color, for: .normal)
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
+        button.titleEdgeInsets = UIEdgeInsets(top: 17, left: 16, bottom: 17, right: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
