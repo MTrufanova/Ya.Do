@@ -33,6 +33,17 @@ class StartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    // MARK: - удалить после создания mainVC!
+    lazy var startButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Create task", for: .normal)
+        button.layer.cornerRadius = 25
+        button.backgroundColor = #colorLiteral(red: 0.2039215686, green: 0.2, blue: 0.2, alpha: 1)
+        button.setTitleColor(.white, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(pushTaskVC), for: .touchUpInside)
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,22 +61,35 @@ class StartViewController: UIViewController {
         nameLabel.text = appName
     }
 
+    @objc func pushTaskVC() {
+        let taskVC = DetailTaskViewController()
+        taskVC.modalPresentationStyle = .formSheet
+        self.present(taskVC, animated: true, completion: nil)
+
+    }
+
     private func setupLayout() {
         view.addSubview(startImageView)
         view.addSubview(nameLabel)
         view.addSubview(releaseLabel)
-        
+        view.addSubview(startButton)
+
         NSLayoutConstraint.activate([
             startImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             startImageView.heightAnchor.constraint(equalToConstant: 200),
             startImageView.widthAnchor.constraint(equalToConstant: 200),
-            
+
             nameLabel.topAnchor.constraint(equalTo: startImageView.bottomAnchor, constant: 8),
             nameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
+
             releaseLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
-            releaseLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            releaseLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+
+            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startButton.heightAnchor.constraint(equalToConstant: 55),
+            startButton.widthAnchor.constraint(equalToConstant: 200),
+            startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50)
         ])
     }
 
