@@ -29,7 +29,7 @@ class DetailTaskViewController: UIViewController {
         self.contentView.dateButton.isHidden = true
     }
     // MARK: - Action for Button
-    @objc func saveButtonAction() {
+    @objc private func saveButtonAction() {
         guard let taskText = contentView.taskTextView.text else {return}
         let deadline: Date?
         let priority: ToDoItem.Priority
@@ -53,11 +53,11 @@ class DetailTaskViewController: UIViewController {
     func cancelButtonAction() {
         contentView.cancelButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
     }
-    @objc func dismissModal() {
+    @objc private func dismissModal() {
         self.dismiss(animated: true, completion: nil)
     }
 
-    @objc func dateButtonAction() {
+    @objc private func dateButtonAction() {
         if contentView.calendarView.isHidden == true {
             UIView.animate(withDuration: 0.5) {
                 self.contentView.calendarView.isHidden = false
@@ -71,7 +71,7 @@ class DetailTaskViewController: UIViewController {
         }
     }
 
-    @objc func deleteButtonAction() {
+    @objc private func deleteButtonAction() {
         contentView.taskTextView.text = ""
         contentView.prioritySegment.selectedSegmentIndex = 1
         contentView.calendarSwitch.isOn = false
@@ -84,7 +84,7 @@ class DetailTaskViewController: UIViewController {
         fileCache.saveAllItems(to: "default.json")
     }
     // MARK: - SwitchAction
-    @objc func switchAction(calendarSwitch: UISwitch) {
+    @objc private func switchAction(calendarSwitch: UISwitch) {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         let dateTitle = formatter.string(from: contentView.datePicker.date)
@@ -96,7 +96,7 @@ class DetailTaskViewController: UIViewController {
         }
     }
 
-    @objc func datePickerAction() {
+    @objc private func datePickerAction() {
         let dateTitle = Date.stringDateFormatter(from: contentView.datePicker.date)
         contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
     }

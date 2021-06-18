@@ -10,11 +10,11 @@ import UIKit
 class DetailView: UIView {
     // MARK: - For NavBar
     lazy var titleLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .semibold), textLabel: NSLocalizedString("task", comment: ""), textAlignment: .center, color: UIColor(named: "navTitle") ?? UIColor())
-
+    
     lazy var cancelButton: UIButton = createNavButton(title: NSLocalizedString("cancel", comment: ""), font: .systemFont(ofSize: 17, weight: .regular), color: UIColor(named: "blueTitle") ?? UIColor())
-
+    
     lazy var saveButton: UIButton = createNavButton(title: NSLocalizedString("save", comment: ""), font: .systemFont(ofSize: 17, weight: .semibold), color: UIColor(named: "grayText") ?? UIColor())
-
+    
     // MARK: - UI
     lazy var taskTextView: UITextView = {
         let textView = UITextView()
@@ -29,7 +29,7 @@ class DetailView: UIView {
     }()
     // MARK: - UI FOR PRIORITY VIEW
     lazy var priorityView: UIView = createViewForStack()
-
+    
     lazy var priorityLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: NSLocalizedString("priority", comment: ""), textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
     lazy var prioritySegment: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["one", "two", "three"])
@@ -45,14 +45,14 @@ class DetailView: UIView {
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment
     }()
-
+    
     lazy var separatorView: UIView = createSeparator()
-
+    
     // MARK: - DEADLINE VIEW
     lazy var deadlineView: UIView = createViewForStack()
-
+    
     lazy var deadlineLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: NSLocalizedString("done", comment: ""), textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
-
+    
     lazy var dateButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor(named: "blueTitle"), for: .normal)
@@ -77,7 +77,7 @@ class DetailView: UIView {
         picker.date = Date.tomorrow
         return picker
     }()
-
+    
     lazy var stackView = UIStackView()
     // MARK: - UIButton
     lazy var deleteButton: UIButton = {
@@ -90,47 +90,59 @@ class DetailView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-
+    
     init() {
         super.init(frame: CGRect.zero)
         setupLayout()
-        createStack()
-        setupLayoutButton()
         backgroundColor = UIColor(named: "background")
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    // MARK: - Methods for layout
     private func setupLayout() {
+        navBarLayout()
+        textViewLayout()
+        createStack()
+        setupPriorityViewLayout()
+        setupDeadlineView()
+        setupDatePickerView()
+        setupLayoutButton()
+    }
+    // MARK: - navBarLayout
+    private func navBarLayout() {
         addSubview(titleLabel)
         addSubview(cancelButton)
         addSubview(saveButton)
-        addSubview(taskTextView)
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 17),
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-
+            
             cancelButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 17),
             cancelButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-
+            
             saveButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 17),
-            saveButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-
+            saveButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+        ])
+    }
+    // MARK: - textViewLayout
+    private func textViewLayout() {
+        addSubview(taskTextView)
+        NSLayoutConstraint.activate([
             taskTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 72),
             taskTextView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             taskTextView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             taskTextView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
-    func createStack() {
+    // MARK: - setupStackView
+    private func createStack() {
         stackView = UIStackView(arrangedSubviews: [priorityView, separatorView, deadlineView, calendarSeparatorView, calendarView])
         stackView.axis = .vertical
         stackView.spacing = 0
         stackView.backgroundColor = UIColor(named: "mainViews")
         stackView.layer.cornerRadius = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        setupLayoutPriority()
         self.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: taskTextView.bottomAnchor, constant: 16),
@@ -138,13 +150,10 @@ class DetailView: UIView {
             stackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16)
         ])
     }
-    func setupLayoutPriority() {
+    // MARK: - setupPriorityViewLayout
+    private func setupPriorityViewLayout() {
         priorityView.addSubview(priorityLabel)
         priorityView.addSubview(prioritySegment)
-        deadlineView.addSubview(deadlineLabel)
-        deadlineView.addSubview(dateButton)
-        deadlineView.addSubview(calendarSwitch)
-        calendarView.addSubview(datePicker)
         NSLayoutConstraint.activate([
             priorityView.heightAnchor.constraint(equalToConstant: 56),
             priorityView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0),
@@ -158,7 +167,16 @@ class DetailView: UIView {
             //
             separatorView.heightAnchor.constraint(equalToConstant: 0.5),
             separatorView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 16),
-            separatorView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -16),
+            separatorView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -16)
+        ])
+    }
+    // MARK: - setupDeadlineView
+    private func setupDeadlineView() {
+        deadlineView.addSubview(deadlineLabel)
+        deadlineView.addSubview(dateButton)
+        deadlineView.addSubview(calendarSwitch)
+        
+        NSLayoutConstraint.activate([
             //
             deadlineView.heightAnchor.constraint(equalToConstant: 58),
             //
@@ -169,7 +187,13 @@ class DetailView: UIView {
             dateButton.leadingAnchor.constraint(equalTo: deadlineLabel.leadingAnchor),
             //
             calendarSwitch.trailingAnchor.constraint(equalTo: deadlineView.trailingAnchor, constant: -12),
-            calendarSwitch.topAnchor.constraint(equalTo: deadlineView.topAnchor, constant: 12.5),
+            calendarSwitch.topAnchor.constraint(equalTo: deadlineView.topAnchor, constant: 12.5)
+        ])
+    }
+    // MARK: - setupDatePickerView
+    private func setupDatePickerView() {
+        calendarView.addSubview(datePicker)
+        NSLayoutConstraint.activate([
             //
             calendarView.heightAnchor.constraint(equalToConstant: 330),
             //
@@ -182,8 +206,8 @@ class DetailView: UIView {
             datePicker.trailingAnchor.constraint(equalTo: calendarView.trailingAnchor, constant: -16)
         ])
     }
-    // возможно убрать в stack
-    func setupLayoutButton() {
+    // MARK: - setupLayoutDeleteButton
+    private func setupLayoutButton() {
         self.addSubview(deleteButton)
         NSLayoutConstraint.activate([
             deleteButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
@@ -200,14 +224,14 @@ class DetailView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-
+    
     private func createSeparator() -> UIView {
         let view = UIView()
         view.backgroundColor = UIColor(named: "separatorColor")
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-
+    
     private func createNavButton(title: String, font: UIFont, color: UIColor) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)
