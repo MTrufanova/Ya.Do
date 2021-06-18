@@ -15,7 +15,9 @@ class DetailView: UIView {
     
     lazy var saveButton: UIButton = createNavButton(title: Title.saveButton, font: Fonts.semibold17, color: UIColor(named: "grayText") ?? UIColor())
     
-    // MARK: - UI
+    
+    lazy var scrollView = UIScrollView()
+    // MARK: - UI textView
     lazy var taskTextView: UITextView = {
         let textView = UITextView()
         textView.text = Title.textViewPlaceholder
@@ -94,15 +96,30 @@ class DetailView: UIView {
     
     init() {
         super.init(frame: CGRect.zero)
+        setupScrollView()
         setupLayout()
+        
         backgroundColor = UIColor(named: "background")
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func setupScrollView() {
+        let heightTextView = taskTextView.bounds.size.height
+        let heightStackView = stackView.bounds.size.height
+        let heightButton = deleteButton.bounds.size.height
+        let height = heightTextView + heightStackView + heightButton
+        scrollView.contentSize = CGSize(width: self.bounds.size.width, height: height)
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.isPagingEnabled = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
     // MARK: - Methods for layout
     private func setupLayout() {
         navBarLayout()
+        setupScrollViewLayout()
         textViewLayout()
         createStack()
         setupPriorityViewLayout()
@@ -130,13 +147,24 @@ class DetailView: UIView {
             saveButton.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
+    // MARK: -setupScrollViewLayout
+    private func setupScrollViewLayout() {
+        addSubview(scrollView)
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 72),
+            scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
+           
+        ])
+    }
     // MARK: - textViewLayout
     private func textViewLayout() {
-        addSubview(taskTextView)
+        scrollView.addSubview(taskTextView)
         NSLayoutConstraint.activate([
-            taskTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 72),
-            taskTextView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            taskTextView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            taskTextView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            taskTextView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            taskTextView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width - 32),
             taskTextView.heightAnchor.constraint(equalToConstant: 120)
         ])
     }
@@ -151,8 +179,8 @@ class DetailView: UIView {
         self.addSubview(stackView)
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: taskTextView.bottomAnchor, constant: 16),
-            stackView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16)
+            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16)
         ])
     }
     // MARK: - setupPriorityViewLayout
@@ -216,8 +244,8 @@ class DetailView: UIView {
         self.addSubview(deleteButton)
         NSLayoutConstraint.activate([
             deleteButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            deleteButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            deleteButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            deleteButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+            deleteButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
             deleteButton.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
