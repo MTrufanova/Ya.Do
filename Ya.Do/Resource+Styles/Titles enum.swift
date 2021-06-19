@@ -16,4 +16,7 @@ enum Title {
     static let noForSegment = NSLocalizedString("no", comment: "")
     static let doneBy = NSLocalizedString("done", comment: "")
     static let delete = NSLocalizedString("delete", comment: "")
+    static let show = NSLocalizedString("show", comment: "")
+    static let hide = NSLocalizedString("hide", comment: "")
+    static let new = NSLocalizedString("new", comment: "")
 }

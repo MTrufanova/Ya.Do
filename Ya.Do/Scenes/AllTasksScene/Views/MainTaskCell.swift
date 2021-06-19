@@ -16,9 +16,9 @@ class MainTaskCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: "", textAlignment: .left, color: Colors.blackTitle ?? UIColor())
+    lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: "", textAlignment: .left, color: Colors.blackTitle ?? UIColor())
     
-    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 15, weight: .regular), textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.system15, textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
     lazy var titleDateStackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -35,6 +35,8 @@ class MainTaskCell: UITableViewCell {
         setupCheckButtonLayout()
         setupTitleDateStack()
         selectionStyle = .none
+        backgroundColor = Colors.viewsBlock
+        separatorInset = UIEdgeInsets(top: 0, left: 52, bottom: 0, right: 0)
     }
     func setupTitleDateStack() {
         titleDateStackView = UIStackView(arrangedSubviews: [taskTitleLabel, deadlineLabel])
@@ -59,11 +61,13 @@ class MainTaskCell: UITableViewCell {
         ])
     }
     
-    func setupCell(_ item: ToDoItem) {
-        taskTitleLabel.text =  item.text
+    func setupCell() {
+        taskTitleLabel.text = "Hello"
+        deadlineLabel.text = "12.12.12"
+       /* taskTitleLabel.text =  item.text
         guard let deadline = item.deadline else { return }
-        deadlineLabel.text = Date.stringDateFormatter(from: deadline)
-        switch item.isCompleted {
+        deadlineLabel.text = Date.stringDateFormatter(from: deadline)*/
+       /* switch item.isCompleted {
         case true:
             checkButton.setImage(Images.fillCircle, for: .normal)
             checkButton.tintColor =  Colors.green
@@ -76,7 +80,7 @@ class MainTaskCell: UITableViewCell {
             }
             checkButton.tintColor = Colors.red
             taskTitleLabel.textColor = Colors.blackTitle
-        }
+        }*/
         
     }
     

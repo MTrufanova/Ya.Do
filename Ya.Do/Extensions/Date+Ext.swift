@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 extension Date {
-    // сделать фабрику форматтеров
 static func stringDateFormatter(from date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateStyle = .medium

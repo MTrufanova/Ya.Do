@@ -14,3 +14,6 @@
 "no" = "no";
 "done" = "Done by";
 "delete" = "Delete";
+"show" = "Show";
+"hide" = "Hide";
+"new" = "New";
