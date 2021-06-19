@@ -17,6 +17,8 @@
 		4680B35D267C7AD8000CEA75 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4680B35B267C7AD8000CEA75 /* Date+Ext.swift */; };
 		468F8BF6267CD39B001231E8 /* AllTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8BF3267CD39B001231E8 /* AllTasksViewController.swift */; };
 		468F8BF7267CD39B001231E8 /* MainTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8BF5267CD39B001231E8 /* MainTaskCell.swift */; };
+		468F8BFF267DEFDF001231E8 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8BFE267DEFDF001231E8 /* Images.swift */; };
+		468F8C04267DF35A001231E8 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8C03267DF35A001231E8 /* Colors.swift */; };
 		46967B962668FC35003DBDFF /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46967B952668FC35003DBDFF /* StartViewController.swift */; };
 		469A4B612668D49800854663 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B602668D49800854663 /* AppDelegate.swift */; };
 		469A4B632668D49800854663 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B622668D49800854663 /* SceneDelegate.swift */; };
@@ -62,6 +64,8 @@
 		4680B35B267C7AD8000CEA75 /* Date+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		468F8BF3267CD39B001231E8 /* AllTasksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllTasksViewController.swift; sourceTree = "<group>"; };
 		468F8BF5267CD39B001231E8 /* MainTaskCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTaskCell.swift; sourceTree = "<group>"; };
+		468F8BFE267DEFDF001231E8 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		468F8C03267DF35A001231E8 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		46967B952668FC35003DBDFF /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		469A4B5D2668D49800854663 /* Ya.Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ya.Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		469A4B602668D49800854663 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -242,7 +246,7 @@
 			children = (
 				469A4B602668D49800854663 /* AppDelegate.swift */,
 				469A4B622668D49800854663 /* SceneDelegate.swift */,
-				46E95358267C990800DB67AF /* Titles+Fonts */,
+				46E95358267C990800DB67AF /* Resource+Styles */,
 				4680B359267C7AD8000CEA75 /* Extensions */,
 				46020FF726768470008BE13B /* Scenes */,
 				46020F8E2671FB51008BE13B /* Models */,
@@ -274,13 +278,15 @@
 			path = Ya.DoUITests;
 			sourceTree = "<group>";
 		};
-		46E95358267C990800DB67AF /* Titles+Fonts */ = {
+		46E95358267C990800DB67AF /* Resource+Styles */ = {
 			isa = PBXGroup;
 			children = (
 				46E95359267C9A6300DB67AF /* Titles enum.swift */,
 				46E95364267C9F9900DB67AF /* Fonts.swift */,
+				468F8BFE267DEFDF001231E8 /* Images.swift */,
+				468F8C03267DF35A001231E8 /* Colors.swift */,
 			);
-			path = "Titles+Fonts";
+			path = "Resource+Styles";
 			sourceTree = "<group>";
 		};
 		70D53270DCDB951799D4E6D8 /* Frameworks */ = {
@@ -529,12 +535,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				46020F942671FBAF008BE13B /* ToDoItemModel.swift in Sources */,
+				468F8C04267DF35A001231E8 /* Colors.swift in Sources */,
 				468F8BF7267CD39B001231E8 /* MainTaskCell.swift in Sources */,
 				4680B35C267C7AD8000CEA75 /* UILabel+Ext.swift in Sources */,
 				46020FF326768404008BE13B /* DetailView.swift in Sources */,
 				46020FEE267683EF008BE13B /* DetailTaskViewController.swift in Sources */,
 				46E9535A267C9A6300DB67AF /* Titles enum.swift in Sources */,
 				468F8BF6267CD39B001231E8 /* AllTasksViewController.swift in Sources */,
+				468F8BFF267DEFDF001231E8 /* Images.swift in Sources */,
 				46967B962668FC35003DBDFF /* StartViewController.swift in Sources */,
 				469A4B612668D49800854663 /* AppDelegate.swift in Sources */,
 				46020FA02671FBE0008BE13B /* FileCache.swift in Sources */,

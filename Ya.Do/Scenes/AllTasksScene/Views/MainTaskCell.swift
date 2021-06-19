@@ -13,14 +13,12 @@ class MainTaskCell: UITableViewCell {
     
     let checkButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "circle"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    //checkmark.circle.fill
-    lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: "", textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 17, weight: .regular), textLabel: "", textAlignment: .left, color: Colors.blackTitle ?? UIColor())
     
-    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 15, weight: .regular), textLabel: "", textAlignment: .left, color: UIColor(named: "grayText") ?? UIColor())
+    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: .systemFont(ofSize: 15, weight: .regular), textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
     lazy var titleDateStackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -36,6 +34,7 @@ class MainTaskCell: UITableViewCell {
     private func setupLayout() {
         setupCheckButtonLayout()
         setupTitleDateStack()
+        selectionStyle = .none
     }
     func setupTitleDateStack() {
         titleDateStackView = UIStackView(arrangedSubviews: [taskTitleLabel, deadlineLabel])
@@ -60,11 +59,24 @@ class MainTaskCell: UITableViewCell {
         ])
     }
     
-    
-    func setupCell() {
-        taskTitleLabel.text =  "Hello"//item.text
-        //guard let deadline = item.deadline else { return }
-        deadlineLabel.text = "14141"//Date.stringDateFormatter(from: deadline)
+    func setupCell(_ item: ToDoItem) {
+        taskTitleLabel.text =  item.text
+        guard let deadline = item.deadline else { return }
+        deadlineLabel.text = Date.stringDateFormatter(from: deadline)
+        switch item.isCompleted {
+        case true:
+            checkButton.setImage(Images.fillCircle, for: .normal)
+            checkButton.tintColor =  Colors.green
+            taskTitleLabel.textColor = Colors.grayTitle
+        case false:
+            checkButton.setImage(Images.circle, for: .normal)
+            guard item.priority == .high else {
+                checkButton.tintColor = Colors.grayLines
+                return
+            }
+            checkButton.tintColor = Colors.red
+            taskTitleLabel.textColor = Colors.blackTitle
+        }
         
     }
     

@@ -9,11 +9,11 @@ import UIKit
 
 class DetailView: UIView {
     // MARK: - For NavBar
-    lazy var titleLabel: UILabel = UILabel.createLabel(font: Fonts.semibold17, textLabel: Title.navTitleDetailVC, textAlignment: .center, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var titleLabel: UILabel = UILabel.createLabel(font: Fonts.semibold17, textLabel: Title.navTitleDetailVC, textAlignment: .center, color: Colors.blackTitle ?? UIColor())
     
-    lazy var cancelButton: UIButton = createNavButton(title: Title.cancelButton, font: Fonts.regular17, color: UIColor(named: "blueTitle") ?? UIColor())
+    lazy var cancelButton: UIButton = createNavButton(title: Title.cancelButton, font: Fonts.regular17, color: Colors.blue ?? UIColor())
     
-    lazy var saveButton: UIButton = createNavButton(title: Title.saveButton, font: Fonts.semibold17, color: UIColor(named: "grayText") ?? UIColor())
+    lazy var saveButton: UIButton = createNavButton(title: Title.saveButton, font: Fonts.semibold17, color: Colors.grayTitle ?? UIColor())
     
     
     lazy var scrollView = UIScrollView()
@@ -22,9 +22,9 @@ class DetailView: UIView {
         let textView = UITextView()
         textView.text = Title.textViewPlaceholder
         textView.layer.cornerRadius = 16
-        textView.textColor = UIColor(named: "grayText")
+        textView.textColor = Colors.grayTitle
         textView.font = Fonts.regular17
-        textView.backgroundColor = UIColor(named: "mainViews")
+        textView.backgroundColor = Colors.viewsBlock
         textView.contentInset = UIEdgeInsets(top: 17, left: 16, bottom: 12, right: 16)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
@@ -32,19 +32,16 @@ class DetailView: UIView {
     // MARK: - UI FOR PRIORITY VIEW
     lazy var priorityView: UIView = createViewForStack()
     
-    lazy var priorityLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.priority, textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var priorityLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.priority, textAlignment: .left, color: Colors.blackTitle ?? UIColor())
     
     lazy var prioritySegment: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["one", "two", "three"])
         let font: UIFont = Fonts.system15
         segment.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-        let largeConfig = UIImage.SymbolConfiguration(weight: .bold)
-        let arrowImage = UIImage(systemName: "arrow.down", withConfiguration: largeConfig)?.withTintColor(#colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 1), renderingMode: .alwaysOriginal)
-        let markImage = UIImage(systemName: "exclamationmark.2", withConfiguration: largeConfig)?.withTintColor(UIColor(named: "redTitle") ?? UIColor(), renderingMode: .alwaysOriginal)
         segment.selectedSegmentIndex = 1
-        segment.setImage(arrowImage, forSegmentAt: 0)
+        segment.setImage(Images.arrowImage, forSegmentAt: 0)
         segment.setTitle(Title.noForSegment, forSegmentAt: 1)
-        segment.setImage(markImage, forSegmentAt: 2)
+        segment.setImage(Images.markImage, forSegmentAt: 2)
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment
     }()
@@ -54,11 +51,11 @@ class DetailView: UIView {
     // MARK: - DEADLINE VIEW
     lazy var deadlineView: UIView = createViewForStack()
     
-    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.doneBy, textAlignment: .left, color: UIColor(named: "navTitle") ?? UIColor())
+    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.doneBy, textAlignment: .left, color: Colors.blackTitle ?? UIColor())
     
     lazy var dateButton: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(named: "blueTitle"), for: .normal)
+        button.setTitleColor(Colors.blue, for: .normal)
         button.titleLabel?.font = Fonts.semibold13
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -85,11 +82,11 @@ class DetailView: UIView {
     // MARK: - UIButton
     lazy var deleteButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(named: "mainViews")
+        button.backgroundColor = Colors.viewsBlock
         button.setTitle(Title.delete, for: .normal)
         button.titleLabel?.font = Fonts.regular17
         button.layer.cornerRadius = 16
-        button.setTitleColor(UIColor(named: "grayText"), for: .normal)
+        button.setTitleColor(Colors.grayTitle, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -99,7 +96,7 @@ class DetailView: UIView {
         setupScrollView()
         setupLayout()
         
-        backgroundColor = UIColor(named: "background")
+        backgroundColor = Colors.background
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -173,7 +170,7 @@ class DetailView: UIView {
         stackView = UIStackView(arrangedSubviews: [priorityView, separatorView, deadlineView, calendarSeparatorView, calendarView])
         stackView.axis = .vertical
         stackView.spacing = 0
-        stackView.backgroundColor = UIColor(named: "mainViews")
+        stackView.backgroundColor = Colors.viewsBlock
         stackView.layer.cornerRadius = 16
         stackView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(stackView)
@@ -252,7 +249,7 @@ class DetailView: UIView {
     // MARK: Methods for same UI
     private func createViewForStack() -> UIView {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "mainViews")
+        view.backgroundColor = Colors.viewsBlock
         view.layer.cornerRadius = 16
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -260,7 +257,7 @@ class DetailView: UIView {
     
     private func createSeparator() -> UIView {
         let view = UIView()
-        view.backgroundColor = UIColor(named: "separatorColor")
+        view.backgroundColor = Colors.grayLines
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }

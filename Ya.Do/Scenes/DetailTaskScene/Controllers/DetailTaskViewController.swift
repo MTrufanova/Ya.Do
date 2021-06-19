@@ -76,7 +76,7 @@ class DetailTaskViewController: UIViewController {
         contentView.prioritySegment.selectedSegmentIndex = 1
         contentView.calendarSwitch.isOn = false
         switchAction(calendarSwitch: contentView.calendarSwitch)
-        let buttonColor = UIColor(named: "grayText")
+        let buttonColor = Colors.grayTitle
         contentView.deleteButton.setTitleColor(buttonColor, for: .normal)
         contentView.datePicker.date = Date.tomorrow
         guard let id = task?.id else { return  }
@@ -105,12 +105,12 @@ class DetailTaskViewController: UIViewController {
 extension DetailTaskViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentView.taskTextView.text = ""
-        contentView.taskTextView.textColor = UIColor(named: "navTitle")
+        contentView.taskTextView.textColor = Colors.blackTitle
     }
 
     func textViewDidChange(_ textView: UITextView) {
         contentView.saveButton.isEnabled = true
-        contentView.saveButton.setTitleColor(UIColor(named: "blueTitle"), for: .normal)
-        contentView.deleteButton.setTitleColor(UIColor(named: "redTitle"), for: .normal)
+        contentView.saveButton.setTitleColor(Colors.blue, for: .normal)
+        contentView.deleteButton.setTitleColor(Colors.red, for: .normal)
     }
 }
