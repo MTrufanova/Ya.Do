@@ -13,7 +13,8 @@ protocol AddItemDelegate {
 class AllTasksViewController: UIViewController {
     let fileCache = FileCache()
     
-    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "Выполнено —", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    
+    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: Title.done, textAlignment: .left, color: Colors.grayTitle ?? UIColor())
     
     lazy var hiddenButton: UIButton = {
         let button = UIButton()
@@ -21,6 +22,7 @@ class AllTasksViewController: UIViewController {
         button.titleLabel?.font = Fonts.semibold15
         button.setTitle(Title.show, for: .normal)
         button.titleEdgeInsets = UIEdgeInsets(top: 1, left: 76, bottom: 1, right: 0)
+        button.addTarget(self, action: #selector(showDone), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -53,10 +55,22 @@ class AllTasksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Мои дела"
+        
+        navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
+        fileCache.getAllItems(from: Files.defaultFile)
         setupLayout()
+    }
+    
+    @objc func showDone() {
+        if hiddenButton.titleLabel?.text == Title.show {
+            hiddenButton.setTitle(Title.hide, for: .normal)
+           //fileCache.tasks.filter { $0.isCompleted }
+        } else {
+            hiddenButton.setTitle(Title.show, for: .normal)
+        }
+        
     }
     
     @objc private func addNewItem() {
@@ -65,7 +79,6 @@ class AllTasksViewController: UIViewController {
         addVC.modalPresentationStyle = .formSheet
         navigationController?.present(addVC, animated: true, completion: nil)
     }
-    
     
     private func setupLayout() {
         setupCountAttributesLayout()
@@ -104,7 +117,8 @@ class AllTasksViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension AllTasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fileCache.tasks.count    }
+        return fileCache.tasks.count + 1
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
@@ -117,12 +131,10 @@ extension AllTasksViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             var task = fileCache.tasks[indexPath.row]
-            
             cell.setupCell(task)
             // cell.setupCell()
             cell.buttonTap = {
                 task.isCompleted = !task.isCompleted
-               // self.fileCache.tasks[indexPath.row] = task
                 
                 switch task.isCompleted {
                 case true:
@@ -141,28 +153,44 @@ extension AllTasksViewController: UITableViewDataSource {
             }
             return cell
         }
-        
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
+        switch indexPath.row {
+        case lastRowIndex - 1:
+            addNewItem()
+        default:
+            let addVC = DetailTaskViewController()
+            let task = fileCache.tasks[indexPath.row]
+            addVC.task = task
+            addVC.delegate = self
+            addVC.modalPresentationStyle = .formSheet
+            navigationController?.present(addVC, animated: true, completion: nil)
+        }
+    }
 }
 // MARK: - UITableViewDelegate
 extension AllTasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 66
     }
-    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let id = fileCache.tasks[indexPath.row].id
+            fileCache.removeItem(at: id)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            fileCache.saveAllItems(to: Files.defaultFile)
+        }
+    }
 }
 
 extension AllTasksViewController: AddItemDelegate {
     
-    func addItem(item: ToDoItem)  {
+    func addItem(item: ToDoItem) {
         self.dismiss(animated: true) { [self] in
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                //fileCache.tasks[selectedIndexPath.row] = item
-            }else {
-                // tasks.append(item)
-                fileCache.addItem(item)
-            }
+            fileCache.addItem(item)
+            tableView.reloadData()
         }
     }
 }

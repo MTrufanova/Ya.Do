@@ -72,7 +72,7 @@ class DetailTaskViewController: UIViewController {
         }
         let item = ToDoItem(text: taskText, priority: priority, deadline: deadline)
         fileCache.addItem(item)
-        fileCache.saveAllItems(to: "default.json")
+        fileCache.saveAllItems(to: Files.defaultFile)
         delegate?.addItem(item: item)
         dismissModal()
     }
@@ -107,7 +107,7 @@ class DetailTaskViewController: UIViewController {
         contentView.datePicker.date = Date.tomorrow
         guard let id = task?.id else { return  }
         fileCache.removeItem(at: id)
-        fileCache.saveAllItems(to: "default.json")
+        fileCache.saveAllItems(to: Files.defaultFile)
     }
     // MARK: - SwitchAction
     @objc private func switchAction(calendarSwitch: UISwitch) {

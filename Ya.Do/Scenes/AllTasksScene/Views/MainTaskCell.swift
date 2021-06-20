@@ -23,7 +23,10 @@ class MainTaskCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+        selectionStyle = .none
+        backgroundColor = Colors.viewsBlock
+        accessoryType = .disclosureIndicator
+        separatorInset = UIEdgeInsets(top: 0, left: 52, bottom: 0, right: 0)
         checkButton.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         setupLayout()
     }
@@ -34,10 +37,6 @@ class MainTaskCell: UITableViewCell {
     private func setupLayout() {
         setupCheckButtonLayout()
         setupTitleDateStack()
-        selectionStyle = .none
-        backgroundColor = Colors.viewsBlock
-        accessoryType = .disclosureIndicator
-        separatorInset = UIEdgeInsets(top: 0, left: 52, bottom: 0, right: 0)
     }
     func setupTitleDateStack() {
         titleDateStackView = UIStackView(arrangedSubviews: [taskTitleLabel, deadlineLabel])
@@ -63,8 +62,6 @@ class MainTaskCell: UITableViewCell {
     }
     
     func setupCell(_ item: ToDoItem) {
-        //taskTitleLabel.text = "Hello"
-        //deadlineLabel.text = "12.12.12"
         taskTitleLabel.text =  item.text
         guard let deadline = item.deadline else { return }
         deadlineLabel.text = Date.stringDateFormatter(from: deadline)
@@ -73,6 +70,7 @@ class MainTaskCell: UITableViewCell {
             checkButton.setImage(Images.fillCircle, for: .normal)
             checkButton.tintColor =  Colors.green
             taskTitleLabel.textColor = Colors.grayTitle
+            
         case false:
             checkButton.setImage(Images.circle, for: .normal)
             guard item.priority == .high else {

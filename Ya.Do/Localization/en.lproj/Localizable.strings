@@ -12,8 +12,10 @@
 "placeholder" = "What needs to be done?";
 "priority" = "Priority";
 "no" = "no";
-"done" = "Done by";
+"doneBy" = "Done by";
 "delete" = "Delete";
+"done" = "Done —";
+"tasksAll" = "My tasks";
 "show" = "Show";
 "hide" = "Hide";
 "new" = "New";
