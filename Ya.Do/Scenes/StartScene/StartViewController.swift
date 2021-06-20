@@ -33,7 +33,7 @@ class StartViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     lazy var startButton: UIButton = {
         let button = UIButton()
         button.setTitle("Create task", for: .normal)

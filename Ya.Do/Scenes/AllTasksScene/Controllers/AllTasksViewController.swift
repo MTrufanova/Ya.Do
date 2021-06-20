@@ -12,10 +12,9 @@ protocol AddItemDelegate {
 }
 class AllTasksViewController: UIViewController {
     let fileCache = FileCache()
-    
-    
+
     lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: Title.done, textAlignment: .left, color: Colors.grayTitle ?? UIColor())
-    
+
     lazy var hiddenButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Colors.blue, for: .normal)
@@ -26,7 +25,7 @@ class AllTasksViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.layer.cornerRadius = 16
@@ -40,7 +39,7 @@ class AllTasksViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    
+
     lazy var addButton: UIButton = {
         let button = UIButton()
         button.layer.shadowRadius = 3
@@ -52,28 +51,28 @@ class AllTasksViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
         fileCache.getAllItems(from: Files.defaultFile)
         setupLayout()
     }
-    
+
     @objc func showDone() {
         if hiddenButton.titleLabel?.text == Title.show {
             hiddenButton.setTitle(Title.hide, for: .normal)
-           //fileCache.tasks.filter { $0.isCompleted }
+           // fileCache.tasks.filter { $0.isCompleted }
         } else {
             hiddenButton.setTitle(Title.show, for: .normal)
         }
     }
-    
+
     func doneAction(at indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .destructive, title: "Done") { (action, view, completion) in
+        let action = UIContextualAction(style: .destructive, title: "Done") { (_, _, completion) in
             var item = self.fileCache.tasks[indexPath.row]
             item.isCompleted = true
             completion(true)
@@ -82,19 +81,19 @@ class AllTasksViewController: UIViewController {
         action.image = Images.fillCircle
         return action
     }
-    
+
     @objc private func addNewItem() {
         let addVC = DetailTaskViewController()
         addVC.delegate = self
         addVC.modalPresentationStyle = .formSheet
         navigationController?.present(addVC, animated: true, completion: nil)
     }
-    
+
     private func setupLayout() {
         setupCountAttributesLayout()
         setupTableViewLayout()
     }
-    
+
     private func setupCountAttributesLayout() {
         view.addSubview(counterLabel)
         view.addSubview(hiddenButton)
@@ -106,7 +105,7 @@ class AllTasksViewController: UIViewController {
             hiddenButton.centerYAnchor.constraint(equalTo: counterLabel.centerYAnchor)
         ])
     }
-    
+
     private func setupTableViewLayout() {
         view.addSubview(tableView)
         view.addSubview(addButton)
@@ -115,7 +114,7 @@ class AllTasksViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
+
             addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -65),
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             addButton.heightAnchor.constraint(equalToConstant: 44),
@@ -129,7 +128,7 @@ extension AllTasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fileCache.tasks.count + 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
         switch indexPath.row {
@@ -145,7 +144,6 @@ extension AllTasksViewController: UITableViewDataSource {
             // cell.setupCell()
             cell.buttonTap = {
                 task.isCompleted = !task.isCompleted
-                
                 switch task.isCompleted {
                 case true:
                     cell.checkButton.setImage(Images.fillCircle, for: .normal)
@@ -164,7 +162,7 @@ extension AllTasksViewController: UITableViewDataSource {
             return cell
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
         switch indexPath.row {
@@ -193,16 +191,16 @@ extension AllTasksViewController: UITableViewDelegate {
             fileCache.saveAllItems(to: Files.defaultFile)
         }
     }
-    
+
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let done = doneAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [done])
     }
-    
+
 }
 
 extension AllTasksViewController: AddItemDelegate {
-    
+
     func addItem(item: ToDoItem) {
         self.dismiss(animated: true) { [self] in
             fileCache.addItem(item)

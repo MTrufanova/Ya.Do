@@ -13,7 +13,7 @@ struct ToDoItem {
     let priority: Priority
     let deadline: Date?
     var isCompleted: Bool
-    
+
     init(id: String = UUID().uuidString, text: String, priority: Priority, deadline: Date?, isCompleted: Bool = false) {
         self.id = id
         self.text = text
@@ -48,7 +48,7 @@ extension ToDoItem {
         }
         return ToDoItem(id: id, text: text, priority: priority, deadline: deadline, isCompleted: isComleted)
     }
-    
+
     var json: Any {
         var params: [String: Any] = [:]
         params[Keys.id] = id

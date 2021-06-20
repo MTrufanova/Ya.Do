@@ -9,18 +9,18 @@ import UIKit
 
 class MainTaskCell: UITableViewCell {
     static let identifier = "MainTaskCell"
-    var buttonTap: () -> () = { }
-    
+    var buttonTap: () -> Void = { }
+
     let checkButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: "", textAlignment: .left, color: Colors.blackTitle ?? UIColor())
-    
+
     lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.system15, textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
     lazy var titleDateStackView = UIStackView()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -30,7 +30,7 @@ class MainTaskCell: UITableViewCell {
         checkButton.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         setupLayout()
     }
-    
+
     @objc func didTapCheckButton() {
         buttonTap()
     }
@@ -44,15 +44,15 @@ class MainTaskCell: UITableViewCell {
         titleDateStackView.spacing = 5
         titleDateStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleDateStackView)
-        
+
         NSLayoutConstraint.activate([
             titleDateStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             titleDateStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 52),
             titleDateStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
-        
+
     }
-    
+
     private func setupCheckButtonLayout() {
         contentView.addSubview(checkButton)
         NSLayoutConstraint.activate([
@@ -60,7 +60,7 @@ class MainTaskCell: UITableViewCell {
         checkButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
-    
+
     func setupCell(_ item: ToDoItem) {
         taskTitleLabel.text =  item.text
         guard let deadline = item.deadline else { return }
@@ -70,7 +70,7 @@ class MainTaskCell: UITableViewCell {
             checkButton.setImage(Images.fillCircle, for: .normal)
             checkButton.tintColor =  Colors.green
             taskTitleLabel.textColor = Colors.grayTitle
-            
+
         case false:
             checkButton.setImage(Images.circle, for: .normal)
             taskTitleLabel.textColor = Colors.blackTitle
@@ -80,9 +80,9 @@ class MainTaskCell: UITableViewCell {
             }
             checkButton.tintColor = Colors.red
         }
-        
+
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
