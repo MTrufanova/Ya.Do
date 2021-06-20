@@ -70,7 +70,17 @@ class AllTasksViewController: UIViewController {
         } else {
             hiddenButton.setTitle(Title.show, for: .normal)
         }
-        
+    }
+    
+    func doneAction(at indexPath: IndexPath) -> UIContextualAction {
+        let action = UIContextualAction(style: .destructive, title: "Done") { (action, view, completion) in
+            var item = self.fileCache.tasks[indexPath.row]
+            item.isCompleted = true
+            completion(true)
+        }
+        action.backgroundColor = .systemGreen
+        action.image = Images.fillCircle
+        return action
     }
     
     @objc private func addNewItem() {
@@ -143,12 +153,12 @@ extension AllTasksViewController: UITableViewDataSource {
                     cell.taskTitleLabel.textColor = Colors.grayTitle
                 case false:
                     cell.checkButton.setImage(Images.circle, for: .normal)
+                    cell.taskTitleLabel.textColor = Colors.blackTitle
                     guard task.priority == .high else {
                         cell.checkButton.tintColor = Colors.grayLines
                         return
                     }
                     cell.checkButton.tintColor = Colors.red
-                    cell.taskTitleLabel.textColor = Colors.blackTitle
                 }
             }
             return cell
@@ -183,6 +193,12 @@ extension AllTasksViewController: UITableViewDelegate {
             fileCache.saveAllItems(to: Files.defaultFile)
         }
     }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let done = doneAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [done])
+    }
+    
 }
 
 extension AllTasksViewController: AddItemDelegate {
@@ -190,6 +206,7 @@ extension AllTasksViewController: AddItemDelegate {
     func addItem(item: ToDoItem) {
         self.dismiss(animated: true) { [self] in
             fileCache.addItem(item)
+            fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
         }
     }

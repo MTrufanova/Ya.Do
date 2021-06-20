@@ -24,6 +24,7 @@ class DetailTaskViewController: UIViewController {
         self.contentView.calendarView.isHidden = true
         self.contentView.calendarSeparatorView.isHidden = true
         self.contentView.dateButton.isHidden = true
+        self.contentView.dateButton.setTitle("", for: .normal)
     }
     
     private func updateUI() {
@@ -58,9 +59,8 @@ class DetailTaskViewController: UIViewController {
         guard let taskText = contentView.taskTextView.text else {return}
         let deadline: Date?
         let priority: ToDoItem.Priority
-        guard contentView.dateButton.titleLabel?.text != "" else { deadline = nil
-            return }
-        deadline = contentView.datePicker.date
+        let date = contentView.dateButton.titleLabel?.text
+        deadline = Date.dateFormatter(from: date)
         
         switch contentView.prioritySegment.selectedSegmentIndex {
         case 0:
@@ -71,8 +71,6 @@ class DetailTaskViewController: UIViewController {
             priority = .high
         }
         let item = ToDoItem(text: taskText, priority: priority, deadline: deadline)
-        fileCache.addItem(item)
-        fileCache.saveAllItems(to: Files.defaultFile)
         delegate?.addItem(item: item)
         dismissModal()
     }
@@ -111,11 +109,8 @@ class DetailTaskViewController: UIViewController {
     }
     // MARK: - SwitchAction
     @objc private func switchAction(calendarSwitch: UISwitch) {
-        // let formatter = DateFormatter()
-        // formatter.dateStyle = .medium
-        let dateTitle = Date.stringDateFormatter(from: contentView.datePicker.date)
-        //formatter.string(from: contentView.datePicker.date)
         if calendarSwitch.isOn {
+            let dateTitle = Date.stringDateFormatter(from: contentView.datePicker.date)
             self.contentView.dateButton.isHidden = false
             self.contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
         } else {

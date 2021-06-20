@@ -73,12 +73,12 @@ class MainTaskCell: UITableViewCell {
             
         case false:
             checkButton.setImage(Images.circle, for: .normal)
+            taskTitleLabel.textColor = Colors.blackTitle
             guard item.priority == .high else {
                 checkButton.tintColor = Colors.grayLines
                 return
             }
             checkButton.tintColor = Colors.red
-            taskTitleLabel.textColor = Colors.blackTitle
         }
         
     }

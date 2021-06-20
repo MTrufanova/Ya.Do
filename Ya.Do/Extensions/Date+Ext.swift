@@ -13,6 +13,11 @@ static func stringDateFormatter(from date: Date) -> String {
     formatter.dateStyle = .medium
     return formatter.string(from: date)
 }
+    static func dateFormatter(from string: String?) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.date(from: string ?? "")
+    }
 }
 
 extension Date {
