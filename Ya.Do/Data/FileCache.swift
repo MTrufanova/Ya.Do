@@ -14,10 +14,9 @@ protocol FileCacheProtocol {
     func getAllItems(from file: String)
 }
 
-class FileCache: FileCacheProtocol {
+final class FileCache: FileCacheProtocol {
     private(set) var tasks = [ToDoItem]()
     // MARK: - METHOD ADD TASK
-    /*  потенциальная проблема: может возникнуть дубль. Можно добавить структуру с другими данными, но с таким же айдишником и это никак не проверяется, а потом в методе removeTask может удалится не та структура, которую мы ожидали*/
     func addItem(_ item: ToDoItem) {
         tasks.append(item)
     }

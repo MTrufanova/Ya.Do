@@ -27,7 +27,11 @@ class DetailTaskViewController: UIViewController {
     }
     
     private func updateUI() {
-        contentView.taskTextView.text = task?.text
+        guard let text = task?.text else {
+            contentView.taskTextView.text = Title.textViewPlaceholder
+            return
+        }
+        contentView.taskTextView.text = text
         guard let deadline  = task?.deadline else { return }
         let date = Date.stringDateFormatter(from: deadline)
         contentView.dateButton.setTitle(date, for: .normal)

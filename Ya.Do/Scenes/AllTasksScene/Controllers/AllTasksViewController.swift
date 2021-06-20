@@ -11,9 +11,9 @@ protocol AddItemDelegate {
     func addItem(item: ToDoItem)
 }
 class AllTasksViewController: UIViewController {
+    let fileCache = FileCache()
     
-    var tasks = [ToDoItem]()
-    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "Выполнено -", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "Выполнено —", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
     
     lazy var hiddenButton: UIButton = {
         let button = UIButton()
@@ -99,14 +99,12 @@ class AllTasksViewController: UIViewController {
             addButton.widthAnchor.constraint(equalTo: addButton.heightAnchor)
         ])
     }
-    
 }
 
 // MARK: - UITableViewDataSource
 extension AllTasksViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4//tasks.count
-    }
+        return fileCache.tasks.count    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
@@ -114,40 +112,37 @@ extension AllTasksViewController: UITableViewDataSource {
         case lastRowIndex - 1:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: AddItemCell.identifier, for: indexPath) as? AddItemCell else { return UITableViewCell() }
             return cell
-            
         default:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTaskCell.identifier, for: indexPath) as? MainTaskCell else {
                 return UITableViewCell()
             }
+            var task = fileCache.tasks[indexPath.row]
             
-            //var task = tasks[indexPath.row]
-            // cell.setupCell(task)
-            cell.setupCell()
-            /*cell.buttonTap = {
-             task.isCompleted = !task.isCompleted
-             self.tasks[indexPath.row] = task
-             
-             switch task.isCompleted {
-             case true:
-             cell.checkButton.setImage(Images.fillCircle, for: .normal)
-             cell.checkButton.tintColor =  Colors.green
-             cell.taskTitleLabel.textColor = Colors.grayTitle
-             case false:
-             cell.checkButton.setImage(Images.circle, for: .normal)
-             guard task.priority == .high else {
-             cell.checkButton.tintColor = Colors.grayLines
-             return
-             }
-             cell.checkButton.tintColor = Colors.red
-             cell.taskTitleLabel.textColor = Colors.blackTitle
-             }
-             }*/
+            cell.setupCell(task)
+            // cell.setupCell()
+            cell.buttonTap = {
+                task.isCompleted = !task.isCompleted
+               // self.fileCache.tasks[indexPath.row] = task
+                
+                switch task.isCompleted {
+                case true:
+                    cell.checkButton.setImage(Images.fillCircle, for: .normal)
+                    cell.checkButton.tintColor =  Colors.green
+                    cell.taskTitleLabel.textColor = Colors.grayTitle
+                case false:
+                    cell.checkButton.setImage(Images.circle, for: .normal)
+                    guard task.priority == .high else {
+                        cell.checkButton.tintColor = Colors.grayLines
+                        return
+                    }
+                    cell.checkButton.tintColor = Colors.red
+                    cell.taskTitleLabel.textColor = Colors.blackTitle
+                }
+            }
             return cell
         }
         
-        
     }
-    
     
 }
 // MARK: - UITableViewDelegate
@@ -163,10 +158,10 @@ extension AllTasksViewController: AddItemDelegate {
     func addItem(item: ToDoItem)  {
         self.dismiss(animated: true) { [self] in
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                tasks[selectedIndexPath.row] = item
-                
+                //fileCache.tasks[selectedIndexPath.row] = item
             }else {
-                tasks.append(item)
+                // tasks.append(item)
+                fileCache.addItem(item)
             }
         }
     }

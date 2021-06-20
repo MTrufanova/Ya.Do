@@ -17,7 +17,6 @@ class AddItemCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
         backgroundColor = Colors.viewsBlock
-       // let cornerRadius = 16
         self.roundCorners([.bottomLeft, .bottomRight], radius: 16)
         self.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         setupLayout()

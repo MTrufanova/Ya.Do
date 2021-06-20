@@ -36,6 +36,7 @@ class MainTaskCell: UITableViewCell {
         setupTitleDateStack()
         selectionStyle = .none
         backgroundColor = Colors.viewsBlock
+        accessoryType = .disclosureIndicator
         separatorInset = UIEdgeInsets(top: 0, left: 52, bottom: 0, right: 0)
     }
     func setupTitleDateStack() {
@@ -61,13 +62,13 @@ class MainTaskCell: UITableViewCell {
         ])
     }
     
-    func setupCell() {
-        taskTitleLabel.text = "Hello"
-        deadlineLabel.text = "12.12.12"
-       /* taskTitleLabel.text =  item.text
+    func setupCell(_ item: ToDoItem) {
+        //taskTitleLabel.text = "Hello"
+        //deadlineLabel.text = "12.12.12"
+        taskTitleLabel.text =  item.text
         guard let deadline = item.deadline else { return }
-        deadlineLabel.text = Date.stringDateFormatter(from: deadline)*/
-       /* switch item.isCompleted {
+        deadlineLabel.text = Date.stringDateFormatter(from: deadline)
+        switch item.isCompleted {
         case true:
             checkButton.setImage(Images.fillCircle, for: .normal)
             checkButton.tintColor =  Colors.green
@@ -80,7 +81,7 @@ class MainTaskCell: UITableViewCell {
             }
             checkButton.tintColor = Colors.red
             taskTitleLabel.textColor = Colors.blackTitle
-        }*/
+        }
         
     }
     
