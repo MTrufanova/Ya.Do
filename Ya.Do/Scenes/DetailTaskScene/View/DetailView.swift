@@ -103,7 +103,6 @@ class DetailView: UIView {
 
     private func setupScrollView() {
         scrollView.showsVerticalScrollIndicator = false
-        // scrollView.isPagingEnabled = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
     }
 
@@ -142,11 +141,10 @@ class DetailView: UIView {
     private func setupScrollViewLayout() {
         addSubview(scrollView)
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: self.topAnchor, constant: 72),
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-
+            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 72),
+            scrollView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     // MARK: - textViewLayout

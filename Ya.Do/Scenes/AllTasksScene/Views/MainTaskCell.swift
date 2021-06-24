@@ -31,14 +31,14 @@ class MainTaskCell: UITableViewCell {
         setupLayout()
     }
     
-    @objc func didTapCheckButton() {
+    @objc private func didTapCheckButton() {
         buttonTap()
     }
     private func setupLayout() {
         setupCheckButtonLayout()
         setupTitleDateStack()
     }
-    func setupTitleDateStack() {
+   private func setupTitleDateStack() {
         titleDateStackView = UIStackView(arrangedSubviews: [taskTitleLabel, deadlineLabel])
         titleDateStackView.axis = .vertical
         titleDateStackView.spacing = 5
@@ -64,7 +64,7 @@ class MainTaskCell: UITableViewCell {
     func setupCell(_ item: ToDoItem) {
         taskTitleLabel.text =  item.text
         if let deadline = item.deadline {
-            deadlineLabel.text = Date.stringDateFormatter(from: deadline)
+            deadlineLabel.text = Date.returnString(from: deadline)
         }
         switch item.isCompleted {
         case true:
@@ -81,7 +81,6 @@ class MainTaskCell: UITableViewCell {
             checkButton.tintColor = Colors.red
         }
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

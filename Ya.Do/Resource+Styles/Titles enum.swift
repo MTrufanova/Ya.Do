@@ -19,6 +19,6 @@ enum Title {
     static let show = NSLocalizedString("show", comment: "")
     static let hide = NSLocalizedString("hide", comment: "")
     static let new = NSLocalizedString("new", comment: "")
-    static let tasksAll = NSLocalizedString("tasksAll", comment: "")
+    static let tasksAll = NSLocalizedString("AllTasksViewController.navbar.title", comment: "")
     static let done = NSLocalizedString("done", comment: "")
 }

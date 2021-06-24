@@ -15,7 +15,7 @@
 "doneBy" = "Сделать до";
 "delete" = "Удалить";
 "done" = "Выполнено —";
-"tasksAll" = "Мои дела";
+"AllTasksViewController.navbar.title" = "Мои дела";
 "show" = "Показать";
 "hide" = "Скрыть";
 "new" = "Новое";

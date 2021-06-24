@@ -8,7 +8,7 @@
 import UIKit
 
 class AllTasksViewController: UIViewController {
-    let fileCache = FileCache()
+    private let fileCache = FileCache()
     
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
@@ -118,8 +118,8 @@ class AllTasksViewController: UIViewController {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: hiddenButton.bottomAnchor, constant: 12),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             
             addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -65),
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -192,10 +192,10 @@ extension AllTasksViewController: UITableViewDataSource {
             var task: ToDoItem
             if isFiltering {
                 let completed = fileCache.completedTasks[indexPath.row].id
-                 guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
+                guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
                 task = fileCache.tasks[index]
             } else {
-                 task = fileCache.tasks[indexPath.row]
+                task = fileCache.tasks[indexPath.row]
             }
             let addVC = DetailTaskViewController()
             addVC.task = task
@@ -216,7 +216,7 @@ extension AllTasksViewController: UITableViewDelegate {
             if isFiltering {
                 task = fileCache.completedTasks[indexPath.row]
             } else {
-                 task = fileCache.tasks[indexPath.row]
+                task = fileCache.tasks[indexPath.row]
             }
             let id = task.id
             fileCache.removeItem(at: id)
@@ -230,10 +230,17 @@ extension AllTasksViewController: UITableViewDelegate {
         let done = doneAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [done])
     }
-    
 }
 
 extension AllTasksViewController: DetailTaskViewControllerDelegate {
+    func removeItem(item: ToDoItem) {
+        self.dismiss(animated: true) { [self] in
+            fileCache.removeItem(at: item.id)
+            fileCache.saveAllItems(to: Files.defaultFile)
+            tableView.reloadData()
+            
+        }
+    }
     
     func addItem(item: ToDoItem) {
         self.dismiss(animated: true) { [self] in
@@ -242,19 +249,19 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
                 switch selectedIndexPath.row {
                 case lastRowIndex - 1:
-                    addNewItem()
+                    fileCache.addItem(item)
                 default:
-                
-                if isFiltering {
-                   let completed = fileCache.completedTasks[selectedIndexPath.row].id
-                    guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
-                    fileCache.updateItem(index: index, item: item)
-                } else {
-                    fileCache.updateItem(index: selectedIndexPath.row, item: item)
+                    
+                    if isFiltering {
+                        let completed = fileCache.completedTasks[selectedIndexPath.row].id
+                        guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
+                        fileCache.updateItem(index: index, item: item)
+                    } else {
+                        fileCache.updateItem(index: selectedIndexPath.row, item: item)
+                    }
                 }
-            }
             }else {
-            fileCache.addItem(item)
+                fileCache.addItem(item)
             }
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()

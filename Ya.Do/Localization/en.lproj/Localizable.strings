@@ -15,7 +15,7 @@
 "doneBy" = "Done by";
 "delete" = "Delete";
 "done" = "Done —";
-"tasksAll" = "My tasks";
+"AllTasksViewController.navbar.title" = "My tasks";
 "show" = "Show";
 "hide" = "Hide";
 "new" = "New";
