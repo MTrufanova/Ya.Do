@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol AddItemDelegate: class {
+protocol DetailTaskViewControllerDelegate: class {
     func addItem(item: ToDoItem)
 }
 
 class DetailTaskViewController: UIViewController {
-   weak var delegate: AddItemDelegate?
+   weak var delegate: DetailTaskViewControllerDelegate?
     let fileCache = FileCache()
     var task: ToDoItem?
     lazy var contentView = DetailView()
