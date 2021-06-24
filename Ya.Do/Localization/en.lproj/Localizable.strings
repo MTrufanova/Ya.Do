@@ -6,16 +6,16 @@
   
 */
 "version" = "Version";
-"task" = "Task";
-"cancel" = "Cancel";
-"save" = "Save";
-"placeholder" = "What needs to be done?";
-"priority" = "Priority";
-"no" = "no";
-"doneBy" = "Done by";
-"delete" = "Delete";
-"done" = "Done —";
+"DetailTaskViewController.title" = "Task";
+"DetailTaskViewController.cancelBtn" = "Cancel";
+"DetailTaskViewController.saveBtn" = "Save";
+"DetailTaskViewController.textView.placeholder" = "What needs to be done?";
+"DetailTaskViewController.priorityLabel" = "Priority";
+"DetailTaskViewController.segmentContoller.noLabel" = "no";
+"DetailTaskViewController.doneByLabel" = "Done by";
+"DetailTaskViewController.deleteBtn" = "Delete";
+"AllTasksViewController.doneLabel" = "Done —";
 "AllTasksViewController.navbar.title" = "My tasks";
-"show" = "Show";
-"hide" = "Hide";
-"new" = "New";
+"AllTasksViewController.showBtn" = "Show";
+"AllTasksViewController.hideBtn" = "Hide";
+"AllTasksViewController.Cell.createNewItem" = "New";

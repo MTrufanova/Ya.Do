@@ -164,6 +164,7 @@ extension AllTasksViewController: UITableViewDataSource {
                 self.fileCache.updateItem(index: indexPath.row, item: task)
                 self.fileCache.saveAllItems(to: Files.defaultFile)
                 self.counterLabel.text = "\(self.countDone())"
+                tableView.reloadData()
                 switch task.isCompleted {
                 case true:
                     cell.checkButton.setImage(Images.fillCircle, for: .normal)
@@ -210,8 +211,14 @@ extension AllTasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 66
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let done = doneAction(at: indexPath)
+        return UISwipeActionsConfiguration(actions: [done])
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
             var task: ToDoItem
             if isFiltering {
                 task = fileCache.completedTasks[indexPath.row]
@@ -224,11 +231,9 @@ extension AllTasksViewController: UITableViewDelegate {
             fileCache.saveAllItems(to: Files.defaultFile)
             self.counterLabel.text = "\(self.countDone())"
         }
-    }
-    
-    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let done = doneAction(at: indexPath)
-        return UISwipeActionsConfiguration(actions: [done])
+        delete.image = Images.trash
+        delete.backgroundColor = Colors.red
+        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
 
