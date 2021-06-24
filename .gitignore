@@ -89,3 +89,5 @@ fastlane/test_output
 
 iOSInjectionProject/
 Ya.Do.xcworkspace/xcuserdata/msc.xcuserdatad/UserInterfaceState.xcuserstate
+*.xcuserstate
+Ya.Do.xcworkspace/xcuserdata/msc.xcuserdatad/UserInterfaceState.xcuserstate

@@ -14,10 +14,9 @@ protocol FileCacheProtocol {
     func getAllItems(from file: String)
 }
 
-class FileCache: FileCacheProtocol {
+final class FileCache: FileCacheProtocol {
     private(set) var tasks = [ToDoItem]()
     // MARK: - METHOD ADD TASK
-    /*  потенциальная проблема: может возникнуть дубль. Можно добавить структуру с другими данными, но с таким же айдишником и это никак не проверяется, а потом в методе removeTask может удалится не та структура, которую мы ожидали*/
     func addItem(_ item: ToDoItem) {
         tasks.append(item)
     }
@@ -27,13 +26,11 @@ class FileCache: FileCacheProtocol {
         tasks.remove(at: index)
     }
     // MARK: - METHOD SAVE ALL TASKS
-    // throws доделать обработку ошибок
     func saveAllItems(to file: String) {
         let tasksDict = tasks.map { $0.json }
         // get file's url
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
         let fileUrl = path.appendingPathComponent(file)
-        print(path)
         // save array in data
         do {
             let data = try JSONSerialization.data(withJSONObject: tasksDict, options: [])
@@ -49,13 +46,11 @@ class FileCache: FileCacheProtocol {
         let fileUrl = path.appendingPathComponent(file)
         // data from json's file in array
         do {
-            let data = try Data(contentsOf: fileUrl, options: [])
-            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+            let data = try Data(contentsOf: fileUrl)
+            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] else { print("no jsondict")
                 return
             }
-            if let task = ToDoItem.parse(json: jsonDict) {
-                tasks.append(task)
-            }
+            tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
         } catch {
             print(error.localizedDescription)
         }

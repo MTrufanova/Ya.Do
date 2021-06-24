@@ -14,6 +14,11 @@ enum Title {
     static let textViewPlaceholder = NSLocalizedString("placeholder", comment: "")
     static let priority = NSLocalizedString("priority", comment: "")
     static let noForSegment = NSLocalizedString("no", comment: "")
-    static let doneBy = NSLocalizedString("done", comment: "")
+    static let doneBy = NSLocalizedString("doneBy", comment: "")
     static let delete = NSLocalizedString("delete", comment: "")
+    static let show = NSLocalizedString("show", comment: "")
+    static let hide = NSLocalizedString("hide", comment: "")
+    static let new = NSLocalizedString("new", comment: "")
+    static let tasksAll = NSLocalizedString("tasksAll", comment: "")
+    static let done = NSLocalizedString("done", comment: "")
 }
