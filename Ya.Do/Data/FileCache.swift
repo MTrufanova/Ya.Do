@@ -16,9 +16,20 @@ protocol FileCacheProtocol {
 
 final class FileCache: FileCacheProtocol {
     private(set) var tasks = [ToDoItem]()
+    private(set) var completedTasks = [ToDoItem]()
+    // MARK: - FILTER TASKS
+    func returnCompleted() {
+        completedTasks = tasks.filter { $0.isCompleted == false}
+    }
     // MARK: - METHOD ADD TASK
     func addItem(_ item: ToDoItem) {
         tasks.append(item)
+    }
+    func updateItem(index: Int, item: ToDoItem) {
+        tasks[index] = item
+    }
+    func updateFilterItem(index: Int, item: ToDoItem) {
+        completedTasks[index] = item
     }
     // MARK: - METHOD REMOVE TASK
     func removeItem(at id: String) {

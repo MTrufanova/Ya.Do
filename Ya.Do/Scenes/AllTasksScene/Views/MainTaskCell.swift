@@ -80,7 +80,6 @@ class MainTaskCell: UITableViewCell {
             }
             checkButton.tintColor = Colors.red
         }
-        
     }
     
     required init?(coder: NSCoder) {

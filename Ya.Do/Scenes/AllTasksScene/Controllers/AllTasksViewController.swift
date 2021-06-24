@@ -7,9 +7,6 @@
 
 import UIKit
 
-protocol AddItemDelegate {
-    func addItem(item: ToDoItem)
-}
 class AllTasksViewController: UIViewController {
     let fileCache = FileCache()
 
