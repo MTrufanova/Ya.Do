@@ -124,6 +124,10 @@ class DetailTaskViewController: UIViewController {
 }
 
 extension DetailTaskViewController: UITextViewDelegate {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        contentView.taskTextView.resignFirstResponder()
+    }
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentView.taskTextView.text = ""
         contentView.taskTextView.textColor = Colors.blackTitle
@@ -132,6 +136,6 @@ extension DetailTaskViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         contentView.saveButton.isEnabled = true
         contentView.saveButton.setTitleColor(Colors.blue, for: .normal)
-       // contentView.deleteButton.setTitleColor(Colors.red, for: .normal)
     }
+    
 }

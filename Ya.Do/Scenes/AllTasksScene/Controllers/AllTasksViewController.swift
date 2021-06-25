@@ -118,6 +118,33 @@ class AllTasksViewController: UIViewController {
         return delete
     }
     
+    private func infoSwipeAction(at indexPath: IndexPath) -> UIContextualAction {
+        let infoSwipe = UIContextualAction(style: .normal, title: nil) { [self] (_, _, completion) in
+            let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
+            switch indexPath.row {
+            case lastRowIndex - 1:
+                addNewItem()
+            default:
+                var task: ToDoItem
+                if isFiltering {
+                    let completed = fileCache.completedTasks[indexPath.row].id
+                    guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
+                    task = fileCache.tasks[index]
+                } else {
+                    task = fileCache.tasks[indexPath.row]
+                }
+                let addVC = DetailTaskViewController()
+                addVC.task = task
+                addVC.delegate = self
+                addVC.modalPresentationStyle = .formSheet
+                navigationController?.present(addVC, animated: true, completion: nil)
+            }
+        }
+        infoSwipe.image = Images.info
+        infoSwipe.backgroundColor = Colors.grayBackgroundSwipe
+        return infoSwipe
+    }
+    
     @objc private func addNewItem() {
         let addVC = DetailTaskViewController()
         addVC.delegate = self
@@ -249,10 +276,7 @@ extension AllTasksViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = deleteSwipeAction(at: indexPath)
-        let info = UIContextualAction(style: .normal, title: nil) { (_, _, competion) in
-        }
-        info.image = Images.info
-        info.backgroundColor = Colors.grayBackgroundSwipe
+        let info = infoSwipeAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete, info])
     }
 }
