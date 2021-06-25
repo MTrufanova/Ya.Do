@@ -79,10 +79,20 @@ class AllTasksViewController: UIViewController {
     
     private func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
-            var item = self.fileCache.tasks[indexPath.row]
-            item.isCompleted = !item.isCompleted
+            var task: ToDoItem
+            if isFiltering {
+                fileCache.returnCompleted()
+                task = fileCache.completedTasks[indexPath.row]
+                // self.fileCache.updateFilterItem(index: indexPath.row, item: task)
+            } else {
+                task = fileCache.tasks[indexPath.row]
+                
+            }
+            task.isCompleted = !task.isCompleted
+            self.fileCache.updateItem(index: indexPath.row, item: task)
+            self.fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
-            //completion(true)
+            completion(true)
         }
         action.backgroundColor = .systemGreen
         action.image = Images.fillCircle
@@ -240,7 +250,6 @@ extension AllTasksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = deleteSwipeAction(at: indexPath)
         let info = UIContextualAction(style: .normal, title: nil) { (_, _, competion) in
-           
         }
         info.image = Images.info
         info.backgroundColor = Colors.grayBackgroundSwipe
