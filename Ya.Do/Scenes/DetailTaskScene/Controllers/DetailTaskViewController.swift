@@ -29,8 +29,6 @@ class DetailTaskViewController: UIViewController {
         //
         self.contentView.calendarView.isHidden = true
         self.contentView.calendarSeparatorView.isHidden = true
-       // self.contentView.dateButton.isHidden = true
-       // self.contentView.dateButton.setTitle("", for: .normal)
     }
 
     private func updateUI() {
@@ -38,7 +36,10 @@ class DetailTaskViewController: UIViewController {
             contentView.taskTextView.text = Title.textViewPlaceholder
             return
         }
+        contentView.taskTextView.textColor = Colors.blackTitle
         contentView.taskTextView.text = task.text
+        contentView.deleteButton.setTitleColor(Colors.red, for: .normal)
+        contentView.saveButton.setTitleColor(Colors.blue, for: .normal)
         guard let deadline  = task.deadline else { return }
         let date = Date.returnString(from: deadline)
         contentView.dateButton.isHidden = false

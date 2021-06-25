@@ -78,14 +78,34 @@ class AllTasksViewController: UIViewController {
     }
     
     private func doneAction(at indexPath: IndexPath) -> UIContextualAction {
-        let action = UIContextualAction(style: .destructive, title: "Done") { (_, _, completion) in
+        let action = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
             var item = self.fileCache.tasks[indexPath.row]
-            item.isCompleted = true
-            completion(true)
+            item.isCompleted = !item.isCompleted
+            tableView.reloadData()
+            //completion(true)
         }
         action.backgroundColor = .systemGreen
         action.image = Images.fillCircle
         return action
+    }
+    
+    private func deleteSwipeAction(at indexPath: IndexPath) -> UIContextualAction {
+        let delete = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
+            var task: ToDoItem
+            if isFiltering {
+                task = fileCache.completedTasks[indexPath.row]
+            } else {
+                task = fileCache.tasks[indexPath.row]
+            }
+            let id = task.id
+            fileCache.removeItem(at: id)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            fileCache.saveAllItems(to: Files.defaultFile)
+            self.counterLabel.text = "\(self.countDone())"
+        }
+        delete.image = Images.trash
+        delete.backgroundColor = Colors.red
+        return delete
     }
     
     @objc private func addNewItem() {
@@ -218,22 +238,13 @@ extension AllTasksViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
-            var task: ToDoItem
-            if isFiltering {
-                task = fileCache.completedTasks[indexPath.row]
-            } else {
-                task = fileCache.tasks[indexPath.row]
-            }
-            let id = task.id
-            fileCache.removeItem(at: id)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-            fileCache.saveAllItems(to: Files.defaultFile)
-            self.counterLabel.text = "\(self.countDone())"
+        let delete = deleteSwipeAction(at: indexPath)
+        let info = UIContextualAction(style: .normal, title: nil) { (_, _, competion) in
+           
         }
-        delete.image = Images.trash
-        delete.backgroundColor = Colors.red
-        return UISwipeActionsConfiguration(actions: [delete])
+        info.image = Images.info
+        info.backgroundColor = Colors.grayBackgroundSwipe
+        return UISwipeActionsConfiguration(actions: [delete, info])
     }
 }
 
@@ -243,7 +254,6 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
             fileCache.removeItem(at: item.id)
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
-            
         }
     }
     

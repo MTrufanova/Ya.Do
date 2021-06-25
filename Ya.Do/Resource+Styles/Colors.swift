@@ -17,4 +17,5 @@ enum Colors {
     static let viewsBlock = UIColor(named: "mainViews")
     static let grayLines = UIColor(named: "separatorColor")
     static let grayArrow = UIColor(named: "arrow")
+    static let grayBackgroundSwipe = UIColor(named: "grayBackForSwipe")
 }

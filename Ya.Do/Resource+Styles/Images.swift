@@ -18,4 +18,5 @@ enum Images {
     static let markImage = UIImage(systemName: "exclamationmark.2", withConfiguration: boldConfig)?.withTintColor(Colors.red ?? .clear, renderingMode: .alwaysOriginal)
     static let calendar = UIImage(systemName: "calendar")
     static let trash = UIImage(systemName: "trash.fill")
+    static let info = UIImage(systemName: "info.circle.fill")
 }
