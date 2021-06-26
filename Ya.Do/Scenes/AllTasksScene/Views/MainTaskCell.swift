@@ -16,9 +16,30 @@ class MainTaskCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: "", textAlignment: .left, color: Colors.blackTitle ?? UIColor())
     
-    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.system15, textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    lazy var screamerImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = Images.markImage
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: Fonts.regular17,
+                                                           textLabel: "",
+                                                           textAlignment: .left,
+                                                           color: Colors.blackTitle ?? UIColor())
+    
+    lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.system15,
+                                                          textLabel: "",
+                                                          textAlignment: .left,
+                                                          color: Colors.grayTitle ?? UIColor())
+    
+    lazy var deadlineStack: UIStackView = createTitleStack(label: deadlineLabel,
+                                                           image: Images.calendar,
+                                                           spacing: 3.5)
+    lazy var taskTitleStack: UIStackView = createTitleStack(label: taskTitleLabel,
+                                                            image: Images.markImage,
+                                                            spacing: 5)
     lazy var titleDateStackView = UIStackView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -27,6 +48,7 @@ class MainTaskCell: UITableViewCell {
         backgroundColor = Colors.viewsBlock
         accessoryType = .disclosureIndicator
         separatorInset = UIEdgeInsets(top: 0, left: 52, bottom: 0, right: 0)
+        deadlineStack.isHidden = true
         checkButton.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         setupLayout()
     }
@@ -39,18 +61,18 @@ class MainTaskCell: UITableViewCell {
         setupTitleDateStack()
     }
    private func setupTitleDateStack() {
-        titleDateStackView = UIStackView(arrangedSubviews: [taskTitleLabel, deadlineLabel])
+        titleDateStackView = UIStackView(arrangedSubviews: [taskTitleStack, deadlineStack])
         titleDateStackView.axis = .vertical
         titleDateStackView.spacing = 5
+        titleDateStackView.alignment = .leading
         titleDateStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleDateStackView)
         
         NSLayoutConstraint.activate([
             titleDateStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             titleDateStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 52),
-            titleDateStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            titleDateStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -38)
         ])
-        
     }
     
     private func setupCheckButtonLayout() {
@@ -63,15 +85,18 @@ class MainTaskCell: UITableViewCell {
     
     func setupCell(_ item: ToDoItem) {
         taskTitleLabel.text =  item.text
+        if item.priority != .high {
+            taskTitleStack.arrangedSubviews[0].isHidden = true
+        }
         if let deadline = item.deadline {
             deadlineLabel.text = Date.returnString(from: deadline)
+            deadlineStack.isHidden = false
         }
-        switch item.isCompleted {
-        case true:
+        if item.isCompleted {
             checkButton.setImage(Images.fillCircle, for: .normal)
             checkButton.tintColor =  Colors.green
             taskTitleLabel.textColor = Colors.grayTitle
-        case false:
+        } else {
             checkButton.setImage(Images.circle, for: .normal)
             taskTitleLabel.textColor = Colors.blackTitle
             guard item.priority == .high else {
@@ -81,6 +106,16 @@ class MainTaskCell: UITableViewCell {
             checkButton.tintColor = Colors.red
         }
     }
+    func createTitleStack(label:UILabel, image: UIImage?, spacing: CGFloat) -> UIStackView {
+        let imageView = UIImageView()
+        imageView.image = image ?? UIImage()
+        let stackView = UIStackView(arrangedSubviews: [imageView, label])
+        stackView.axis = .horizontal
+        stackView.spacing = spacing
+        stackView.frame.size = CGSize(width: imageView.frame.width + label.frame.width, height: imageView.frame.height)
+        return stackView
+    }
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

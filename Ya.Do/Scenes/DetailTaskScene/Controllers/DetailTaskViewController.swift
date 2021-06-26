@@ -27,13 +27,14 @@ class DetailTaskViewController: UIViewController {
         contentView.taskTextView.delegate = self
         cancelButtonAction()
         actions()
+        hideKeyboardForTap()
         //
         self.contentView.calendarView.isHidden = true
         self.contentView.calendarSeparatorView.isHidden = true
     }
     
     private func notificationsForKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
@@ -158,10 +159,6 @@ class DetailTaskViewController: UIViewController {
 }
 // MARK: - UITextViewDelegate
 extension DetailTaskViewController: UITextViewDelegate {
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        contentView.taskTextView.resignFirstResponder()
-    }
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentView.taskTextView.text = ""
         contentView.taskTextView.textColor = Colors.blackTitle
@@ -175,4 +172,15 @@ extension DetailTaskViewController: UITextViewDelegate {
         
     }
     
+}
+// MARK: - Dismiss Keyboard
+extension DetailTaskViewController {
+    func hideKeyboardForTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardView))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboardView() {
+        view.endEditing(true)
+    }
 }

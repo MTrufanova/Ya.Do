@@ -270,11 +270,15 @@ extension AllTasksViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
+        guard indexPath.row != lastRowIndex-1 else { return nil }
         let done = doneAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [done])
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
+        guard indexPath.row != lastRowIndex-1 else { return nil }
         let delete = deleteSwipeAction(at: indexPath)
         let info = infoSwipeAction(at: indexPath)
         return UISwipeActionsConfiguration(actions: [delete, info])
@@ -293,7 +297,6 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
     func addItem(item: ToDoItem) {
         self.dismiss(animated: true) { [self] in
             if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                
                 let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
                 switch selectedIndexPath.row {
                 case lastRowIndex - 1:

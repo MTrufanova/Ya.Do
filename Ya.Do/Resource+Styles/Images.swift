@@ -16,7 +16,7 @@ enum Images {
     static let fillCircle = UIImage(systemName: "checkmark.circle.fill", withConfiguration: largeConfig)
     static let arrowImage = UIImage(systemName: "arrow.down", withConfiguration: boldConfig)?.withTintColor(Colors.grayArrow ?? .clear, renderingMode: .alwaysOriginal)
     static let markImage = UIImage(systemName: "exclamationmark.2", withConfiguration: boldConfig)?.withTintColor(Colors.red ?? .clear, renderingMode: .alwaysOriginal)
-    static let calendar = UIImage(systemName: "calendar")
+    static let calendar = UIImage(systemName: "calendar")?.withTintColor(Colors.grayTitle ?? .clear, renderingMode: .alwaysOriginal)
     static let trash = UIImage(systemName: "trash.fill")
     static let info = UIImage(systemName: "info.circle.fill")
 }
