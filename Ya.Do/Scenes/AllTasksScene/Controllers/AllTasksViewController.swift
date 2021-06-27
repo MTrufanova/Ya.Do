@@ -20,7 +20,7 @@ class AllTasksViewController: UIViewController {
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
     }
-    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "\(self.countDone())", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
 
     lazy var hiddenButton: UIButton = {
         let button = UIButton()
@@ -70,6 +70,11 @@ class AllTasksViewController: UIViewController {
         setupLayout()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        counterLabel.text = "\(self.countDone())"
+    }
+    
     @objc private func showDone() {
         if hiddenButton.titleLabel?.text == Title.show {
             hiddenButton.setTitle(Title.hide, for: .normal)
