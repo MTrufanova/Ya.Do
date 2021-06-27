@@ -6,3 +6,16 @@
   
 */
 "version" = "Версия";
+"DetailTaskViewController.title" = "Дело";
+"DetailTaskViewController.cancelBtn" = "Отменить";
+"DetailTaskViewController.saveBtn" = "Сохранить";
+"DetailTaskViewController.textView.placeholder" = "Что надо сделать?";
+"DetailTaskViewController.priorityLabel" = "Важность";
+"DetailTaskViewController.segmentContoller.noLabel" = "нет";
+"DetailTaskViewController.doneByLabel" = "Сделать до";
+"DetailTaskViewController.deleteBtn" = "Удалить";
+"AllTasksViewController.doneLabel" = "Выполнено —";
+"AllTasksViewController.navbar.title" = "Мои дела";
+"AllTasksViewController.showBtn" = "Показать";
+"AllTasksViewController.hideBtn" = "Скрыть";
+"AllTasksViewController.Cell.createNewItem" = "Новое";

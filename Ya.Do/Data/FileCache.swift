@@ -8,59 +8,62 @@
 import Foundation
 
 protocol FileCacheProtocol {
-    func addTask(_ item: ToDoItem)
-    func removeTask(at id: String)
-    func saveAllTasks(at file: String)
-    func getAllTasks(from file: String)
+    func addItem(_ item: ToDoItem)
+    func removeItem(at id: String)
+    func saveAllItems(to file: String)
+    func getAllItems(from file: String)
 }
 
-class FileCache: FileCacheProtocol {
-   private(set) var tasks = [ToDoItem]()
-
+final class FileCache: FileCacheProtocol {
+    private(set) var tasks = [ToDoItem]()
+    private(set) var completedTasks = [ToDoItem]()
+    // MARK: - FILTER TASKS
+    func returnCompleted() {
+        completedTasks = tasks.filter { $0.isCompleted == false}
+    }
     // MARK: - METHOD ADD TASK
-    func addTask(_ item: ToDoItem) {
+    func addItem(_ item: ToDoItem) {
         tasks.append(item)
     }
+    func updateItem(index: Int, item: ToDoItem) {
+        tasks[index] = item
+    }
+    func updateFilterItem(index: Int, item: ToDoItem) {
+        completedTasks[index] = item
+    }
     // MARK: - METHOD REMOVE TASK
-    func removeTask(at id: String) {
+    func removeItem(at id: String) {
         guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
         tasks.remove(at: index)
     }
     // MARK: - METHOD SAVE ALL TASKS
-    func saveAllTasks(at file: String) {
+    func saveAllItems(to file: String) {
         let tasksDict = tasks.map { $0.json }
         // get file's url
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-         let fileUrl = path.appendingPathComponent(file)
-        print(path)
+        let fileUrl = path.appendingPathComponent(file)
         // save array in data
-
         do {
             let data = try JSONSerialization.data(withJSONObject: tasksDict, options: [])
             try data.write(to: fileUrl, options: [])
         } catch {
             print(error.localizedDescription)
         }
-
     }
     // MARK: - METHOD GET ALL TASKS
-    func getAllTasks(from file: String) {
+    func getAllItems(from file: String) {
         // get file's url
         guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-         let fileUrl = path.appendingPathComponent(file)
-       // data from json's file in array
+        let fileUrl = path.appendingPathComponent(file)
+        // data from json's file in array
         do {
-            let data = try Data(contentsOf: fileUrl, options: [])
-            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+            let data = try Data(contentsOf: fileUrl)
+            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] else { print("no jsondict")
                 return
             }
-                if let task = ToDoItem.parse(json: jsonDict) {
-                    tasks.append(task)
-                }
-
+            tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
         } catch {
             print(error.localizedDescription)
-
         }
     }
 }
