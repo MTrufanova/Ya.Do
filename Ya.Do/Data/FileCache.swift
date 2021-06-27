@@ -38,32 +38,32 @@ final class FileCache: FileCacheProtocol {
     }
     // MARK: - METHOD SAVE ALL TASKS
     func saveAllItems(to file: String) {
-        let tasksDict = tasks.map { $0.json }
-        // get file's url
-        guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        let fileUrl = path.appendingPathComponent(file)
-        // save array in data
-        do {
-            let data = try JSONSerialization.data(withJSONObject: tasksDict, options: [])
-            try data.write(to: fileUrl, options: [])
-        } catch {
-            print(error.localizedDescription)
+        DispatchQueue.global(qos: .background).async { [self] in
+            let tasksDict = tasks.map { $0.json }
+            guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            let fileUrl = path.appendingPathComponent(file)
+            do {
+                let data = try JSONSerialization.data(withJSONObject: tasksDict, options: [])
+                try data.write(to: fileUrl, options: [])
+            } catch {
+                print(error.localizedDescription)
+            }
         }
     }
     // MARK: - METHOD GET ALL TASKS
     func getAllItems(from file: String) {
-        // get file's url
-        guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
-        let fileUrl = path.appendingPathComponent(file)
-        // data from json's file in array
-        do {
-            let data = try Data(contentsOf: fileUrl)
-            guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] else { print("no jsondict")
-                return
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            let fileUrl = path.appendingPathComponent(file)
+            do {
+                let data = try Data(contentsOf: fileUrl)
+                guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] else { return }
+              //  DispatchQueue.main.async {
+                    self.tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
+               // }
+            } catch {
+                    print(error.localizedDescription)
             }
-            tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
-        } catch {
-            print(error.localizedDescription)
         }
     }
 }

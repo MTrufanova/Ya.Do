@@ -7,8 +7,15 @@
 
 import UIKit
 
+protocol AllTasksDisplayLogic: class {
+    func showData(data: [ToDoItem])
+    func showError()
+}
+
 class AllTasksViewController: UIViewController {
+    var networkService: NetworkServiceProtocol?
     private let fileCache = FileCache()
+    var tasks = [ToDoItem]()
 
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
@@ -58,6 +65,7 @@ class AllTasksViewController: UIViewController {
         navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
+        networkService?.fetchData()
         fileCache.getAllItems(from: Files.defaultFile)
         setupLayout()
     }
@@ -83,7 +91,6 @@ class AllTasksViewController: UIViewController {
             if isFiltering {
                 fileCache.returnCompleted()
                 task = fileCache.completedTasks[indexPath.row]
-                // self.fileCache.updateFilterItem(index: indexPath.row, item: task)
             } else {
                 task = fileCache.tasks[indexPath.row]
 
@@ -319,5 +326,19 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
         }
+    }
+}
+
+extension AllTasksViewController: AllTasksDisplayLogic {
+    func showData(data: [ToDoItem]) {
+        if !data.isEmpty {
+            tasks = data
+        } else {
+            tasks = fileCache.tasks
+        }
+        tableView.reloadData()
+    }
+    
+    func showError() {
     }
 }
