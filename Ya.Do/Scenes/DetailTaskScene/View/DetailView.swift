@@ -10,11 +10,11 @@ import UIKit
 class DetailView: UIView {
     // MARK: - For NavBar
     lazy var titleLabel: UILabel = UILabel.createLabel(font: Fonts.semibold17, textLabel: Title.navTitleDetailVC, textAlignment: .center, color: Colors.blackTitle ?? UIColor())
-    
+
     lazy var cancelButton: UIButton = createNavButton(title: Title.cancelButton, font: Fonts.regular17, color: Colors.blue ?? UIColor())
-    
+
     lazy var saveButton: UIButton = createNavButton(title: Title.saveButton, font: Fonts.semibold17, color: Colors.grayTitle ?? UIColor())
-    
+
     lazy var scrollView = UIScrollView()
     // MARK: - UI textView
     lazy var taskTextView: UITextView = {
@@ -30,9 +30,9 @@ class DetailView: UIView {
     }()
     // MARK: - UI FOR PRIORITY VIEW
     lazy var priorityView: UIView = createViewForStack()
-    
+
     lazy var priorityLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.priority, textAlignment: .left, color: Colors.blackTitle ?? UIColor())
-    
+
     lazy var prioritySegment: UISegmentedControl = {
         let segment = UISegmentedControl(items: ["one", "two", "three"])
         let font: UIFont = Fonts.system15
@@ -44,14 +44,14 @@ class DetailView: UIView {
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment
     }()
-    
+
     lazy var separatorView: UIView = createSeparator()
-    
+
     // MARK: - DEADLINE VIEW
     lazy var deadlineView: UIView = createViewForStack()
-    
+
     lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.regular17, textLabel: Title.doneBy, textAlignment: .left, color: Colors.blackTitle ?? UIColor())
-    
+
     lazy var dateButton: UIButton = {
         let button = UIButton()
         button.setTitleColor(Colors.blue, for: .normal)
@@ -76,7 +76,7 @@ class DetailView: UIView {
         picker.date = Date.tomorrow
         return picker
     }()
-    
+
     lazy var stackView = UIStackView()
     // MARK: - UIButton
     lazy var deleteButton: UIButton = {
@@ -89,10 +89,10 @@ class DetailView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     var portretConstraints: [NSLayoutConstraint] = []
     var landscapeConstraints: [NSLayoutConstraint] = []
-    
+
     init() {
         super.init(frame: CGRect.zero)
         setupScrollView()
@@ -103,12 +103,12 @@ class DetailView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupScrollView() {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     // MARK: - Methods for layout
     private func setupLayout() {
         navBarLayout()
@@ -128,12 +128,12 @@ class DetailView: UIView {
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: cancelButton.centerYAnchor),
-            
+
             cancelButton.topAnchor.constraint(equalTo: self.topAnchor),
             cancelButton.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             cancelButton.widthAnchor.constraint(equalToConstant: 108),
             cancelButton.heightAnchor.constraint(equalToConstant: 56),
-            
+
             saveButton.topAnchor.constraint(equalTo: self.topAnchor),
             saveButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             saveButton.widthAnchor.constraint(equalToConstant: 118),
@@ -157,10 +157,10 @@ class DetailView: UIView {
             taskTextView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             taskTextView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             taskTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            taskTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
+            taskTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16)
         ])
         let portret = taskTextView.heightAnchor.constraint(equalToConstant: 120)
-        let landscape = taskTextView.heightAnchor.constraint(equalTo: self.heightAnchor)
+        let landscape = taskTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
         portretConstraints.append(portret)
         landscapeConstraints.append(landscape)
     }
@@ -204,7 +204,7 @@ class DetailView: UIView {
         deadlineView.addSubview(deadlineLabel)
         deadlineView.addSubview(dateButton)
         deadlineView.addSubview(calendarSwitch)
-        
+
         NSLayoutConstraint.activate([
             //
             deadlineView.heightAnchor.constraint(equalToConstant: 58),
@@ -254,14 +254,14 @@ class DetailView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-    
+
     private func createSeparator() -> UIView {
         let view = UIView()
         view.backgroundColor = Colors.grayLines
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-    
+
     private func createNavButton(title: String, font: UIFont, color: UIColor) -> UIButton {
         let button = UIButton()
         button.setTitle(title, for: .normal)

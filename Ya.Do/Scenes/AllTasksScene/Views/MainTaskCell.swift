@@ -10,30 +10,30 @@ import UIKit
 class MainTaskCell: UITableViewCell {
     static let identifier = "MainTaskCell"
     var buttonTap: () -> Void = { }
-    
+
     let checkButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     lazy var screamerImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.image = Images.markImage
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     lazy var taskTitleLabel: UILabel = UILabel.createLabel(font: Fonts.regular17,
                                                            textLabel: "",
                                                            textAlignment: .left,
                                                            color: Colors.blackTitle ?? UIColor())
-    
+
     lazy var deadlineLabel: UILabel = UILabel.createLabel(font: Fonts.system15,
                                                           textLabel: "",
                                                           textAlignment: .left,
                                                           color: Colors.grayTitle ?? UIColor())
-    
+
     lazy var deadlineStack: UIStackView = createTitleStack(label: deadlineLabel,
                                                            image: Images.calendar,
                                                            spacing: 3.5)
@@ -41,7 +41,7 @@ class MainTaskCell: UITableViewCell {
                                                             image: Images.markImage,
                                                             spacing: 5)
     lazy var titleDateStackView = UIStackView()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
@@ -52,7 +52,7 @@ class MainTaskCell: UITableViewCell {
         checkButton.addTarget(self, action: #selector(didTapCheckButton), for: .touchUpInside)
         setupLayout()
     }
-    
+
     @objc private func didTapCheckButton() {
         buttonTap()
     }
@@ -67,14 +67,14 @@ class MainTaskCell: UITableViewCell {
         titleDateStackView.alignment = .leading
         titleDateStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(titleDateStackView)
-        
+
         NSLayoutConstraint.activate([
             titleDateStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             titleDateStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 52),
             titleDateStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -38)
         ])
     }
-    
+
     private func setupCheckButtonLayout() {
         contentView.addSubview(checkButton)
         NSLayoutConstraint.activate([
@@ -82,7 +82,7 @@ class MainTaskCell: UITableViewCell {
             checkButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
-    
+
     func setupCell(_ item: ToDoItem) {
         taskTitleLabel.text =  item.text
         if item.priority != .high {
@@ -99,14 +99,10 @@ class MainTaskCell: UITableViewCell {
         } else {
             checkButton.setImage(Images.circle, for: .normal)
             taskTitleLabel.textColor = Colors.blackTitle
-            guard item.priority == .high else {
-                checkButton.tintColor = Colors.grayLines
-                return
-            }
-            checkButton.tintColor = Colors.red
+            item.priority == .high ? (checkButton.tintColor = Colors.red) : (checkButton.tintColor = Colors.grayLines)
         }
     }
-    func createTitleStack(label:UILabel, image: UIImage?, spacing: CGFloat) -> UIStackView {
+    func createTitleStack(label: UILabel, image: UIImage?, spacing: CGFloat) -> UIStackView {
         let imageView = UIImageView()
         imageView.image = image ?? UIImage()
         let stackView = UIStackView(arrangedSubviews: [imageView, label])

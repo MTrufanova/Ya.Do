@@ -32,12 +32,12 @@ class DetailTaskViewController: UIViewController {
         self.contentView.calendarView.isHidden = true
         self.contentView.calendarSeparatorView.isHidden = true
     }
-    
+
     private func notificationsForKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
+
     @objc func updateTextView(notification: Notification) {
         let userInfo = notification.userInfo
         guard let keyboardRect = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
@@ -54,7 +54,7 @@ class DetailTaskViewController: UIViewController {
         contentView.taskTextView.scrollIndicatorInsets = contentView.taskTextView.contentInset
         contentView.taskTextView.scrollRangeToVisible(contentView.taskTextView.selectedRange)
     }
-    
+
     private func updateUI() {
         guard let task = task else {
             contentView.taskTextView.text = Title.textViewPlaceholder
@@ -78,7 +78,7 @@ class DetailTaskViewController: UIViewController {
             contentView.prioritySegment.selectedSegmentIndex = 2
         }
     }
-    
+
     private func actions() {
         contentView.calendarSwitch.addTarget(self, action: #selector(switchAction(calendarSwitch:)), for: .valueChanged)
         contentView.deleteButton.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
@@ -93,7 +93,7 @@ class DetailTaskViewController: UIViewController {
         let priority: ToDoItem.Priority
         let date = contentView.dateButton.titleLabel?.text
         deadline = Date.returnDate(from: date)
-        
+
         switch contentView.prioritySegment.selectedSegmentIndex {
         case 0:
             priority = .low
@@ -111,7 +111,7 @@ class DetailTaskViewController: UIViewController {
     @objc private func dismissModal() {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     @objc private func dateButtonAction() {
         if contentView.calendarView.isHidden == true {
             UIView.animate(withDuration: 0.5) {
@@ -125,7 +125,7 @@ class DetailTaskViewController: UIViewController {
             }
         }
     }
-    
+
     @objc private func deleteButtonAction() {
         guard let task = task else { return  }
         delegate?.removeItem(item: task)
@@ -140,7 +140,7 @@ class DetailTaskViewController: UIViewController {
             self.contentView.dateButton.setTitle("", for: .normal)
         }
     }
-    
+
     @objc private func datePickerAction() {
         let dateTitle = Date.returnString(from: contentView.datePicker.date)
         contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
@@ -163,15 +163,11 @@ extension DetailTaskViewController: UITextViewDelegate {
         contentView.taskTextView.text = ""
         contentView.taskTextView.textColor = Colors.blackTitle
     }
-    
+
     func textViewDidChange(_ textView: UITextView) {
         contentView.saveButton.isEnabled = true
         contentView.saveButton.setTitleColor(Colors.blue, for: .normal)
     }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        
-    }
-    
 }
 // MARK: - Dismiss Keyboard
 extension DetailTaskViewController {
