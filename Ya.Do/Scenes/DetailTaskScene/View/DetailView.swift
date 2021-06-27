@@ -97,13 +97,21 @@ class DetailView: UIView {
         super.init(frame: CGRect.zero)
         setupScrollView()
         setupLayout()
-        NSLayoutConstraint.activate(portretConstraints)
+        updateTextViewHeight(for: traitCollection.verticalSizeClass)
         backgroundColor = Colors.background
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func updateTextViewHeight(for verticalSizeClass: UIUserInterfaceSizeClass) {
+        if verticalSizeClass == .compact {
+            NSLayoutConstraint.activate(landscapeConstraints)
+        } else {
+            NSLayoutConstraint.activate(portretConstraints)
+        }
+    }
+    
     private func setupScrollView() {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -150,6 +158,7 @@ class DetailView: UIView {
             scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
     // MARK: - textViewLayout
     private func textViewLayout() {
         scrollView.addSubview(taskTextView)
