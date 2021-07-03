@@ -21,7 +21,7 @@ extension ToDoItem {
               let id = data[Keys.id] as? String,
               let text = data[Keys.text] as? String,
               let isComleted = data[Keys.isComleted] as? Bool else { return nil }
-        let priority = (data[Keys.priority] as? String).flatMap(Priority.init(rawValue:)) ?? .normal
+        let priority = (data[Keys.priority] as? String).flatMap(Priority.init(rawValue:)) ?? .basic
         var deadline: Date?
         if let timestamp = data[Keys.deadline] as? TimeInterval {
             deadline = Date(timeIntervalSince1970: timestamp)
@@ -35,7 +35,7 @@ extension ToDoItem {
         params[Keys.text] = text
         params[Keys.deadline] = deadline?.timeIntervalSince1970
         params[Keys.isComleted] = isCompleted
-        if priority != .normal {
+        if priority != .basic {
             params[Keys.priority] = priority.rawValue
         }
         return params

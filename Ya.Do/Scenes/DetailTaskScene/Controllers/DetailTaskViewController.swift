@@ -73,9 +73,9 @@ class DetailTaskViewController: UIViewController {
         switch task.priority {
         case .low:
             contentView.prioritySegment.selectedSegmentIndex = 0
-        case .normal:
+        case .basic:
             contentView.prioritySegment.selectedSegmentIndex = 1
-        case .high:
+        case .important:
             contentView.prioritySegment.selectedSegmentIndex = 2
         }
     }
@@ -99,9 +99,9 @@ class DetailTaskViewController: UIViewController {
         case 0:
             priority = .low
         case 1:
-            priority = .normal
+            priority = .basic
         default:
-            priority = .high
+            priority = .important
         }
         let item = ToDoItem(text: taskText, priority: priority, deadline: deadline)
         delegate?.addItem(item: item)
