@@ -7,13 +7,20 @@
 
 import UIKit
 
+protocol AllTasksDisplayLogic: class {
+    func showData(data: [ToDoItem])
+    func showError()
+}
+
 class AllTasksViewController: UIViewController {
+    var networkService: NetworkServiceProtocol?
     private let fileCache = FileCache()
+    var tasks = [ToDoItem]()
 
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
     }
-    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "\(self.countDone())", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
 
     lazy var hiddenButton: UIButton = {
         let button = UIButton()
@@ -58,10 +65,16 @@ class AllTasksViewController: UIViewController {
         navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
+        networkService?.fetchData()
         fileCache.getAllItems(from: Files.defaultFile)
         setupLayout()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        counterLabel.text = "\(self.countDone())"
+    }
+    
     @objc private func showDone() {
         if hiddenButton.titleLabel?.text == Title.show {
             hiddenButton.setTitle(Title.hide, for: .normal)
@@ -83,7 +96,6 @@ class AllTasksViewController: UIViewController {
             if isFiltering {
                 fileCache.returnCompleted()
                 task = fileCache.completedTasks[indexPath.row]
-                // self.fileCache.updateFilterItem(index: indexPath.row, item: task)
             } else {
                 task = fileCache.tasks[indexPath.row]
 
@@ -319,5 +331,19 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
         }
+    }
+}
+
+extension AllTasksViewController: AllTasksDisplayLogic {
+    func showData(data: [ToDoItem]) {
+        if !data.isEmpty {
+            tasks = data
+        } else {
+            tasks = fileCache.tasks
+        }
+        tableView.reloadData()
+    }
+    
+    func showError() {
     }
 }

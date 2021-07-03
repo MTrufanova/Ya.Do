@@ -22,6 +22,8 @@
 		468F8C11267E672F001231E8 /* AddItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8C10267E672F001231E8 /* AddItemCell.swift */; };
 		468F8C16267E7DE4001231E8 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8C15267E7DE4001231E8 /* UIView+Ext.swift */; };
 		468F8C1B267FBA63001231E8 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8C1A267FBA63001231E8 /* Files.swift */; };
+		469494082688F10200BCB6A3 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469494072688F10200BCB6A3 /* NetworkService.swift */; };
+		469494102688F47200BCB6A3 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4694940F2688F47200BCB6A3 /* APIClient.swift */; };
 		46967B962668FC35003DBDFF /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46967B952668FC35003DBDFF /* StartViewController.swift */; };
 		469A4B612668D49800854663 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B602668D49800854663 /* AppDelegate.swift */; };
 		469A4B632668D49800854663 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B622668D49800854663 /* SceneDelegate.swift */; };
@@ -72,6 +74,8 @@
 		468F8C10267E672F001231E8 /* AddItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemCell.swift; sourceTree = "<group>"; };
 		468F8C15267E7DE4001231E8 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		468F8C1A267FBA63001231E8 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
+		469494072688F10200BCB6A3 /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		4694940F2688F47200BCB6A3 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		46967B952668FC35003DBDFF /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		469A4B5D2668D49800854663 /* Ya.Do.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ya.Do.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		469A4B602668D49800854663 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -227,6 +231,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		469494062688F10200BCB6A3 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				469494072688F10200BCB6A3 /* NetworkService.swift */,
+				4694940F2688F47200BCB6A3 /* APIClient.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		469A4B542668D49800854663 = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +269,7 @@
 				469A4B622668D49800854663 /* SceneDelegate.swift */,
 				46E95358267C990800DB67AF /* Resource+Styles */,
 				4680B359267C7AD8000CEA75 /* Extensions */,
+				469494062688F10200BCB6A3 /* Service */,
 				46020FF726768470008BE13B /* Scenes */,
 				46020F8E2671FB51008BE13B /* Models */,
 				46020F922671FB7A008BE13B /* Data */,
@@ -546,6 +560,7 @@
 				468F8C16267E7DE4001231E8 /* UIView+Ext.swift in Sources */,
 				46020F942671FBAF008BE13B /* ToDoItemModel.swift in Sources */,
 				468F8C04267DF35A001231E8 /* Colors.swift in Sources */,
+				469494102688F47200BCB6A3 /* APIClient.swift in Sources */,
 				468F8BF7267CD39B001231E8 /* MainTaskCell.swift in Sources */,
 				4680B35C267C7AD8000CEA75 /* UILabel+Ext.swift in Sources */,
 				468F8C11267E672F001231E8 /* AddItemCell.swift in Sources */,
@@ -558,6 +573,7 @@
 				46967B962668FC35003DBDFF /* StartViewController.swift in Sources */,
 				469A4B612668D49800854663 /* AppDelegate.swift in Sources */,
 				46020FA02671FBE0008BE13B /* FileCache.swift in Sources */,
+				469494082688F10200BCB6A3 /* NetworkService.swift in Sources */,
 				46E95365267C9F9900DB67AF /* Fonts.swift in Sources */,
 				469A4B632668D49800854663 /* SceneDelegate.swift in Sources */,
 				4680B35D267C7AD8000CEA75 /* Date+Ext.swift in Sources */,
