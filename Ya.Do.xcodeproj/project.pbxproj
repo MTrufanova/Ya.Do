@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,7 +12,6 @@
 		46020FEE267683EF008BE13B /* DetailTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46020FED267683EF008BE13B /* DetailTaskViewController.swift */; };
 		46020FF326768404008BE13B /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46020FF226768404008BE13B /* DetailView.swift */; };
 		4669530A266A191800EFEFD4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4669530C266A191800EFEFD4 /* Localizable.strings */; };
-		4680B355267C7AC5000CEA75 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4680B354267C7AC5000CEA75 /* Colors.xcassets */; };
 		4680B35C267C7AD8000CEA75 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4680B35A267C7AD8000CEA75 /* UILabel+Ext.swift */; };
 		4680B35D267C7AD8000CEA75 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4680B35B267C7AD8000CEA75 /* Date+Ext.swift */; };
 		468F8BF6267CD39B001231E8 /* AllTasksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468F8BF3267CD39B001231E8 /* AllTasksViewController.swift */; };
@@ -31,6 +30,7 @@
 		469A4B6D2668D49C00854663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 469A4B6B2668D49C00854663 /* LaunchScreen.storyboard */; };
 		469A4B782668D49C00854663 /* Ya_DoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B772668D49C00854663 /* Ya_DoTests.swift */; };
 		469A4B832668D49C00854663 /* Ya_DoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 469A4B822668D49C00854663 /* Ya_DoUITests.swift */; };
+		46BB0B2E2690A7950040AAAA /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46BB0B2D2690A7950040AAAA /* Colors.xcassets */; };
 		46E9535A267C9A6300DB67AF /* Titles enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E95359267C9A6300DB67AF /* Titles enum.swift */; };
 		46E95365267C9F9900DB67AF /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E95364267C9F9900DB67AF /* Fonts.swift */; };
 		BDDE55F7CEF33298955D164C /* Pods_Ya_Do_Ya_DoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554D4C0821B07D803CF8716A /* Pods_Ya_Do_Ya_DoUITests.framework */; };
@@ -64,7 +64,6 @@
 		46020FF226768404008BE13B /* DetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		4669530B266A191800EFEFD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		46695310266A1D9000EFEFD4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
-		4680B354267C7AC5000CEA75 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		4680B35A267C7AD8000CEA75 /* UILabel+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel+Ext.swift"; sourceTree = "<group>"; };
 		4680B35B267C7AD8000CEA75 /* Date+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		468F8BF3267CD39B001231E8 /* AllTasksViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllTasksViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		469A4B7E2668D49C00854663 /* Ya.DoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Ya.DoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		469A4B822668D49C00854663 /* Ya_DoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ya_DoUITests.swift; sourceTree = "<group>"; };
 		469A4B842668D49C00854663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		46BB0B2D2690A7950040AAAA /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = ../../Ya/Ya.Do/Colors.xcassets; sourceTree = "<group>"; };
 		46E95359267C9A6300DB67AF /* Titles enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Titles enum.swift"; sourceTree = "<group>"; };
 		46E95364267C9F9900DB67AF /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		554D4C0821B07D803CF8716A /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do_Ya_DoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,7 +275,7 @@
 				46020F922671FB7A008BE13B /* Data */,
 				46020F5B266F72FD008BE13B /* Localization */,
 				469A4B692668D49C00854663 /* Assets.xcassets */,
-				4680B354267C7AC5000CEA75 /* Colors.xcassets */,
+				46BB0B2D2690A7950040AAAA /* Colors.xcassets */,
 				469A4B6B2668D49C00854663 /* LaunchScreen.storyboard */,
 				469A4B6E2668D49C00854663 /* Info.plist */,
 			);
@@ -347,6 +347,7 @@
 				469A4B592668D49800854663 /* Sources */,
 				469A4B5A2668D49800854663 /* Frameworks */,
 				469A4B5B2668D49800854663 /* Resources */,
+				A7460B5363A9E074651872F3 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -384,6 +385,7 @@
 				469A4B7A2668D49C00854663 /* Sources */,
 				469A4B7B2668D49C00854663 /* Frameworks */,
 				469A4B7C2668D49C00854663 /* Resources */,
+				8546C7B11DDC935D658F6B82 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -444,7 +446,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				469A4B6D2668D49C00854663 /* LaunchScreen.storyboard in Resources */,
-				4680B355267C7AC5000CEA75 /* Colors.xcassets in Resources */,
+				46BB0B2E2690A7950040AAAA /* Colors.xcassets in Resources */,
 				4669530A266A191800EFEFD4 /* Localizable.strings in Resources */,
 				469A4B6A2668D49C00854663 /* Assets.xcassets in Resources */,
 			);
@@ -526,6 +528,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8546C7B11DDC935D658F6B82 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ya.Do-Ya.DoUITests/Pods-Ya.Do-Ya.DoUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A7460B5363A9E074651872F3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do/Pods-Ya.Do-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Ya.Do/Pods-Ya.Do-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Ya.Do/Pods-Ya.Do-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C0715C7EAFE0FF0685C65B1E /* [CP] Check Pods Manifest.lock */ = {

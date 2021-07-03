@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import DevToDoPod
 protocol DetailTaskViewControllerDelegate: class {
     func addItem(item: ToDoItem)
     func removeItem(item: ToDoItem)

@@ -1,0 +1,6 @@
+framework module DevToDoPod {
+  umbrella header "DevToDoPod-umbrella.h"
+
+  export *
+  module * { export * }
+}

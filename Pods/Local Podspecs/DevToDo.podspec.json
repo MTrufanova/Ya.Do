@@ -1,0 +1,19 @@
+{
+  "name": "DevToDo",
+  "version": "0.0.1",
+  "summary": "DevToDo for ToDoManager",
+  "description": "DevToDo for ToDoManager: colors and model",
+  "homepage": "https://github.com/MTrufanova/Ya.Do",
+  "license": "MIT",
+  "authors": {
+    "Marina Trufanova": "trufanovamyu@gmail.com"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source": {
+    "path": "~/Documents/Lib/DevToDoPod"
+  },
+  "source_files": "DevToDoPod/**/*.{swift}",
+  "resources": "DevToDoPod/Image.xcassets"
+}
