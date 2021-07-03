@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DevToDoPod
 
 class MainTaskCell: UITableViewCell {
     static let identifier = "MainTaskCell"

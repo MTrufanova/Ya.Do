@@ -1,0 +1,27 @@
+{
+  "name": "DevToDoPod",
+  "version": "0.0.1",
+  "summary": "DevToDoPod for ToDoManager",
+  "description": "DevToDoPod for ToDoManager: colors and model",
+  "homepage": "https://github.com/MTrufanova",
+  "license": {
+    "type": "MIT",
+    "file": "MIT.txt"
+  },
+  "authors": {
+    "Marina Trufanova": "trufanovamyu@gmail.com"
+  },
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source": {
+    "git": "~/Documents/Lib/DevToDoPod",
+    "tag": "0.0.1"
+  },
+  "source_files": "DevToDoPod/**/*.{swift}",
+  "resources": "DevToDoPod/Resources/*.{xcassets}",
+  "preserve_paths": "DevToDoPod/Resources",
+  "frameworks": "UIKit",
+  "swift_versions": "5.0",
+  "swift_version": "5.0"
+}

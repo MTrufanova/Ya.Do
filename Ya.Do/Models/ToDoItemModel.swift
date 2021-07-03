@@ -6,27 +6,7 @@
 //
 
 import Foundation
-
-struct ToDoItem {
-    let id: String
-    let text: String
-    let priority: Priority
-    let deadline: Date?
-    var isCompleted: Bool
-
-    init(id: String = UUID().uuidString, text: String, priority: Priority, deadline: Date?, isCompleted: Bool = false) {
-        self.id = id
-        self.text = text
-        self.priority = priority
-        self.deadline = deadline
-        self.isCompleted = isCompleted
-    }
-    enum Priority: String {
-        case high
-        case low
-        case normal
-    }
-}
+import DevToDoPod
 
 extension ToDoItem {
     private struct Keys {

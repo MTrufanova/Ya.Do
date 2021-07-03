@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DevToDoPod
 
 protocol FileCacheProtocol {
     func addItem(_ item: ToDoItem)
