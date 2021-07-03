@@ -13,7 +13,7 @@ protocol DetailTaskViewControllerDelegate: class {
 }
 
 class DetailTaskViewController: UIViewController {
-   weak var delegate: DetailTaskViewControllerDelegate?
+    weak var delegate: DetailTaskViewControllerDelegate?
     let fileCache = FileCache()
     var task: ToDoItem?
     lazy var contentView = DetailView()
@@ -22,13 +22,37 @@ class DetailTaskViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        notificationsForKeyboard()
         updateUI()
         contentView.taskTextView.delegate = self
         cancelButtonAction()
         actions()
+        hideKeyboardForTap()
         //
         self.contentView.calendarView.isHidden = true
         self.contentView.calendarSeparatorView.isHidden = true
+    }
+
+    private func notificationsForKeyboard() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateTextView(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func updateTextView(notification: Notification) {
+        let userInfo = notification.userInfo
+        guard let keyboardRect = (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        let keyboardFrame = view.convert(keyboardRect, to: view.window)
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            contentView.taskTextView.contentInset = UIEdgeInsets(top: 17, left: 16, bottom: 12, right: 16)
+        } else {
+            guard UIDevice.current.orientation.isLandscape else {
+                contentView.taskTextView.contentInset = UIEdgeInsets(top: 17, left: 16, bottom: 12, right: 16)
+                return
+            }
+            contentView.taskTextView.contentInset = UIEdgeInsets(top: 17, left: 16, bottom: keyboardFrame.width, right: 16)
+        }
+        contentView.taskTextView.scrollIndicatorInsets = contentView.taskTextView.contentInset
+        contentView.taskTextView.scrollRangeToVisible(contentView.taskTextView.selectedRange)
     }
 
     private func updateUI() {
@@ -121,8 +145,19 @@ class DetailTaskViewController: UIViewController {
         let dateTitle = Date.returnString(from: contentView.datePicker.date)
         contentView.dateButton.setTitle("\(dateTitle)", for: .normal)
     }
+    // MARK: - Method for landscape/ portret constraints
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            NSLayoutConstraint.deactivate(contentView.portretConstraints)
+            NSLayoutConstraint.activate(contentView.landscapeConstraints)
+        } else {
+            NSLayoutConstraint.activate(contentView.portretConstraints)
+            NSLayoutConstraint.deactivate(contentView.landscapeConstraints)
+        }
+    }
 }
-
+// MARK: - UITextViewDelegate
 extension DetailTaskViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         contentView.taskTextView.text = ""
@@ -132,6 +167,16 @@ extension DetailTaskViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         contentView.saveButton.isEnabled = true
         contentView.saveButton.setTitleColor(Colors.blue, for: .normal)
-       // contentView.deleteButton.setTitleColor(Colors.red, for: .normal)
+    }
+}
+// MARK: - Dismiss Keyboard
+extension DetailTaskViewController {
+    func hideKeyboardForTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboardView))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboardView() {
+        view.endEditing(true)
     }
 }

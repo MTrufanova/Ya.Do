@@ -90,17 +90,28 @@ class DetailView: UIView {
         return button
     }()
 
+    var portretConstraints: [NSLayoutConstraint] = []
+    var landscapeConstraints: [NSLayoutConstraint] = []
+
     init() {
         super.init(frame: CGRect.zero)
         setupScrollView()
         setupLayout()
-
+        updateTextViewHeight(for: traitCollection.verticalSizeClass)
         backgroundColor = Colors.background
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    private func updateTextViewHeight(for verticalSizeClass: UIUserInterfaceSizeClass) {
+        if verticalSizeClass == .compact {
+            NSLayoutConstraint.activate(landscapeConstraints)
+        } else {
+            NSLayoutConstraint.activate(portretConstraints)
+        }
+    }
+    
     private func setupScrollView() {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -147,6 +158,7 @@ class DetailView: UIView {
             scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
+    
     // MARK: - textViewLayout
     private func textViewLayout() {
         scrollView.addSubview(taskTextView)
@@ -154,9 +166,12 @@ class DetailView: UIView {
             taskTextView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             taskTextView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             taskTextView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-            taskTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16),
-            taskTextView.heightAnchor.constraint(equalToConstant: 120)
+            taskTextView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -16)
         ])
+        let portret = taskTextView.heightAnchor.constraint(equalToConstant: 120)
+        let landscape = taskTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
+        portretConstraints.append(portret)
+        landscapeConstraints.append(landscape)
     }
     // MARK: - setupStackView
     private func createStack() {
