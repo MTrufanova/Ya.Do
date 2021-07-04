@@ -6,10 +6,15 @@
 	<dict>
 		<key>DevToDoPod.xcscheme</key>
 		<dict>
+<<<<<<< Updated upstream
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>0</integer>
+=======
+			<key>orderHint</key>
+			<integer>4</integer>
+>>>>>>> Stashed changes
 		</dict>
 		<key>Pods-Ya.Do-Ya.DoUITests.xcscheme</key>
 		<dict>
