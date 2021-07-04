@@ -12,7 +12,7 @@ struct NetworkingModel: Codable {
     let text: String
     let importance: String
     let done: Bool
-    let deadline: Int
+    let deadline: Int?
     let createdAt: Int
     let updatedAt: Int?
     

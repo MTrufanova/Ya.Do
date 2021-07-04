@@ -34,6 +34,7 @@
 		46AF91DB2690E2B3003A1896 /* TombstoneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF91DA2690E2B3003A1896 /* TombstoneModel.swift */; };
 		46AF91E02690E2C2003A1896 /* NetworkingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF91DF2690E2C2003A1896 /* NetworkingModel.swift */; };
 		46AF91E526919970003A1896 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF91E426919970003A1896 /* Endpoint.swift */; };
+		46AF91ED26922E73003A1896 /* StructInStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF91EC26922E73003A1896 /* StructInStruct.swift */; };
 		46E9535A267C9A6300DB67AF /* Titles enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E95359267C9A6300DB67AF /* Titles enum.swift */; };
 		46E95365267C9F9900DB67AF /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E95364267C9F9900DB67AF /* Fonts.swift */; };
 		BDDE55F7CEF33298955D164C /* Pods_Ya_Do_Ya_DoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 554D4C0821B07D803CF8716A /* Pods_Ya_Do_Ya_DoUITests.framework */; };
@@ -95,6 +96,7 @@
 		46AF91DA2690E2B3003A1896 /* TombstoneModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TombstoneModel.swift; sourceTree = "<group>"; };
 		46AF91DF2690E2C2003A1896 /* NetworkingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingModel.swift; sourceTree = "<group>"; };
 		46AF91E426919970003A1896 /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		46AF91EC26922E73003A1896 /* StructInStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructInStruct.swift; sourceTree = "<group>"; };
 		46E95359267C9A6300DB67AF /* Titles enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Titles enum.swift"; sourceTree = "<group>"; };
 		46E95364267C9F9900DB67AF /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		554D4C0821B07D803CF8716A /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do_Ya_DoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -209,6 +211,7 @@
 				4680B35A267C7AD8000CEA75 /* UILabel+Ext.swift */,
 				4680B35B267C7AD8000CEA75 /* Date+Ext.swift */,
 				468F8C15267E7DE4001231E8 /* UIView+Ext.swift */,
+				46AF91EC26922E73003A1896 /* StructInStruct.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				46AF91E02690E2C2003A1896 /* NetworkingModel.swift in Sources */,
 				468F8C1B267FBA63001231E8 /* Files.swift in Sources */,
 				46967B962668FC35003DBDFF /* StartViewController.swift in Sources */,
+				46AF91ED26922E73003A1896 /* StructInStruct.swift in Sources */,
 				469A4B612668D49800854663 /* AppDelegate.swift in Sources */,
 				46AF91E526919970003A1896 /* Endpoint.swift in Sources */,
 				46020FA02671FBE0008BE13B /* FileCache.swift in Sources */,

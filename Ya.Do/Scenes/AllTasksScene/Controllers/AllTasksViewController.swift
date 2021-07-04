@@ -8,16 +8,21 @@
 import UIKit
 import DevToDoPod
 
-protocol AllTasksDisplayLogic: class {
+/*protocol AllTasksDisplayLogic: class {
     func showData(data: [NetworkingModel])
     func showError()
 }
+protocol AllTasksVCDelegate: class {
+    func pushData(item: NetworkingModel)
+}*/
 
 class AllTasksViewController: UIViewController {
-    var networkService: AllTasksServiceProtocol?
+   // var networkService: AllTasksServiceProtocol?
+    let networking: NetworkServiceProtocol = NetworkService()
     private let fileCache = FileCache()
     var tasks = [ToDoItem]()
-
+    //weak var delegate : AllTasksVCDelegate?
+    
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
     }
@@ -66,14 +71,30 @@ class AllTasksViewController: UIViewController {
         navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
-        networkService?.fetchData()
-        fileCache.getAllItems(from: Files.defaultFile)
+       // networkService?.fetchData()
+        //fileCache.getAllItems(from: Files.defaultFile)
+        presentData()
         setupLayout()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         counterLabel.text = "\(self.countDone())"
+    }
+    
+   private func presentData() {
+        networking.getTasks { (result) in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let item):
+                    self.tasks = intoToDoItem(from: item)
+                    self.tableView.reloadData()
+                case .failure(_):
+               // self.tasks = self.fileCache.tasks
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
     @objc private func showDone() {
@@ -124,6 +145,14 @@ class AllTasksViewController: UIViewController {
             fileCache.removeItem(at: id)
             tableView.deleteRows(at: [indexPath], with: .fade)
             fileCache.saveAllItems(to: Files.defaultFile)
+            networking.deleteItem(at: id) { (result) in
+                switch result {
+                case .success(_):
+                    print("ok")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
             self.counterLabel.text = "\(self.countDone())"
         }
         delete.image = Images.trash
@@ -304,6 +333,14 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
     func removeItem(item: ToDoItem) {
         self.dismiss(animated: true) { [self] in
             fileCache.removeItem(at: item.id)
+            networking.deleteItem(at: item.id) { (result) in
+                switch result {
+                case .success(_):
+                    print("ok")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
         }
@@ -328,6 +365,15 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 }
             } else {
                 fileCache.addItem(item)
+                networking.postItem(item: intoNetworkModel(from: item)) { (result) in
+                    switch result {
+                    case .success(_):
+                        print("add item ")
+                    case .failure(let err):
+                        print(err.localizedDescription)
+                    }
+                }
+                //delegate?.pushData(item: intoNetworkModel(from: item))
             }
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
@@ -335,21 +381,14 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
     }
 }
 
-extension AllTasksViewController: AllTasksDisplayLogic {
+/*extension AllTasksViewController: AllTasksDisplayLogic {
     func showData(data: [NetworkingModel]) {
         if !data.isEmpty {
-            let taskModel = data.map { (model) -> ToDoItem in
-                let date = Double(model.deadline)
-                let cellModel = ToDoItem(id: model.id, text: model.text, priority: ToDoItem.Priority(rawValue: model.importance) ?? .basic, deadline: Date(timeIntervalSince1970: date), isCompleted: model.done, createdAt: model.createdAt, updatedAt: model.updatedAt, isDirty: false)
-                return cellModel
-            }
-            tasks = taskModel
-        } else {
-            tasks = fileCache.tasks
+            tasks = intoToDoItem(from: data)
         }
         tableView.reloadData()
     }
     
     func showError() {
     }
-}
+}*/

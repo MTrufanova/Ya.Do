@@ -32,6 +32,7 @@ class NetworkService: NetworkServiceProtocol {
     func getTasks(onResult: @escaping (Result<[NetworkingModel], Error>) -> Void) {
         
         guard let url =  Endpoint.getTasks.url else { return }
+        print(url)
         var urlRequest = URLRequest(url: url)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")

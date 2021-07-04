@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol AllTasksServiceProtocol {
+/*protocol AllTasksServiceProtocol {
     func fetchData()
 }
 class AllTasksService {
     private let api: NetworkService
     weak var allTasksVC: AllTasksViewController?
-
+    
     init(api: NetworkService) {
         self.api = api
     }
@@ -33,3 +33,20 @@ extension AllTasksService: AllTasksServiceProtocol {
         }
     }
 }
+
+extension AllTasksService: AllTasksVCDelegate {
+    func pushData(item: NetworkingModel) {
+        api.postItem(item: item) { result in
+            switch result {
+            case .success(_):
+                print("ok")
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    
+    
+}
+*/
