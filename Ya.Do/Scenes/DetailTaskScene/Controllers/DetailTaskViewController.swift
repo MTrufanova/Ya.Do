@@ -92,6 +92,7 @@ class DetailTaskViewController: UIViewController {
         guard let taskText = contentView.taskTextView.text else {return}
         let deadline: Date?
         let priority: ToDoItem.Priority
+        let createDate = Date().timeIntervalSince1970
         let date = contentView.dateButton.titleLabel?.text
         deadline = Date.returnDate(from: date)
 
@@ -103,7 +104,7 @@ class DetailTaskViewController: UIViewController {
         default:
             priority = .important
         }
-        let item = ToDoItem(text: taskText, priority: priority, deadline: deadline)
+        let item = ToDoItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int(createDate), updatedAt: nil)
         delegate?.addItem(item: item)
     }
     func cancelButtonAction() {

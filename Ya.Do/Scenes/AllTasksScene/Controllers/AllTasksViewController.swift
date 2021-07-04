@@ -9,12 +9,12 @@ import UIKit
 import DevToDoPod
 
 protocol AllTasksDisplayLogic: class {
-    func showData(data: [ToDoItem])
+    func showData(data: [NetworkingModel])
     func showError()
 }
 
 class AllTasksViewController: UIViewController {
-    var networkService: NetworkServiceProtocol?
+    var networkService: AllTasksServiceProtocol?
     private let fileCache = FileCache()
     var tasks = [ToDoItem]()
 
@@ -336,9 +336,14 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
 }
 
 extension AllTasksViewController: AllTasksDisplayLogic {
-    func showData(data: [ToDoItem]) {
+    func showData(data: [NetworkingModel]) {
         if !data.isEmpty {
-            tasks = data
+            let taskModel = data.map { (model) -> ToDoItem in
+                let date = Double(model.deadline)
+                let cellModel = ToDoItem(id: model.id, text: model.text, priority: ToDoItem.Priority(rawValue: model.importance) ?? .basic, deadline: Date(timeIntervalSince1970: date), isCompleted: model.done, createdAt: model.createdAt, updatedAt: model.updatedAt, isDirty: false)
+                return cellModel
+            }
+            tasks = taskModel
         } else {
             tasks = fileCache.tasks
         }

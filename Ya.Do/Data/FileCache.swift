@@ -59,9 +59,7 @@ final class FileCache: FileCacheProtocol {
             do {
                 let data = try Data(contentsOf: fileUrl)
                 guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] else { return }
-              //  DispatchQueue.main.async {
                     self.tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
-               // }
             } catch {
                     print(error.localizedDescription)
             }

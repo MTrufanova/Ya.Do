@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Tombstone  {
+struct Tombstone {
    let itemId: String
    let deletedAt: Date
 }
