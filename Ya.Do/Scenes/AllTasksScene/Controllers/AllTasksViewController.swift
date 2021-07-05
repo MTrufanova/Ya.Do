@@ -245,7 +245,7 @@ extension AllTasksViewController: UITableViewDataSource {
                 case false:
                     cell.checkButton.setImage(Images.circle, for: .normal)
                     cell.taskTitleLabel.textColor = Colors.blackTitle
-                    guard task.priority == .high else {
+                    guard task.priority == .important else {
                         cell.checkButton.tintColor = Colors.grayLines
                         return
                     }

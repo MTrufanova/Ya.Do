@@ -15,7 +15,7 @@
     "ios": "11.0"
   },
   "source": {
-    "git": "~/Documents/Lib/DevToDoPod",
+    "git": "LocalPod/DevToDoPod",
     "tag": "0.0.1"
   },
   "source_files": "DevToDoPod/**/*.{swift}",
