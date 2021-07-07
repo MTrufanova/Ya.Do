@@ -26,6 +26,7 @@ final class FileCache: FileCacheProtocol {
     // MARK: - METHOD ADD TASK
     func addItem(_ item: ToDoItem) {
         tasks.append(item)
+        serverUploadItem(item: item)
     }
     func updateItem(index: Int, item: ToDoItem) {
         tasks[index] = item
@@ -79,5 +80,9 @@ final class FileCache: FileCacheProtocol {
                 print(error.localizedDescription)
             }
         }
+    }
+
+    func serverUploadItem(item: ToDoItem ) {
+        netManager.uploadItem(item: item)
     }
 }

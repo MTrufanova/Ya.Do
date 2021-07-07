@@ -14,7 +14,7 @@ enum APIError: Error {
 
 protocol NetworkServiceProtocol {
     func getTasks(completion: @escaping (Result<[NetworkingModel], Error>) -> Void)
-    func postItem(item: NetworkingModel, onResult: @escaping (Result<NetworkingModel, Error>) -> Void)
+    func postItem(item: NetworkingModel)
    // func putTasks(onResult: @escaping (Result<[NetworkingModel], Error>) -> Void)
     func deleteItem(at id: String, onResult: @escaping (Result<NetworkingModel, Error>) -> Void)
     func updateItem(item: NetworkingModel, onResult: @escaping (Result<NetworkingModel, Error>) -> Void)
@@ -70,26 +70,32 @@ class NetworkService: NetworkServiceProtocol {
         dataTask.resume()
     }
     // MARK: - POST
-    func postItem(item: NetworkingModel, onResult: @escaping (Result<NetworkingModel, Error>) -> Void) {
+   // func postItem(item: NetworkingModel, completion: @escaping (Result<NetworkingModel, Error>) -> Void) {
+    func postItem(item: NetworkingModel) {
 
         guard let url =  Endpoint.postTask.url else { return }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
-        guard let uploadData = try? JSONEncoder().encode(item) else { return }
+        guard let uploadData = try? JSONEncoder().encode(item) else {
+            return }
         let task = session.uploadTask(with: urlRequest, from: uploadData) { (data, _, error) in
 
-            guard let data = data else {
-                onResult(.failure(APIError.noData))
+            if let error = error {
+               // completion(.failure(error))
+                print(error.localizedDescription)
                 return
             }
+
+            guard let data = data else { return }
+
             do {
                 let taskResponse = try JSONDecoder().decode(NetworkingModel.self, from: data)
-                onResult(.success(taskResponse))
+               // completion(.success(taskResponse))
             } catch let error {
                 print(error)
-                onResult(.failure(error))
+               // completion(.failure(error))
             }
         }
         task.resume()
