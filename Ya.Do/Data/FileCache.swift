@@ -16,6 +16,7 @@ protocol FileCacheProtocol {
 }
 
 final class FileCache: FileCacheProtocol {
+    private let netManager = NetworkManager()
     private(set) var tasks = [ToDoItem]()
     private(set) var completedTasks = [ToDoItem]()
     // MARK: - FILTER TASKS
@@ -39,12 +40,12 @@ final class FileCache: FileCacheProtocol {
     }
     // MARK: - METHOD SAVE ALL TASKS
     func saveAllItems(to file: String) {
-        DispatchQueue.global(qos: .background).async { [self] in
-            let tasksDict = tasks.map { $0.json }
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            let tasksDict = self?.tasks.map { $0.json }
             guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
             let fileUrl = path.appendingPathComponent(file)
             do {
-                let data = try JSONSerialization.data(withJSONObject: tasksDict, options: [])
+                let data = try JSONSerialization.data(withJSONObject: tasksDict as Any, options: [])
                 try data.write(to: fileUrl, options: [])
             } catch {
                 print(error.localizedDescription)
@@ -53,15 +54,29 @@ final class FileCache: FileCacheProtocol {
     }
     // MARK: - METHOD GET ALL TASKS
     func getAllItems(from file: String) {
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
             let fileUrl = path.appendingPathComponent(file)
             do {
                 let data = try Data(contentsOf: fileUrl)
                 guard let jsonDict = try JSONSerialization.jsonObject(with: data, options: []) as? [Any] else { return }
-                    self.tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
+               // DispatchQueue.main.async {
+                self?.tasks = jsonDict.compactMap { ToDoItem.parse(json: $0)}
+                self?.merge()
+              //  }
             } catch {
                     print(error.localizedDescription)
+            }
+        }
+    }
+
+    func merge() {
+        netManager.fetchItems { [weak self] (result) in
+            switch result {
+            case .success(let items):
+                self?.tasks.append(contentsOf: items)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }

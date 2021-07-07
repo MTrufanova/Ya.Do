@@ -13,7 +13,7 @@ enum Endpoint {
     case updateItem(id: String)
     case removeItem(id: String)
     case putTasks
-    
+
     var url: URL? {
         var result = "https://d5dps3h13rv6902lp5c8.apigw.yandexcloud.net"
         switch self {

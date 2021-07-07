@@ -16,7 +16,7 @@ public struct ToDoItem {
     public let createdAt: Int
     public let updatedAt: Int?
     public let isDirty: Bool
-    
+
     public init(id: String = UUID().uuidString, text: String, priority: Priority, deadline: Date?, isCompleted: Bool = false, createdAt: Int, updatedAt: Int?, isDirty: Bool = false) {
         self.id = id
         self.text = text
@@ -33,4 +33,3 @@ public struct ToDoItem {
         case basic
     }
 }
-

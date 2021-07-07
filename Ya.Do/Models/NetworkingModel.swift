@@ -15,11 +15,11 @@ struct NetworkingModel: Codable {
     let deadline: Int?
     let createdAt: Int
     let updatedAt: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case id, text, importance, done, deadline
         case createdAt = "created_at"
         case updatedAt = "updated_at"
-            
+
     }
 }

@@ -18,7 +18,7 @@ func intoNetworkModel(from item: ToDoItem) -> NetworkingModel {
                                createdAt: item.createdAt,
                                updatedAt: item.updatedAt)
     }
-    
+
     return NetworkingModel(id: item.id,
                            text: item.text,
                            importance: item.priority.rawValue,
@@ -46,7 +46,7 @@ func intoToDoItem(from array: [NetworkingModel]) -> [ToDoItem] {
                         createdAt: model.createdAt,
                         updatedAt: model.updatedAt,
                         isDirty: false)
-        
+
     }
     return taskModel
 }
