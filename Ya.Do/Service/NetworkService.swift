@@ -16,8 +16,8 @@ protocol NetworkServiceProtocol {
     func getTasks(completion: @escaping (Result<[NetworkingModel], Error>) -> Void)
     func postItem(item: NetworkingModel)
    // func putTasks(onResult: @escaping (Result<[NetworkingModel], Error>) -> Void)
-    func deleteItem(at id: String, onResult: @escaping (Result<NetworkingModel, Error>) -> Void)
-    func updateItem(item: NetworkingModel, onResult: @escaping (Result<NetworkingModel, Error>) -> Void)
+    func deleteItem(at id: String)
+    func updateItem(item: NetworkingModel)
 }
 
 class NetworkService: NetworkServiceProtocol {
@@ -110,49 +110,56 @@ class NetworkService: NetworkServiceProtocol {
         
     }*/
     // MARK: - UPDATE ITEM
-    func updateItem(item: NetworkingModel, onResult: @escaping (Result<NetworkingModel, Error>) -> Void) {
+    func updateItem(item: NetworkingModel) {
         guard let url = Endpoint.updateItem(id: item.id).url else { return }
         var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
         guard let data = try? JSONEncoder().encode(item) else { return }
         urlRequest.httpBody = data
         let task = session.dataTask(with: urlRequest) { (data, _, error) in
-            guard let data = data else {
-                onResult(.failure(APIError.noData))
+            if let error = error {
+                print(error.localizedDescription)
                 return
             }
+
+            guard let data = data else { return }
+
             do {
                 let taskResponse = try JSONDecoder().decode(NetworkingModel.self, from: data)
-                onResult(.success(taskResponse))
+               // completion(.success(taskResponse))
             } catch let error {
                 print(error)
-                onResult(.failure(error))
+              //  completion(.failure(error))
             }
         }
         task.resume()
 
     }
     // MARK: - DELETE
-    func deleteItem(at id: String, onResult: @escaping (Result<NetworkingModel, Error>) -> Void) {
+    func deleteItem(at id: String) {
         guard let url =  Endpoint.removeItem(id: id).url else { return }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "DELETE"
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
         urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
 
         let task = session.dataTask(with: urlRequest) { (data, _, error) in
-            guard let data = data else {
-                onResult(.failure(APIError.noData))
+            if let error = error {
+                //completion(.failure(error))
+                print(error.localizedDescription)
                 return
             }
+
+            guard let data = data else { return }
+
             do {
                 let taskResponse = try JSONDecoder().decode(NetworkingModel.self, from: data)
-                onResult(.success(taskResponse))
+             //   completion(.success(taskResponse))
             } catch let error {
                 print(error)
-                onResult(.failure(error))
+            //    completion(.failure(error))
             }
         }
         task.resume()

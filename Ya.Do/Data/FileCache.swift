@@ -30,6 +30,7 @@ final class FileCache: FileCacheProtocol {
     }
     func updateItem(index: Int, item: ToDoItem) {
         tasks[index] = item
+        serverUpdateItem(item: item)
     }
     func updateFilterItem(index: Int, item: ToDoItem) {
         completedTasks[index] = item
@@ -38,6 +39,7 @@ final class FileCache: FileCacheProtocol {
     func removeItem(at id: String) {
         guard let index = tasks.firstIndex(where: { $0.id == id }) else { return }
         tasks.remove(at: index)
+        deleteItem(at: id)
     }
     // MARK: - METHOD SAVE ALL TASKS
     func saveAllItems(to file: String) {
@@ -84,5 +86,12 @@ final class FileCache: FileCacheProtocol {
 
     func serverUploadItem(item: ToDoItem ) {
         netManager.uploadItem(item: item)
+    }
+
+    func serverUpdateItem(item: ToDoItem) {
+        netManager.updateItem(item: item)
+    }
+    func deleteItem(at id: String) {
+        netManager.deleteItem(at: id)
     }
 }

@@ -14,8 +14,8 @@ class NetworkManager {
         netService.getTasks { (result) in
             switch result {
             case .success(let netItems):
-                   let serverTasks = intoToDoItem(from: netItems)
-                    completion(.success(serverTasks))
+                let serverTasks = intoToDoItem(from: netItems)
+                completion(.success(serverTasks))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -25,5 +25,11 @@ class NetworkManager {
     func uploadItem( item: ToDoItem) {
         netService.postItem(item: intoNetworkModel(from: item))
     }
+    func updateItem(item: ToDoItem) {
+        netService.updateItem(item: intoNetworkModel(from: item))
+    }
 
+    func deleteItem(at id: String) {
+        netService.deleteItem(at: id)
+    }
 }
