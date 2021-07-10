@@ -21,12 +21,12 @@ extension ToDoItem {
     }
     static func parse(json: Any) -> ToDoItem? {
         guard let data = json as? [String: Any],
-              let id = data[Keys.id] as? String,
-              let text = data[Keys.text] as? String,
-              let createdAt = data[Keys.createdAt] as? Int,
-              let updatedAt = data[Keys.updatedAt] as? Int?,
-              let isDirty = data[Keys.isDirty] as? Bool,
-              let isComleted = data[Keys.isComleted] as? Bool else { return nil }
+         let id = data[Keys.id] as? String,
+         let text = data[Keys.text] as? String,
+         let createdAt = data[Keys.createdAt] as? Int,
+         let updatedAt = data[Keys.updatedAt] as? Int?,
+         let isDirty = data[Keys.isDirty] as? Bool,
+         let isComleted = data[Keys.isComleted] as? Bool else { return nil }
         let priority = (data[Keys.priority] as? String).flatMap(Priority.init(rawValue:)) ?? .basic
         var deadline: Date?
         if let timestamp = data[Keys.deadline] as? TimeInterval {
@@ -34,7 +34,7 @@ extension ToDoItem {
         }
         return ToDoItem(id: id, text: text, priority: priority, deadline: deadline, isCompleted: isComleted, createdAt: createdAt, updatedAt: updatedAt, isDirty: isDirty)
     }
-    
+
     var json: Any {
         var params: [String: Any] = [:]
         params[Keys.id] = id

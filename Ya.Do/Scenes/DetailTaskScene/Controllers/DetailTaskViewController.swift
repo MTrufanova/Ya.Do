@@ -151,10 +151,10 @@ class DetailTaskViewController: UIViewController {
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
-            NSLayoutConstraint.deactivate(contentView.portretConstraints)
+            NSLayoutConstraint.deactivate(contentView.portraitConstraints)
             NSLayoutConstraint.activate(contentView.landscapeConstraints)
         } else {
-            NSLayoutConstraint.activate(contentView.portretConstraints)
+            NSLayoutConstraint.activate(contentView.portraitConstraints)
             NSLayoutConstraint.deactivate(contentView.landscapeConstraints)
         }
     }
