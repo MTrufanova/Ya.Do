@@ -6,30 +6,162 @@
 //
 
 import Foundation
+import DevToDoPod
+
+enum APIError: Error {
+    case noData
+}
 
 protocol NetworkServiceProtocol {
-    func fetchData()
-}
-class NetworkService {
-    private let api: APIClientclass
-    weak var allTasksVC: AllTasksViewController?
-
-    init(api: APIClientclass) {
-        self.api = api
-    }
+    func getTasks(completion: @escaping (Result<[NetworkingModel], Error>) -> Void)
+    func postItem(item: NetworkingModel)
+   // func putTasks(onResult: @escaping (Result<[NetworkingModel], Error>) -> Void)
+    func deleteItem(at id: String)
+    func updateItem(item: NetworkingModel)
 }
 
-extension NetworkService: NetworkServiceProtocol {
-    func fetchData() {
-        api.fetchData { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let item):
-                    self.allTasksVC?.showData(data: item)
-                case .failure:
-                    self.allTasksVC?.showError()
+class NetworkService: NetworkServiceProtocol {
+    let session: URLSession = {
+        let session = URLSession(configuration: .default)
+        session.configuration.timeoutIntervalForRequest = 30.0
+        return session
+    }()
+
+    let token = "LTI1NDg1ODAxMTQ3MjQ1NzgxMDY"
+    // MARK: - GET
+    func getTasks(completion: @escaping (Result<[NetworkingModel], Error>) -> Void) {
+
+        guard let url =  Endpoint.getTasks.url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
+        urlRequest.httpMethod = "GET"
+
+        let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
+
+            if let error = error {
+                completion(.failure(error))
+                print(error.localizedDescription)
+                return
+            }
+
+            guard let response = response as? HTTPURLResponse else {
+                print("Response is empty")
+                return
+            }
+
+            print(response.statusCode)
+
+            guard let data = data else {
+                print("Data is empty")
+                return
+            }
+
+            do {
+                let jsonData = try JSONDecoder().decode([NetworkingModel].self, from: data)
+
+                DispatchQueue.main.async {
+                    completion(.success(jsonData))
                 }
+            } catch let error {
+                completion(.failure(error))
             }
         }
+        dataTask.resume()
+    }
+    // MARK: - POST
+   // func postItem(item: NetworkingModel, completion: @escaping (Result<NetworkingModel, Error>) -> Void) {
+    func postItem(item: NetworkingModel) {
+
+        guard let url =  Endpoint.postTask.url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
+        guard let uploadData = try? JSONEncoder().encode(item) else {
+            return }
+        let task = session.uploadTask(with: urlRequest, from: uploadData) { (data, _, error) in
+
+            if let error = error {
+               // completion(.failure(error))
+                print(error.localizedDescription)
+                return
+            }
+
+            guard let data = data else { return }
+
+            do {
+                let taskResponse = try JSONDecoder().decode(NetworkingModel.self, from: data)
+               // completion(.success(taskResponse))
+            } catch let error {
+                print(error)
+               // completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    // MARK: - UPDATE ITEMS
+   /* func putTasks(onResult: @escaping (Result<[NetworkingModel], Error>) -> Void) {
+        guard let url =  Endpoint.putTasks.url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
+        
+    }*/
+    // MARK: - UPDATE ITEM
+    func updateItem(item: NetworkingModel) {
+        guard let url = Endpoint.updateItem(id: item.id).url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
+        guard let data = try? JSONEncoder().encode(item) else { return }
+        urlRequest.httpBody = data
+        let task = session.dataTask(with: urlRequest) { (data, _, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+
+            guard let data = data else { return }
+
+            do {
+                let taskResponse = try JSONDecoder().decode(NetworkingModel.self, from: data)
+               // completion(.success(taskResponse))
+            } catch let error {
+                print(error)
+              //  completion(.failure(error))
+            }
+        }
+        task.resume()
+
+    }
+    // MARK: - DELETE
+    func deleteItem(at id: String) {
+        guard let url =  Endpoint.removeItem(id: id).url else { return }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
+
+        let task = session.dataTask(with: urlRequest) { (data, _, error) in
+            if let error = error {
+                //completion(.failure(error))
+                print(error.localizedDescription)
+                return
+            }
+
+            guard let data = data else { return }
+
+            do {
+                let taskResponse = try JSONDecoder().decode(NetworkingModel.self, from: data)
+             //   completion(.success(taskResponse))
+            } catch let error {
+                print(error)
+            //    completion(.failure(error))
+            }
+        }
+        task.resume()
     }
 }

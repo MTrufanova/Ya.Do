@@ -3,7 +3,7 @@ PODS:
   - SwiftLint (0.43.1)
 
 DEPENDENCIES:
-  - DevToDoPod (from `~/Documents/Lib/DevToDoPod`)
+  - DevToDoPod (from `LocalPod/DevToDoPod`)
   - SwiftLint
 
 SPEC REPOS:
@@ -12,12 +12,12 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   DevToDoPod:
-    :path: "~/Documents/Lib/DevToDoPod"
+    :path: LocalPod/DevToDoPod
 
 SPEC CHECKSUMS:
-  DevToDoPod: ade54ec40eb60618fc04bb5d371463a8dd8cf845
+  DevToDoPod: 17e9220222ba5da8c55bec4dd38303d2d2923e06
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
 
-PODFILE CHECKSUM: 735cf7b0f75e758d29206633a5143f1bdc2edf26
+PODFILE CHECKSUM: 81fc1fc11b1463567bf3dba11479536afc70ac82
 
 COCOAPODS: 1.10.0

@@ -7,6 +7,7 @@
 
 import UIKit
 import DevToDoPod
+
 protocol DetailTaskViewControllerDelegate: class {
     func addItem(item: ToDoItem)
     func removeItem(item: ToDoItem)
@@ -72,9 +73,9 @@ class DetailTaskViewController: UIViewController {
         switch task.priority {
         case .low:
             contentView.prioritySegment.selectedSegmentIndex = 0
-        case .normal:
+        case .basic:
             contentView.prioritySegment.selectedSegmentIndex = 1
-        case .high:
+        case .important:
             contentView.prioritySegment.selectedSegmentIndex = 2
         }
     }
@@ -91,6 +92,7 @@ class DetailTaskViewController: UIViewController {
         guard let taskText = contentView.taskTextView.text else {return}
         let deadline: Date?
         let priority: ToDoItem.Priority
+        let createDate = Date().timeIntervalSince1970
         let date = contentView.dateButton.titleLabel?.text
         deadline = Date.returnDate(from: date)
 
@@ -98,11 +100,11 @@ class DetailTaskViewController: UIViewController {
         case 0:
             priority = .low
         case 1:
-            priority = .normal
+            priority = .basic
         default:
-            priority = .high
+            priority = .important
         }
-        let item = ToDoItem(text: taskText, priority: priority, deadline: deadline)
+        let item = ToDoItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int(createDate), updatedAt: nil)
         delegate?.addItem(item: item)
     }
     func cancelButtonAction() {
@@ -149,10 +151,10 @@ class DetailTaskViewController: UIViewController {
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
         super.willTransition(to: newCollection, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
-            NSLayoutConstraint.deactivate(contentView.portretConstraints)
+            NSLayoutConstraint.deactivate(contentView.portraitConstraints)
             NSLayoutConstraint.activate(contentView.landscapeConstraints)
         } else {
-            NSLayoutConstraint.activate(contentView.portretConstraints)
+            NSLayoutConstraint.activate(contentView.portraitConstraints)
             NSLayoutConstraint.deactivate(contentView.landscapeConstraints)
         }
     }

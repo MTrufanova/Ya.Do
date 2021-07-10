@@ -90,7 +90,7 @@ class DetailView: UIView {
         return button
     }()
 
-    var portretConstraints: [NSLayoutConstraint] = []
+    var portraitConstraints: [NSLayoutConstraint] = []
     var landscapeConstraints: [NSLayoutConstraint] = []
 
     init() {
@@ -108,10 +108,10 @@ class DetailView: UIView {
         if verticalSizeClass == .compact {
             NSLayoutConstraint.activate(landscapeConstraints)
         } else {
-            NSLayoutConstraint.activate(portretConstraints)
+            NSLayoutConstraint.activate(portraitConstraints)
         }
     }
-    
+
     private func setupScrollView() {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -158,7 +158,7 @@ class DetailView: UIView {
             scrollView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-    
+
     // MARK: - textViewLayout
     private func textViewLayout() {
         scrollView.addSubview(taskTextView)
@@ -170,7 +170,7 @@ class DetailView: UIView {
         ])
         let portret = taskTextView.heightAnchor.constraint(equalToConstant: 120)
         let landscape = taskTextView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.75)
-        portretConstraints.append(portret)
+        portraitConstraints.append(portret)
         landscapeConstraints.append(landscape)
     }
     // MARK: - setupStackView

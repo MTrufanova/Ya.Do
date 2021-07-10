@@ -8,7 +8,7 @@ target 'Ya.Do' do
   # Pods for Ya.Do
 
 	pod 'SwiftLint'
-        pod 'DevToDoPod', :path => '~/Documents/Lib/DevToDoPod'
+	pod 'DevToDoPod', :path => 'LocalPod/DevToDoPod'
 
   target 'Ya.DoTests' do
     inherit! :search_paths

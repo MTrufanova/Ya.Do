@@ -7,15 +7,10 @@
 
 import UIKit
 import DevToDoPod
-protocol AllTasksDisplayLogic: class {
-    func showData(data: [ToDoItem])
-    func showError()
-}
 
 class AllTasksViewController: UIViewController {
-    var networkService: NetworkServiceProtocol?
+
     private let fileCache = FileCache()
-    var tasks = [ToDoItem]()
 
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
@@ -65,16 +60,15 @@ class AllTasksViewController: UIViewController {
         navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
-        networkService?.fetchData()
         fileCache.getAllItems(from: Files.defaultFile)
         setupLayout()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         counterLabel.text = "\(self.countDone())"
     }
-    
+
     @objc private func showDone() {
         if hiddenButton.titleLabel?.text == Title.show {
             hiddenButton.setTitle(Title.hide, for: .normal)
@@ -222,7 +216,10 @@ extension AllTasksViewController: UITableViewDataSource {
             var index: Int
             if isFiltering {
                 task = fileCache.completedTasks[indexPath.row]
-                index = fileCache.tasks.firstIndex(where: {task.id == $0.id})!
+                guard let ind = fileCache.tasks.firstIndex(where: {task.id == $0.id})  else {
+                   return UITableViewCell()
+                }
+                index = ind
                 self.fileCache.updateItem(index: index, item: task)
             } else {
                 index = indexPath.row
@@ -244,7 +241,7 @@ extension AllTasksViewController: UITableViewDataSource {
                 case false:
                     cell.checkButton.setImage(Images.circle, for: .normal)
                     cell.taskTitleLabel.textColor = Colors.blackTitle
-                    guard task.priority == .high else {
+                    guard task.priority == .important else {
                         cell.checkButton.tintColor = Colors.grayLines
                         return
                     }
@@ -331,19 +328,5 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
             fileCache.saveAllItems(to: Files.defaultFile)
             tableView.reloadData()
         }
-    }
-}
-
-extension AllTasksViewController: AllTasksDisplayLogic {
-    func showData(data: [ToDoItem]) {
-        if !data.isEmpty {
-            tasks = data
-        } else {
-            tasks = fileCache.tasks
-        }
-        tableView.reloadData()
-    }
-    
-    func showError() {
     }
 }

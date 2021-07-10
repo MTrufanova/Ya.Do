@@ -7,12 +7,12 @@
 
 import UIKit
 import DevToDoPod
-
 class StartViewController: UIViewController {
 
     lazy var startImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "startIcon")
+        let bundle = Bundle(for: LocalClass.self)
+        imageView.image = UIImage(named: "startIcon", in: bundle, compatibleWith: nil)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
