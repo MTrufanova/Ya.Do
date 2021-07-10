@@ -20,6 +20,8 @@ protocol NetworkServiceProtocol {
     func updateItem(item: NetworkingModel)
 }
 
+private let queue = DispatchQueue.global(qos: .utility)
+
 class NetworkService: NetworkServiceProtocol {
     let session: URLSession = {
         let session = URLSession(configuration: .default)
@@ -30,44 +32,47 @@ class NetworkService: NetworkServiceProtocol {
     let token = "LTI1NDg1ODAxMTQ3MjQ1NzgxMDY"
     // MARK: - GET
     func getTasks(completion: @escaping (Result<[NetworkingModel], Error>) -> Void) {
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            guard let url =  Endpoint.getTasks.url else { return }
+            var urlRequest = URLRequest(url: url)
+            urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+            urlRequest.setValue( "Bearer \(self.token)", forHTTPHeaderField: "Authorization")
+            urlRequest.httpMethod = "GET"
 
-        guard let url =  Endpoint.getTasks.url else { return }
-        var urlRequest = URLRequest(url: url)
-        urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        urlRequest.setValue( "Bearer \(token)", forHTTPHeaderField: "Authorization")
-        urlRequest.httpMethod = "GET"
+            let dataTask = self.session.dataTask(with: urlRequest) { (data, response, error) in
 
-        let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
-
-            if let error = error {
-                completion(.failure(error))
-                print(error.localizedDescription)
-                return
-            }
-
-            guard let response = response as? HTTPURLResponse else {
-                print("Response is empty")
-                return
-            }
-
-            print(response.statusCode)
-
-            guard let data = data else {
-                print("Data is empty")
-                return
-            }
-
-            do {
-                let jsonData = try JSONDecoder().decode([NetworkingModel].self, from: data)
-
-                DispatchQueue.main.async {
-                    completion(.success(jsonData))
+                if let error = error {
+                    completion(.failure(error))
+                    print(error.localizedDescription)
+                    return
                 }
-            } catch let error {
-                completion(.failure(error))
+
+                guard let response = response as? HTTPURLResponse else {
+                    print("Response is empty")
+                    return
+                }
+
+                print(response.statusCode)
+
+                guard let data = data else {
+                    print("Data is empty")
+                    return
+                }
+
+                do {
+                    let jsonData = try JSONDecoder().decode([NetworkingModel].self, from: data)
+
+                    DispatchQueue.main.async {
+                        completion(.success(jsonData))
+                    }
+                } catch let error {
+                    completion(.failure(error))
+                }
             }
+            dataTask.resume()
         }
-        dataTask.resume()
+
     }
     // MARK: - POST
    // func postItem(item: NetworkingModel, completion: @escaping (Result<NetworkingModel, Error>) -> Void) {

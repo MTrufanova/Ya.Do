@@ -7,6 +7,9 @@
 
 import Foundation
 
+public class LocalClass {
+    
+}
 public struct ToDoItem {
     public let id: String
     public let text: String
