@@ -7,8 +7,11 @@
 
 import UIKit
 import DevToDoPod
+import CoreData
 
 class AllTasksViewController: UIViewController {
+
+    var context: NSManagedObjectContext?
 
     private let fileCache = FileCache()
 

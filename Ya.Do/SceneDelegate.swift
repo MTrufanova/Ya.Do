@@ -22,6 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tasksVC = AllTasksViewController()
         let navigationController = UINavigationController(rootViewController: tasksVC)
         window?.rootViewController = navigationController
+        let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext
+        tasksVC.context = context
         window?.makeKeyAndVisible()
 
     }
