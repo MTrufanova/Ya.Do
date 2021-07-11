@@ -9,10 +9,13 @@ import Foundation
 import DevToDoPod
 import CoreData
 
-class CoreDataStack {
-    var data = [TodoItem]()
-    var filterData = [TodoItem]()
-    lazy var persistentContainer: NSPersistentContainer = {
+final class CoreDataStack {
+    private(set) var data = [TodoItem]()
+    private(set) var filterData = [TodoItem]()
+
+   private let queue = DispatchQueue.global(qos: .utility)
+
+   private lazy var persistentContainer: NSPersistentContainer = {
 
         let container = NSPersistentContainer(name: "Ya.Do")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -24,8 +27,8 @@ class CoreDataStack {
         return container
     }()
 
-    lazy var context: NSManagedObjectContext = persistentContainer.viewContext
-    lazy var backgroundContext: NSManagedObjectContext = persistentContainer.newBackgroundContext()
+    private lazy var context: NSManagedObjectContext = persistentContainer.viewContext
+    private lazy var backgroundContext: NSManagedObjectContext = persistentContainer.newBackgroundContext()
 
     // MARK: - Core Data Saving support
 
@@ -60,10 +63,7 @@ class CoreDataStack {
         return itemObject
     }
     func addItem(item: TodoItem) {
-       guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: context) else { return }
-
-       // let itemObject = TodoItem(entity: entity, insertInto: backgroundContext)
-       // itemObject.text = text
+        guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: context) else { return }
 
         let itemObject = TodoItem(entity: entity, insertInto: context)
         itemObject.id = item.id
@@ -96,7 +96,7 @@ class CoreDataStack {
     func deleteItem(item: TodoItem) {
         guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
         data.remove(at: index)
-        DispatchQueue.global(qos: .utility).async { [weak self] in
+        queue.async { [weak self] in
             self?.context.delete(item)
 
             do {
@@ -108,18 +108,47 @@ class CoreDataStack {
 
     }
 
-    func updateItem(item: TodoItem, text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64) {
+    func updateItem(item: TodoItem) {
 
-        item.text = text
-        item.importance = priority
-        item.deadline = deadline
-       // item.createdAt = self.item.createdAt
-        item.updatedAt = Date()
+        guard let coreItem = getCoreItem(byIdentifier: item.id) else { return }
+        coreItem.text = item.text
+        coreItem.deadline = item.deadline
+        coreItem.importance = item.importance
+        coreItem.updatedAt = Date()
 
-        do {
-            try backgroundContext.save()
-        } catch let error {
-            print(error.localizedDescription)
+        queue.async { [weak self] in
+            do {
+                try self?.context.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
         }
+
+    }
+
+    func turnCompleted(item: TodoItem) {
+        guard let coreItem = getCoreItem(byIdentifier: item.id) else {return}
+        print(coreItem.isCompleted)
+        coreItem.isCompleted = !item.isCompleted
+        print(coreItem.isCompleted)
+        queue.async { [weak self] in
+            do {
+                try self?.context.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+
+    }
+
+    private func getCoreItem(byIdentifier id: UUID) -> TodoItem? {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TodoItem")
+        fetchRequest.predicate = NSPredicate(format: "id==%@", id as CVarArg)
+        guard let items = try? context.fetch(fetchRequest) as? [TodoItem] else { return nil}
+            guard let item = items.first(where: { $0.id == id }) else {
+                return nil
+            }
+        print(item.text)
+            return item
     }
 }
