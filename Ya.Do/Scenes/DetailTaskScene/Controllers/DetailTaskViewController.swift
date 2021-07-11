@@ -7,16 +7,19 @@
 
 import UIKit
 import DevToDoPod
+import CoreData
 
 protocol DetailTaskViewControllerDelegate: class {
-    func addItem(item: ToDoItem)
-    func removeItem(item: ToDoItem)
+    func addItem(item: TodoItem)
+    func removeItem(item: TodoItem)
 }
 
 class DetailTaskViewController: UIViewController {
     weak var delegate: DetailTaskViewControllerDelegate?
     let fileCache = FileCache()
-    var task: ToDoItem?
+    let dataManager = CoreDataStack()
+   // var task: ToDoItem?
+    var task: TodoItem?
     lazy var contentView = DetailView()
     override func loadView() {
         self.view = contentView
@@ -70,7 +73,8 @@ class DetailTaskViewController: UIViewController {
         contentView.dateButton.isHidden = false
         contentView.dateButton.setTitle(date, for: .normal)
         contentView.datePicker.date = deadline
-        switch task.priority {
+       // switch task.priority {
+        switch task.importance {
         case .low:
             contentView.prioritySegment.selectedSegmentIndex = 0
         case .basic:
@@ -104,7 +108,9 @@ class DetailTaskViewController: UIViewController {
         default:
             priority = .important
         }
-        let item = ToDoItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int(createDate), updatedAt: nil)
+       // let item = ToDoItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int(createDate), updatedAt: nil)
+        let itemDo = dataManager.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
+        guard let item = itemDo else { return }
         delegate?.addItem(item: item)
     }
     func cancelButtonAction() {

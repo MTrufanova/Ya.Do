@@ -7,6 +7,7 @@
 
 import UIKit
 import DevToDoPod
+import CoreData
 
 class MainTaskCell: UITableViewCell {
     static let identifier = "MainTaskCell"
@@ -84,9 +85,9 @@ class MainTaskCell: UITableViewCell {
         ])
     }
 
-    func setupCell(_ item: ToDoItem) {
+    func setupCell(_ item: TodoItem) {
         taskTitleLabel.text =  item.text
-        if item.priority != .important {
+        if item.importance != .important {
             taskTitleStack.arrangedSubviews[0].isHidden = true
         }
         if let deadline = item.deadline {
@@ -100,7 +101,7 @@ class MainTaskCell: UITableViewCell {
         } else {
             checkButton.setImage(Images.circle, for: .normal)
             taskTitleLabel.textColor = Colors.blackTitle
-            item.priority == .important ? (checkButton.tintColor = Colors.red) : (checkButton.tintColor = Colors.grayLines)
+            item.importance == .important ? (checkButton.tintColor = Colors.red) : (checkButton.tintColor = Colors.grayLines)
         }
     }
     func createTitleStack(label: UILabel, image: UIImage?, spacing: CGFloat) -> UIStackView {

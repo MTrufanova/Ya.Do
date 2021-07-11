@@ -16,13 +16,13 @@ extension TodoItem {
         return NSFetchRequest<TodoItem>(entityName: "TodoItem")
     }
 
-    @NSManaged public var id: UUID?
-    @NSManaged public var text: String?
+    @NSManaged public var id: UUID
+    @NSManaged public var text: String
     @NSManaged public var priority: String?
     @NSManaged public var deadline: Date?
     @NSManaged public var isCompleted: Bool
     @NSManaged public var createdAt: Int64
-    @NSManaged public var updatedAt: Int64
+    @NSManaged public var updatedAt: Date?
     @NSManaged public var isDirty: Bool
 
 }

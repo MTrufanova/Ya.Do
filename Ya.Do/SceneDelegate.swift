@@ -22,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let tasksVC = AllTasksViewController()
         let navigationController = UINavigationController(rootViewController: tasksVC)
         window?.rootViewController = navigationController
-        let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext
-        tasksVC.context = context
+       // let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext
+      //  tasksVC.context = context
         window?.makeKeyAndVisible()
 
     }
@@ -54,7 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.saveContext()
+       // (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.saveContext()
     }
 
 }
