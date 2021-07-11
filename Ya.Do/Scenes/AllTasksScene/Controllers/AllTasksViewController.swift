@@ -377,7 +377,8 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 dataManager.addItem(item: item)
             }
             //fileCache.saveAllItems(to: Files.defaultFile)
-            tableView.reloadData()
+                tableView.reloadData()
+
         }
     }
 }

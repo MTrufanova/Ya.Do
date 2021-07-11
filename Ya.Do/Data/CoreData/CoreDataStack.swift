@@ -65,7 +65,7 @@ class CoreDataStack {
        // let itemObject = TodoItem(entity: entity, insertInto: backgroundContext)
        // itemObject.text = text
 
-        let itemObject = TodoItem(entity: entity, insertInto: backgroundContext)
+        let itemObject = TodoItem(entity: entity, insertInto: context)
         itemObject.id = item.id
         itemObject.isCompleted = item.isCompleted
         itemObject.text = item.text
@@ -74,9 +74,10 @@ class CoreDataStack {
         itemObject.createdAt = item.createdAt
         itemObject.updatedAt = item.updatedAt
         itemObject.isDirty = item.isDirty
+
         do {
-            data.append(item)
-            try backgroundContext.save()
+            data.append(itemObject)
+            try context.save()
         } catch let error {
             print(error.localizedDescription)
         }
@@ -95,14 +96,30 @@ class CoreDataStack {
     func deleteItem(item: TodoItem) {
         guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
         data.remove(at: index)
-        context.delete(item)
+        DispatchQueue.global(qos: .utility).async { [weak self] in
+            self?.context.delete(item)
+
+            do {
+                try self?.context.save()
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
+
+    }
+
+    func updateItem(item: TodoItem, text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64) {
+
+        item.text = text
+        item.importance = priority
+        item.deadline = deadline
+       // item.createdAt = self.item.createdAt
+        item.updatedAt = Date()
 
         do {
-            try context.save()
+            try backgroundContext.save()
         } catch let error {
             print(error.localizedDescription)
         }
     }
-
-
 }
