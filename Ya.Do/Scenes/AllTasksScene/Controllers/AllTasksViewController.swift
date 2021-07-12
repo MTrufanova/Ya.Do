@@ -334,31 +334,32 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
     }
 
     func addItem(item: TodoItem) {
-        self.dismiss(animated: true) { [self] in
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                let lastRowIndex = tableView.numberOfRows(inSection: tableView.numberOfSections-1)
+        self.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
+                let lastRowIndex = self.tableView.numberOfRows(inSection: self.tableView.numberOfSections-1)
                 switch selectedIndexPath.row {
                 case lastRowIndex - 1:
-                    dataManager.addItem(item: item)
+                    self.dataManager.addItem(item: item)
 
                 default:
 
-                    if isFiltering {
+                    if self.isFiltering {
                         //let completed = fileCache.completedTasks[selectedIndexPath.row].id
                        // guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
                         // MARK: - !!!!!!!!
                         //fileCache.updateItem(index: index, item: item)
-                        dataManager.updateItem(item: item)
+                        self.dataManager.updateItem(item: item)
                     } else {
                         // MARK: - !!!!!!!!
                         //fileCache.updateItem(index: selectedIndexPath.row, item: item)
-                        dataManager.updateItem(item: item)
+                        self.dataManager.updateItem(item: item)
                     }
                 }
             } else {
-                dataManager.addItem(item: item)
+                self.dataManager.addItem(item: item)
             }
-                tableView.reloadData()
+            self.tableView.reloadData()
 
         }
     }
