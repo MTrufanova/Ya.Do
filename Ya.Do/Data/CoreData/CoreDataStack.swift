@@ -9,7 +9,14 @@ import Foundation
 import DevToDoPod
 import CoreData
 
-final class CoreDataStack {
+protocol CoreDataStackProtocol {
+    func addItem(item: TodoItem)
+    func fetchItems()
+    func deleteItem(item: TodoItem)
+    func updateItem(item: TodoItem)
+}
+
+final class CoreDataStack: CoreDataStackProtocol {
     private(set) var data = [TodoItem]()
     private(set) var filterData = [TodoItem]()
 
