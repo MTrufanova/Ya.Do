@@ -228,32 +228,15 @@ extension AllTasksViewController: UITableViewDataSource {
             var index: Int
             if isFiltering {
                 task = dataManager.filterData[indexPath.row]
-               // task = fileCache.completedTasks[indexPath.row]
-               // guard let ind = fileCache.tasks.firstIndex(where: {task.id == $0.id})  else {
-                  // return UITableViewCell()
-               // }
-               // guard let ind = dataManager.data.firstIndex(where: {task.id == $0.id})  else {
-                  //  return UITableViewCell()
-                // }
-               // index = ind
-                // MARK: - !!!!
-                //self.fileCache.updateItem(index: index, item: task)
-
             } else {
                 index = indexPath.row
                 task = dataManager.data[index]
-                // MARK: - !!!!
-               // self.fileCache.updateItem(index: indexPath.row, item: task)
             }
             cell.setupCell(task)
             cell.buttonTap = { [weak self] in
                 guard let self = self else {
                     return
                 }
-                //task.isCompleted = !task.isCompleted
-                // MARK: - !!!!
-               // self.fileCache.updateItem(index: index, item: task)
-                //self.fileCache.saveAllItems(to: Files.defaultFile)
                 self.dataManager.turnCompleted(item: task)
 
                 self.counterLabel.text = "\(self.countDone())"
@@ -285,14 +268,10 @@ extension AllTasksViewController: UITableViewDataSource {
         default:
             var task: TodoItem
             if isFiltering {
-                //let completed = fileCache.completedTasks[indexPath.row].id
-               // guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
                 let completed = dataManager.filterData[indexPath.row].id
                 guard let index = dataManager.data.firstIndex(where: { $0.id == completed }) else {return}
-               // task = fileCache.tasks[index]
                 task = dataManager.data[index]
             } else {
-                //task = fileCache.tasks[indexPath.row]
                 task = dataManager.data[indexPath.row]
             }
             let addVC = DetailTaskViewController()
@@ -326,10 +305,12 @@ extension AllTasksViewController: UITableViewDelegate {
 }
 
 extension AllTasksViewController: DetailTaskViewControllerDelegate {
+
     func removeItem(item: TodoItem) {
-        self.dismiss(animated: true) { [self] in
-            dataManager.deleteItem(item: item)
-            tableView.reloadData()
+        self.dismiss(animated: true) { [weak self] in
+            guard let self = self else { return }
+            self.dataManager.deleteItem(item: item)
+            self.tableView.reloadData()
         }
     }
 
@@ -345,14 +326,8 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 default:
 
                     if self.isFiltering {
-                        //let completed = fileCache.completedTasks[selectedIndexPath.row].id
-                       // guard let index = fileCache.tasks.firstIndex(where: { $0.id == completed }) else {return}
-                        // MARK: - !!!!!!!!
-                        //fileCache.updateItem(index: index, item: item)
                         self.dataManager.updateItem(item: item)
                     } else {
-                        // MARK: - !!!!!!!!
-                        //fileCache.updateItem(index: selectedIndexPath.row, item: item)
                         self.dataManager.updateItem(item: item)
                     }
                 }

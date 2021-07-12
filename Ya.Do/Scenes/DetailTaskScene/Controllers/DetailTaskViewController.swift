@@ -16,9 +16,7 @@ protocol DetailTaskViewControllerDelegate: class {
 
 class DetailTaskViewController: UIViewController {
     weak var delegate: DetailTaskViewControllerDelegate?
-    let fileCache = FileCache()
     let dataManager = CoreDataStack()
-   // var task: ToDoItem?
     var task: TodoItem?
     lazy var contentView = DetailView()
     override func loadView() {
@@ -73,7 +71,7 @@ class DetailTaskViewController: UIViewController {
         contentView.dateButton.isHidden = false
         contentView.dateButton.setTitle(date, for: .normal)
         contentView.datePicker.date = deadline
-       // switch task.priority {
+        // switch task.priority {
         switch task.importance {
         case .low:
             contentView.prioritySegment.selectedSegmentIndex = 0
@@ -108,10 +106,18 @@ class DetailTaskViewController: UIViewController {
         default:
             priority = .important
         }
-       // let item = ToDoItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int(createDate), updatedAt: nil)
-        let itemDo = dataManager.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
-        guard let item = itemDo else { return }
-        delegate?.addItem(item: item)
+        guard let task = task else {
+            let itemDo = dataManager.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
+            guard let item = itemDo else { return }
+            delegate?.addItem(item: item)
+            return
+        }
+        task.text = taskText
+        task.deadline = deadline
+        task.importance = priority
+        task.updatedAt = Date()
+        delegate?.addItem(item: task)
+
     }
     func cancelButtonAction() {
         contentView.cancelButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
