@@ -14,19 +14,21 @@ protocol AllTasksProtocol: class {
 
 protocol AllTasksPresenterProtocol: class {
     init(view: AllTasksProtocol, localData: CoreDataStackProtocol)
-    var data: [TodoItem]? {get set}
+    var data: [TodoItem] { get }
+    var filterData: [TodoItem] { get }
     func loadItems()
+    func returnUncompleted()
 }
 
 class AllTasksPresenter: AllTasksPresenterProtocol {
     weak var view: AllTasksProtocol?
     let localData: CoreDataStackProtocol
-    var data: [TodoItem]?
+    private(set) var data = [TodoItem]()
+    private(set) var filterData = [TodoItem]()
     
     required init(view: AllTasksProtocol, localData: CoreDataStackProtocol) {
         self.view = view
         self.localData = localData
-        loadItems()
     }
     
     func loadItems() {
@@ -42,6 +44,10 @@ class AllTasksPresenter: AllTasksPresenterProtocol {
                 }
             }
         }
+    }
+
+   func returnUncompleted() {
+        filterData = data.filter { $0.isCompleted == false}
     }
     
 }

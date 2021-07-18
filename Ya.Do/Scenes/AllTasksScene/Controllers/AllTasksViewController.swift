@@ -67,7 +67,7 @@ class AllTasksViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-       // dataManager.fetchItems()
+        presenter.loadItems()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -94,11 +94,11 @@ class AllTasksViewController: UIViewController {
         let action = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
             var task: TodoItem
             if isFiltering {
-                dataManager.returnUncompleted()
-                task = dataManager.filterData[indexPath.row]
+                presenter.returnUncompleted()
+                task = presenter.filterData[indexPath.row]
 
             } else {
-                task = dataManager.data[indexPath.row]
+                task = presenter.data[indexPath.row]
 
             }
             dataManager.turnCompleted(item: task)
@@ -208,8 +208,8 @@ extension AllTasksViewController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
-            dataManager.returnUncompleted()
-            return dataManager.filterData.count + 1
+            presenter.returnUncompleted()
+            return presenter.filterData.count + 1
         }
         return dataManager.data.count + 1
     }
@@ -225,12 +225,11 @@ extension AllTasksViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             var task: TodoItem
-            var index: Int
+
             if isFiltering {
-                task = dataManager.filterData[indexPath.row]
+                task = presenter.filterData[indexPath.row]
             } else {
-                index = indexPath.row
-                task = dataManager.data[index]
+                task = presenter.data[indexPath.row]
             }
             cell.setupCell(task)
             cell.buttonTap = { [weak self] in
@@ -268,11 +267,11 @@ extension AllTasksViewController: UITableViewDataSource {
         default:
             var task: TodoItem
             if isFiltering {
-                let completed = dataManager.filterData[indexPath.row].id
-                guard let index = dataManager.data.firstIndex(where: { $0.id == completed }) else {return}
-                task = dataManager.data[index]
+                let completed = presenter.filterData[indexPath.row].id
+                guard let index = presenter.data.firstIndex(where: { $0.id == completed }) else {return}
+                task = presenter.data[index]
             } else {
-                task = dataManager.data[indexPath.row]
+                task = presenter.data[indexPath.row]
             }
             let addVC = DetailTaskViewController()
             addVC.task = task
@@ -338,4 +337,16 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
 
         }
     }
+}
+
+extension AllTasksViewController: AllTasksProtocol {
+    func succes() {
+        tableView.reloadData()
+    }
+
+    func failure(error: Error) {
+        print(error.localizedDescription)
+    }
+
+
 }

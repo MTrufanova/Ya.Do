@@ -19,11 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let tasksVC = AllTasksViewController()
+        let tasksVC = ModuleBuilder.configuredTasksListModule()
         let navigationController = UINavigationController(rootViewController: tasksVC)
         window?.rootViewController = navigationController
-       // let context = (UIApplication.shared.delegate as? AppDelegate)?.coreDataStack.persistentContainer.viewContext
-      //  tasksVC.context = context
         window?.makeKeyAndVisible()
 
     }

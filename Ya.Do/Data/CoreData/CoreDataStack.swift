@@ -51,9 +51,9 @@ final class CoreDataStack: CoreDataStackProtocol {
         }
     }
 
-    func returnUncompleted() {
-        filterData = data.filter { $0.isCompleted == false}
-    }
+   // func returnUncompleted() {
+    //    filterData = data.filter { $0.isCompleted == false}
+   // }
     func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem? {
 
         guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: backgroundContext) else {
