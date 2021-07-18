@@ -13,8 +13,6 @@ class AllTasksViewController: UIViewController {
 
     var presenter: AllTasksPresenterProtocol!
 
-    private let dataManager = CoreDataStack()
-
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
     }
@@ -60,6 +58,8 @@ class AllTasksViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        presenter.loadItems()
+
         navigationItem.title = Title.tasksAll
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
@@ -67,7 +67,7 @@ class AllTasksViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        presenter.loadItems()
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -86,7 +86,7 @@ class AllTasksViewController: UIViewController {
     }
     // MARK: - Method for count completed tasks
     private func countDone() -> String {
-        let count = dataManager.data.filter { $0.isCompleted == true }.count
+        let count = presenter.data.filter { $0.isCompleted == true }.count
         return Title.done + "\(count)"
     }
 
@@ -101,7 +101,7 @@ class AllTasksViewController: UIViewController {
                 task = presenter.data[indexPath.row]
 
             }
-            dataManager.turnCompleted(item: task)
+            presenter.turnCompleted(item: task)
             counterLabel.text = "\(self.countDone())"
             tableView.reloadData()
             completion(true)
@@ -115,12 +115,12 @@ class AllTasksViewController: UIViewController {
         let delete = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, _) in
             var task: TodoItem
             if isFiltering {
-                task = dataManager.filterData[indexPath.row]
+                task = presenter.filterData[indexPath.row]
             } else {
-                task = dataManager.data[indexPath.row]
+                task = presenter.data[indexPath.row]
             }
 
-            dataManager.deleteItem(item: task)
+            presenter.deleteItem(item: task)
             tableView.deleteRows(at: [indexPath], with: .fade)
 
             self.counterLabel.text = "\(self.countDone())"
@@ -139,14 +139,14 @@ class AllTasksViewController: UIViewController {
             default:
                 var task: TodoItem
                 if isFiltering {
-                    let completed = dataManager.filterData[indexPath.row].id
-                    guard let index = dataManager.data.firstIndex(where: { $0.id == completed
+                    let completed = presenter.filterData[indexPath.row].id
+                    guard let index = presenter.data.firstIndex(where: { $0.id == completed
                     }) else {
                         return
                     }
-                    task = dataManager.data[index]
+                    task = presenter.data[index]
                 } else {
-                    task = dataManager.data[indexPath.row]
+                    task = presenter.data[indexPath.row]
                 }
                 let addVC = DetailTaskViewController()
                 addVC.task = task
@@ -211,7 +211,7 @@ extension AllTasksViewController: UITableViewDataSource {
             presenter.returnUncompleted()
             return presenter.filterData.count + 1
         }
-        return dataManager.data.count + 1
+        return presenter.data.count + 1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -236,7 +236,7 @@ extension AllTasksViewController: UITableViewDataSource {
                 guard let self = self else {
                     return
                 }
-                self.dataManager.turnCompleted(item: task)
+                self.presenter.turnCompleted(item: task)
 
                 self.counterLabel.text = "\(self.countDone())"
                 tableView.reloadData()
@@ -308,7 +308,7 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
     func removeItem(item: TodoItem) {
         self.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
-            self.dataManager.deleteItem(item: item)
+            self.presenter.deleteItem(item: item)
             self.tableView.reloadData()
         }
     }
@@ -320,18 +320,18 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 let lastRowIndex = self.tableView.numberOfRows(inSection: self.tableView.numberOfSections-1)
                 switch selectedIndexPath.row {
                 case lastRowIndex - 1:
-                    self.dataManager.addItem(item: item)
+                    self.presenter.addItem(item: item)
 
                 default:
 
                     if self.isFiltering {
-                        self.dataManager.updateItem(item: item)
+                        self.presenter.updateItem(item: item)
                     } else {
-                        self.dataManager.updateItem(item: item)
+                        self.presenter.updateItem(item: item)
                     }
                 }
             } else {
-                self.dataManager.addItem(item: item)
+                self.presenter.addItem(item: item)
             }
             self.tableView.reloadData()
 
@@ -347,6 +347,4 @@ extension AllTasksViewController: AllTasksProtocol {
     func failure(error: Error) {
         print(error.localizedDescription)
     }
-
-
 }

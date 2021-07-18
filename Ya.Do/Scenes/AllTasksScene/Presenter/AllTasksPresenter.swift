@@ -18,6 +18,10 @@ protocol AllTasksPresenterProtocol: class {
     var filterData: [TodoItem] { get }
     func loadItems()
     func returnUncompleted()
+    func turnCompleted(item: TodoItem)
+    func deleteItem(item: TodoItem)
+    func updateItem(item: TodoItem)
+    func addItem(item: TodoItem)
 }
 
 class AllTasksPresenter: AllTasksPresenterProtocol {
@@ -49,5 +53,31 @@ class AllTasksPresenter: AllTasksPresenterProtocol {
    func returnUncompleted() {
         filterData = data.filter { $0.isCompleted == false}
     }
-    
+
+    func turnCompleted(item: TodoItem) {
+        localData.turnCompleted(item: item)
+    }
+
+    func deleteItem(item: TodoItem) {
+        guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
+        data.remove(at: index)
+        localData.deleteItem(item: item)
+    }
+
+    func updateItem(item: TodoItem) {
+        localData.updateItem(item: item)
+    }
+
+    func addItem(item: TodoItem) {
+
+        localData.addItem(item: item) { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let item):
+                self.data.append(item)
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
 }

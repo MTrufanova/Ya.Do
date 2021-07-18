@@ -10,16 +10,15 @@ import DevToDoPod
 import CoreData
 
 protocol CoreDataStackProtocol {
-    func addItem(item: TodoItem)
+    func addItem(item: TodoItem, completion: @escaping (Result<TodoItem, Error>) -> Void)
     func fetchItems(completion: @escaping (Result<[TodoItem], Error>) -> Void)
     func deleteItem(item: TodoItem)
     func updateItem(item: TodoItem)
+    func turnCompleted(item: TodoItem)
 }
 
 final class CoreDataStack: CoreDataStackProtocol {
-    private(set) var data = [TodoItem]()
-    private(set) var filterData = [TodoItem]()
-
+  
    private let queue = DispatchQueue.global(qos: .utility)
 
    private lazy var persistentContainer: NSPersistentContainer = {
@@ -51,9 +50,6 @@ final class CoreDataStack: CoreDataStackProtocol {
         }
     }
 
-   // func returnUncompleted() {
-    //    filterData = data.filter { $0.isCompleted == false}
-   // }
     func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem? {
 
         guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: backgroundContext) else {
@@ -69,9 +65,9 @@ final class CoreDataStack: CoreDataStackProtocol {
         itemObject.isDirty = false
         return itemObject
     }
-    func addItem(item: TodoItem) {
+    func addItem(item: TodoItem, completion: @escaping (Result<TodoItem, Error>) -> Void) {
         guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: context) else { return }
-
+        do {
         let itemObject = TodoItem(entity: entity, insertInto: context)
         itemObject.id = item.id
         itemObject.isCompleted = item.isCompleted
@@ -82,11 +78,10 @@ final class CoreDataStack: CoreDataStackProtocol {
         itemObject.updatedAt = item.updatedAt
         itemObject.isDirty = item.isDirty
 
-        do {
-            data.append(itemObject)
             try context.save()
+            completion(.success(itemObject))
         } catch let error {
-            print(error.localizedDescription)
+            completion(.failure(error))
         }
     }
 
@@ -102,8 +97,6 @@ final class CoreDataStack: CoreDataStackProtocol {
     }
 
     func deleteItem(item: TodoItem) {
-        guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
-        data.remove(at: index)
         queue.async { [weak self] in
             self?.context.delete(item)
 
@@ -136,9 +129,9 @@ final class CoreDataStack: CoreDataStackProtocol {
 
     func turnCompleted(item: TodoItem) {
         guard let coreItem = getCoreItem(byIdentifier: item.id) else {return}
-        print(coreItem.isCompleted)
+
         coreItem.isCompleted = !item.isCompleted
-        print(coreItem.isCompleted)
+
         queue.async { [weak self] in
             do {
                 try self?.context.save()
@@ -156,7 +149,6 @@ final class CoreDataStack: CoreDataStackProtocol {
             guard let item = items.first(where: { $0.id == id }) else {
                 return nil
             }
-        print(item.text)
             return item
     }
 }
