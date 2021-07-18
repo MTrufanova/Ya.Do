@@ -16,6 +16,7 @@
 		461AE7D62699F253005FD277 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE7D52699F253005FD277 /* CoreDataStack.swift */; };
 		461AE7E7269A117F005FD277 /* TodoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE7E5269A117F005FD277 /* TodoItem+CoreDataClass.swift */; };
 		461AE7E8269A117F005FD277 /* TodoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE7E6269A117F005FD277 /* TodoItem+CoreDataProperties.swift */; };
+		461AE87226A45262005FD277 /* AllTasksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE87126A45262005FD277 /* AllTasksPresenter.swift */; };
 		4669530A266A191800EFEFD4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4669530C266A191800EFEFD4 /* Localizable.strings */; };
 		4680B355267C7AC5000CEA75 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4680B354267C7AC5000CEA75 /* Colors.xcassets */; };
 		4680B35C267C7AD8000CEA75 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4680B35A267C7AD8000CEA75 /* UILabel+Ext.swift */; };
@@ -77,6 +78,7 @@
 		461AE7D52699F253005FD277 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		461AE7E5269A117F005FD277 /* TodoItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		461AE7E6269A117F005FD277 /* TodoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		461AE87126A45262005FD277 /* AllTasksPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTasksPresenter.swift; sourceTree = "<group>"; };
 		4669530B266A191800EFEFD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		46695310266A1D9000EFEFD4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4680B354267C7AC5000CEA75 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -230,6 +232,14 @@
 			path = CoreData;
 			sourceTree = "<group>";
 		};
+		461AE87026A4523B005FD277 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				461AE87126A45262005FD277 /* AllTasksPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		4680B359267C7AD8000CEA75 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +254,7 @@
 		468F8BF1267CD39B001231E8 /* AllTasksScene */ = {
 			isa = PBXGroup;
 			children = (
+				461AE87026A4523B005FD277 /* Presenter */,
 				468F8BF2267CD39B001231E8 /* Controllers */,
 				468F8BF4267CD39B001231E8 /* Views */,
 			);
@@ -643,6 +654,7 @@
 				468F8C11267E672F001231E8 /* AddItemCell.swift in Sources */,
 				461AE7862699D3EB005FD277 /* Ya.Do.xcdatamodeld in Sources */,
 				46020FF326768404008BE13B /* DetailView.swift in Sources */,
+				461AE87226A45262005FD277 /* AllTasksPresenter.swift in Sources */,
 				46020FEE267683EF008BE13B /* DetailTaskViewController.swift in Sources */,
 				46E9535A267C9A6300DB67AF /* Titles enum.swift in Sources */,
 				468F8BF6267CD39B001231E8 /* AllTasksViewController.swift in Sources */,

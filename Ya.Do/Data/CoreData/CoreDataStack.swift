@@ -11,7 +11,7 @@ import CoreData
 
 protocol CoreDataStackProtocol {
     func addItem(item: TodoItem)
-    func fetchItems()
+    func fetchItems(completion: @escaping (Result<[TodoItem], Error>) -> Void)
     func deleteItem(item: TodoItem)
     func updateItem(item: TodoItem)
 }
@@ -90,13 +90,14 @@ final class CoreDataStack: CoreDataStackProtocol {
         }
     }
 
-    func fetchItems() {
+    func fetchItems(completion: @escaping (Result<[TodoItem], Error>) -> Void) {
         let fetchRequest: NSFetchRequest<TodoItem> = TodoItem.fetchRequest()
 
         do {
-            data = try context.fetch(fetchRequest)
+            let dataTasks = try context.fetch(fetchRequest)
+             completion(.success(dataTasks))
         } catch let error {
-            print(error.localizedDescription)
+            completion(.failure(error))
         }
     }
 

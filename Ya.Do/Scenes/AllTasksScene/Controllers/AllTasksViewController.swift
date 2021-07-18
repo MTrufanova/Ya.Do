@@ -11,7 +11,7 @@ import CoreData
 
 class AllTasksViewController: UIViewController {
 
-    var context: NSManagedObjectContext?
+    var presenter: AllTasksPresenterProtocol!
 
     private let dataManager = CoreDataStack()
 
@@ -67,7 +67,7 @@ class AllTasksViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        dataManager.fetchItems()
+       // dataManager.fetchItems()
     }
 
     override func viewDidAppear(_ animated: Bool) {
