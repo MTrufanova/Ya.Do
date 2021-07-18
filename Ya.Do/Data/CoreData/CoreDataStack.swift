@@ -15,6 +15,7 @@ protocol CoreDataStackProtocol {
     func deleteItem(item: TodoItem)
     func updateItem(item: TodoItem)
     func turnCompleted(item: TodoItem)
+    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem?
 }
 
 final class CoreDataStack: CoreDataStackProtocol {

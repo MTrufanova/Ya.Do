@@ -18,6 +18,7 @@
 		461AE7E8269A117F005FD277 /* TodoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE7E6269A117F005FD277 /* TodoItem+CoreDataProperties.swift */; };
 		461AE87226A45262005FD277 /* AllTasksPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE87126A45262005FD277 /* AllTasksPresenter.swift */; };
 		461AE87B26A46812005FD277 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE87A26A46812005FD277 /* ModuleBuilder.swift */; };
+		461AE88726A4A8AC005FD277 /* DetailTaskPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 461AE88626A4A8AC005FD277 /* DetailTaskPresenter.swift */; };
 		4669530A266A191800EFEFD4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4669530C266A191800EFEFD4 /* Localizable.strings */; };
 		4680B355267C7AC5000CEA75 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4680B354267C7AC5000CEA75 /* Colors.xcassets */; };
 		4680B35C267C7AD8000CEA75 /* UILabel+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4680B35A267C7AD8000CEA75 /* UILabel+Ext.swift */; };
@@ -81,6 +82,7 @@
 		461AE7E6269A117F005FD277 /* TodoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoItem+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		461AE87126A45262005FD277 /* AllTasksPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllTasksPresenter.swift; sourceTree = "<group>"; };
 		461AE87A26A46812005FD277 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
+		461AE88626A4A8AC005FD277 /* DetailTaskPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskPresenter.swift; sourceTree = "<group>"; };
 		4669530B266A191800EFEFD4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		46695310266A1D9000EFEFD4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4680B354267C7AC5000CEA75 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 		46020FF92676849A008BE13B /* DetailTaskScene */ = {
 			isa = PBXGroup;
 			children = (
+				461AE88526A4A88D005FD277 /* Presenter */,
 				46020FFA267684C4008BE13B /* View */,
 				46020F6E266FDB02008BE13B /* Controllers */,
 			);
@@ -238,6 +241,14 @@
 			isa = PBXGroup;
 			children = (
 				461AE87126A45262005FD277 /* AllTasksPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		461AE88526A4A88D005FD277 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				461AE88626A4A8AC005FD277 /* DetailTaskPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -664,6 +675,7 @@
 				468F8BF6267CD39B001231E8 /* AllTasksViewController.swift in Sources */,
 				46AF91DB2690E2B3003A1896 /* TombstoneModel.swift in Sources */,
 				468F8BFF267DEFDF001231E8 /* Images.swift in Sources */,
+				461AE88726A4A8AC005FD277 /* DetailTaskPresenter.swift in Sources */,
 				46AF91E02690E2C2003A1896 /* NetworkingModel.swift in Sources */,
 				468F8C1B267FBA63001231E8 /* Files.swift in Sources */,
 				46967B962668FC35003DBDFF /* StartViewController.swift in Sources */,

@@ -16,6 +16,7 @@ protocol DetailTaskViewControllerDelegate: class {
 
 class DetailTaskViewController: UIViewController {
     weak var delegate: DetailTaskViewControllerDelegate?
+    var presenter: DetailTaskPresenterProtocol!
     let dataManager = CoreDataStack()
     var task: TodoItem?
     lazy var contentView = DetailView()
