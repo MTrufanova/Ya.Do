@@ -148,9 +148,7 @@ class AllTasksViewController: UIViewController {
                 } else {
                     task = presenter.data[indexPath.row]
                 }
-                let addVC = DetailTaskViewController()
-                addVC.task = task
-                addVC.delegate = self
+                let addVC = ModuleBuilder.configuredDetailTaskModule(task: task, delegate: self)
                 addVC.modalPresentationStyle = .formSheet
                 navigationController?.present(addVC, animated: true, completion: nil)
             }
@@ -161,8 +159,7 @@ class AllTasksViewController: UIViewController {
     }
 
     @objc private func addNewItem() {
-        let addVC = DetailTaskViewController()
-        addVC.delegate = self
+        let addVC = ModuleBuilder.configuredDetailTaskModule(task: nil, delegate: self)
         addVC.modalPresentationStyle = .formSheet
         navigationController?.present(addVC, animated: true, completion: nil)
     }
@@ -273,9 +270,7 @@ extension AllTasksViewController: UITableViewDataSource {
             } else {
                 task = presenter.data[indexPath.row]
             }
-            let addVC = DetailTaskViewController()
-            addVC.task = task
-            addVC.delegate = self
+            let addVC = ModuleBuilder.configuredDetailTaskModule(task: task, delegate: self)
             addVC.modalPresentationStyle = .formSheet
             navigationController?.present(addVC, animated: true, completion: nil)
         }

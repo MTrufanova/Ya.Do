@@ -15,9 +15,8 @@ protocol DetailTaskViewControllerDelegate: class {
 }
 
 class DetailTaskViewController: UIViewController {
-    weak var delegate: DetailTaskViewControllerDelegate?
+
     var presenter: DetailTaskPresenterProtocol!
-    let dataManager = CoreDataStack()
     var task: TodoItem?
     lazy var contentView = DetailView()
     override func loadView() {
@@ -25,6 +24,7 @@ class DetailTaskViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter.setTask()
         notificationsForKeyboard()
         updateUI()
         contentView.taskTextView.delegate = self
@@ -108,16 +108,16 @@ class DetailTaskViewController: UIViewController {
             priority = .important
         }
         guard let task = task else {
-            let itemDo = dataManager.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
+            let itemDo = presenter.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
             guard let item = itemDo else { return }
-            delegate?.addItem(item: item)
+            presenter.addItem(item: item)
             return
         }
         task.text = taskText
         task.deadline = deadline
         task.importance = priority
         task.updatedAt = Date()
-        delegate?.addItem(item: task)
+        presenter.addItem(item: task)
 
     }
     func cancelButtonAction() {
@@ -143,7 +143,7 @@ class DetailTaskViewController: UIViewController {
 
     @objc private func deleteButtonAction() {
         guard let task = task else { return  }
-        delegate?.removeItem(item: task)
+        presenter.removeItem(item: task)
     }
     // MARK: - SwitchAction
     @objc private func switchAction(calendarSwitch: UISwitch) {
@@ -193,5 +193,11 @@ extension DetailTaskViewController {
     }
     @objc func dismissKeyboardView() {
         view.endEditing(true)
+    }
+}
+
+extension DetailTaskViewController: DetailTaskProtocol {
+    func setTask(task: TodoItem?) {
+        self.task = task
     }
 }
