@@ -135,7 +135,7 @@ class NetworkService: NetworkServiceProtocol {
 
     // MARK: - DELETE
     func deleteItem(at id: String, completion: @escaping (Result<ToDoItem, NetworkingServiceError>) -> Void ) {
-        
+
         func complete(_ result: Result<ToDoItem, NetworkingServiceError>) {
             DispatchQueue.main.async {
                 completion(result)
