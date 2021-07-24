@@ -2,13 +2,13 @@
 //  TodoItem+CoreDataProperties.swift
 //  Ya.Do
 //
-//  Created by msc on 10.07.2021.
+//  Created by msc on 24.07.2021.
 //
 //
 
 import Foundation
 import CoreData
-import DevToDoPod
+
 
 extension TodoItem {
 
@@ -16,7 +16,7 @@ extension TodoItem {
         return NSFetchRequest<TodoItem>(entityName: "TodoItem")
     }
 
-    @NSManaged public var id: UUID
+    @NSManaged public var id: String
     @NSManaged public var text: String
     @NSManaged public var priority: String?
     @NSManaged public var deadline: Date?
@@ -27,12 +27,7 @@ extension TodoItem {
 
 }
 
-extension TodoItem: Identifiable {
-
-}
-
 extension TodoItem {
-
     var importance: ToDoItem.Priority {
 
         get {

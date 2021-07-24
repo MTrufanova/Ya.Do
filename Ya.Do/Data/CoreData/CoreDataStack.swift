@@ -6,25 +6,23 @@
 //
 
 import Foundation
-import DevToDoPod
 import CoreData
 
 protocol CoreDataStackProtocol {
-    func addItem(item: TodoItem, completion: @escaping (Result<TodoItem, Error>) -> Void)
-    func fetchItems(completion: @escaping (Result<[TodoItem], Error>) -> Void)
-    func deleteItem(item: TodoItem)
-    func updateItem(item: TodoItem)
-    func turnCompleted(item: TodoItem)
-    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem?
+    func addItem(item: ToDoItem, completion: @escaping (Result<ToDoItem, Error>) -> Void)
+    func fetchItems(completion: @escaping (Result<[ToDoItem], Error>) -> Void)
+    func deleteItem(item: ToDoItem)
+    func updateItem(item: ToDoItem)
+    func turnCompleted(item: ToDoItem)
 }
 
 final class CoreDataStack: CoreDataStackProtocol {
-  
-   private let queue = DispatchQueue.global(qos: .utility)
 
-   private lazy var persistentContainer: NSPersistentContainer = {
+    private let queue = DispatchQueue.global(qos: .utility)
 
-        let container = NSPersistentContainer(name: "Ya.Do")
+    private lazy var persistentContainer: NSPersistentContainer = {
+
+        let container = NSPersistentContainer(name: "TodoItem")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
 
@@ -51,56 +49,42 @@ final class CoreDataStack: CoreDataStackProtocol {
         }
     }
 
-    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem? {
-
-        guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: backgroundContext) else {
-            return nil }
-        let itemObject = TodoItem(entity: entity, insertInto: backgroundContext)
-        itemObject.id = UUID()
-        itemObject.isCompleted = false
-        itemObject.text = text
-        itemObject.importance = priority
-        itemObject.deadline = deadline
-        itemObject.createdAt = createdAt
-        itemObject.updatedAt = updatedAt
-        itemObject.isDirty = false
-        return itemObject
-    }
-    func addItem(item: TodoItem, completion: @escaping (Result<TodoItem, Error>) -> Void) {
+    func addItem(item: ToDoItem, completion: @escaping (Result<ToDoItem, Error>) -> Void) {
         guard let entity = NSEntityDescription.entity(forEntityName: "TodoItem", in: context) else { return }
         do {
-        let itemObject = TodoItem(entity: entity, insertInto: context)
-        itemObject.id = item.id
-        itemObject.isCompleted = item.isCompleted
-        itemObject.text = item.text
-        itemObject.importance = item.importance
-        itemObject.deadline = item.deadline
-        itemObject.createdAt = item.createdAt
-        itemObject.updatedAt = item.updatedAt
-        itemObject.isDirty = item.isDirty
+            let itemObject = TodoItem(entity: entity, insertInto: context)
+            itemObject.id = item.id
+            itemObject.isCompleted = item.isCompleted
+            itemObject.text = item.text
+            itemObject.importance = item.priority
+            itemObject.deadline = item.deadline
+            itemObject.createdAt = item.createdAt
+            itemObject.updatedAt = item.updatedAt
+            itemObject.isDirty = item.isDirty
 
             try context.save()
-            completion(.success(itemObject))
+            let todoItem = try ToDoItem.init(withLocal: itemObject)
+            completion(.success(todoItem))
         } catch let error {
             completion(.failure(error))
         }
     }
 
-    func fetchItems(completion: @escaping (Result<[TodoItem], Error>) -> Void) {
+    func fetchItems(completion: @escaping (Result<[ToDoItem], Error>) -> Void) {
         let fetchRequest: NSFetchRequest<TodoItem> = TodoItem.fetchRequest()
-
         do {
-            let dataTasks = try context.fetch(fetchRequest)
-             completion(.success(dataTasks))
+            let dataTasks = try self.context.fetch(fetchRequest)
+            let todoItems = try dataTasks.map { try ToDoItem.init(withLocal: $0) }
+            completion(.success(todoItems))
         } catch let error {
             completion(.failure(error))
         }
     }
 
-    func deleteItem(item: TodoItem) {
+    func deleteItem(item: ToDoItem) {
+        guard let coreItem = getCoreItem(byIdentifier: item.id) else { return }
         queue.async { [weak self] in
-            self?.context.delete(item)
-
+            self?.context.delete(coreItem)
             do {
                 try self?.context.save()
             } catch let error {
@@ -110,12 +94,11 @@ final class CoreDataStack: CoreDataStackProtocol {
 
     }
 
-    func updateItem(item: TodoItem) {
-
+    func updateItem(item: ToDoItem) {
         guard let coreItem = getCoreItem(byIdentifier: item.id) else { return }
         coreItem.text = item.text
         coreItem.deadline = item.deadline
-        coreItem.importance = item.importance
+        coreItem.importance = item.priority
         coreItem.updatedAt = Date()
 
         queue.async { [weak self] in
@@ -125,13 +108,13 @@ final class CoreDataStack: CoreDataStackProtocol {
                 print(error.localizedDescription)
             }
         }
-
     }
 
-    func turnCompleted(item: TodoItem) {
+    func turnCompleted(item: ToDoItem) {
         guard let coreItem = getCoreItem(byIdentifier: item.id) else {return}
 
-        coreItem.isCompleted = !item.isCompleted
+        coreItem.isCompleted = item.isCompleted
+        coreItem.updatedAt = item.updatedAt
 
         queue.async { [weak self] in
             do {
@@ -143,13 +126,13 @@ final class CoreDataStack: CoreDataStackProtocol {
 
     }
 
-    private func getCoreItem(byIdentifier id: UUID) -> TodoItem? {
+    private func getCoreItem(byIdentifier id: String) -> TodoItem? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "TodoItem")
         fetchRequest.predicate = NSPredicate(format: "id==%@", id as CVarArg)
         guard let items = try? context.fetch(fetchRequest) as? [TodoItem] else { return nil}
-            guard let item = items.first(where: { $0.id == id }) else {
-                return nil
-            }
-            return item
+        guard let item = items.first(where: { $0.id == id }) else {
+            return nil
+        }
+        return item
     }
 }

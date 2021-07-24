@@ -12,9 +12,9 @@ struct NetworkingModel: Codable {
     let text: String
     let importance: String
     let done: Bool
-    let deadline: Int?
-    let createdAt: Int
-    let updatedAt: Int?
+    let deadline: Int64?
+    let createdAt: Int64
+    let updatedAt: Int64?
 
     enum CodingKeys: String, CodingKey {
         case id, text, importance, done, deadline

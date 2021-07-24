@@ -6,27 +6,27 @@
 //
 
 import Foundation
-import DevToDoPod
 
 protocol DetailTaskProtocol: class {
-    func setTask(task: TodoItem?)
+    func setTask(task: ToDoItem?)
 }
 
 protocol DetailTaskPresenterProtocol: class {
-    init(view: DetailTaskProtocol, localData: CoreDataStackProtocol, task: TodoItem?, delegate: DetailTaskViewControllerDelegate?)
+    init(view: DetailTaskProtocol, localData: CoreDataStackProtocol, task: ToDoItem?, delegate: DetailTaskViewControllerDelegate?)
     func setTask()
-    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem?
-    func addItem(item: TodoItem)
-    func removeItem(item: TodoItem)
+    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> ToDoItem?
+    func itemToUpdate(id: String, text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> ToDoItem?
+    func addItem(item: ToDoItem)
+    func removeItem(item: ToDoItem)
 }
 
 class DetailTaskPresenter: DetailTaskPresenterProtocol {
     weak var view: DetailTaskProtocol?
     weak var delegate: DetailTaskViewControllerDelegate?
     let localData: CoreDataStackProtocol!
-    var task: TodoItem?
+    var task: ToDoItem?
 
-    required init(view: DetailTaskProtocol, localData: CoreDataStackProtocol, task: TodoItem?, delegate: DetailTaskViewControllerDelegate?) {
+    required init(view: DetailTaskProtocol, localData: CoreDataStackProtocol, task: ToDoItem?, delegate: DetailTaskViewControllerDelegate?) {
         self.view = view
         self.localData = localData
         self.task = task
@@ -37,15 +37,21 @@ class DetailTaskPresenter: DetailTaskPresenterProtocol {
     self.view?.setTask(task: task)
     }
 
-    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> TodoItem? {
-        localData.createItem(text: text, priority: priority, deadline: deadline, createdAt: createdAt, updatedAt: updatedAt)
+    func createItem(text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> ToDoItem? {
+
+        return ToDoItem(text: text, priority: priority, deadline: deadline, createdAt: createdAt, updatedAt: updatedAt)
+    }
+    func itemToUpdate(id: String, text: String, priority: ToDoItem.Priority, deadline: Date?, createdAt: Int64, updatedAt: Date?) -> ToDoItem? {
+
+        return ToDoItem(id: id, text: text, priority: priority, deadline: deadline, createdAt: createdAt, updatedAt: updatedAt)
     }
 
-    func addItem(item: TodoItem) {
+    func addItem(item: ToDoItem) {
         delegate?.addItem(item: item)
     }
 
-    func removeItem(item: TodoItem)  {
+    func removeItem(item: ToDoItem) {
         delegate?.removeItem(item: item)
     }
+
 }

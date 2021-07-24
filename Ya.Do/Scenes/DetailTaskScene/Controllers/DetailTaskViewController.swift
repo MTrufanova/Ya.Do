@@ -6,18 +6,17 @@
 //
 
 import UIKit
-import DevToDoPod
 import CoreData
 
 protocol DetailTaskViewControllerDelegate: class {
-    func addItem(item: TodoItem)
-    func removeItem(item: TodoItem)
+    func addItem(item: ToDoItem)
+    func removeItem(item: ToDoItem)
 }
 
 class DetailTaskViewController: UIViewController {
 
     var presenter: DetailTaskPresenterProtocol!
-    var task: TodoItem?
+    var task: ToDoItem?
     lazy var contentView = DetailView()
     override func loadView() {
         self.view = contentView
@@ -72,8 +71,8 @@ class DetailTaskViewController: UIViewController {
         contentView.dateButton.isHidden = false
         contentView.dateButton.setTitle(date, for: .normal)
         contentView.datePicker.date = deadline
-        // switch task.priority {
-        switch task.importance {
+
+        switch task.priority {
         case .low:
             contentView.prioritySegment.selectedSegmentIndex = 0
         case .basic:
@@ -108,17 +107,14 @@ class DetailTaskViewController: UIViewController {
             priority = .important
         }
         guard let task = task else {
-            let itemDo = presenter.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
-            guard let item = itemDo else { return }
+            let newItem = presenter.createItem(text: taskText, priority: priority, deadline: deadline, createdAt: Int64(createDate), updatedAt: nil)
+            guard let item = newItem else { return }
             presenter.addItem(item: item)
             return
         }
-        task.text = taskText
-        task.deadline = deadline
-        task.importance = priority
-        task.updatedAt = Date()
-        presenter.addItem(item: task)
-
+        if let itemToUpdate = presenter.itemToUpdate(id: task.id, text: taskText, priority: priority, deadline: deadline, createdAt: task.createdAt, updatedAt: Date()) {
+        presenter.addItem(item: itemToUpdate)
+        }
     }
     func cancelButtonAction() {
         contentView.cancelButton.addTarget(self, action: #selector(dismissModal), for: .touchUpInside)
@@ -197,7 +193,7 @@ extension DetailTaskViewController {
 }
 
 extension DetailTaskViewController: DetailTaskProtocol {
-    func setTask(task: TodoItem?) {
+    func setTask(task: ToDoItem?) {
         self.task = task
     }
 }

@@ -6,47 +6,77 @@
 //
 
 import Foundation
-import DevToDoPod
+
+public struct ToDoItem {
+    public let id: String
+    public let text: String
+    public let priority: Priority
+    public let deadline: Date?
+    public var isCompleted: Bool
+    public let createdAt: Int64
+    public var updatedAt: Date?
+    public let isDirty: Bool
+
+    public init(id: String = UUID().uuidString, text: String, priority: Priority, deadline: Date?, isCompleted: Bool = false, createdAt: Int64, updatedAt: Date?, isDirty: Bool = false) {
+        self.id = id
+        self.text = text
+        self.priority = priority
+        self.deadline = deadline
+        self.isCompleted = isCompleted
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.isDirty = isDirty
+    }
+    public enum Priority: String, Codable {
+        case important
+        case low
+        case basic
+    }
+}
 
 extension ToDoItem {
-    private struct Keys {
-        static let id = "id"
-        static let text = "text"
-        static let priority = "priority"
-        static let deadline = "timestamp"
-        static let isComleted = "isComleted"
-        static let createdAt = "createdAt"
-        static let updatedAt = "updatedAt"
-        static let isDirty = "isDirty"
-    }
-    static func parse(json: Any) -> ToDoItem? {
-        guard let data = json as? [String: Any],
-         let id = data[Keys.id] as? String,
-         let text = data[Keys.text] as? String,
-         let createdAt = data[Keys.createdAt] as? Int,
-         let updatedAt = data[Keys.updatedAt] as? Int?,
-         let isDirty = data[Keys.isDirty] as? Bool,
-         let isComleted = data[Keys.isComleted] as? Bool else { return nil }
-        let priority = (data[Keys.priority] as? String).flatMap(Priority.init(rawValue:)) ?? .basic
-        var deadline: Date?
-        if let timestamp = data[Keys.deadline] as? TimeInterval {
-            deadline = Date(timeIntervalSince1970: timestamp)
-        }
-        return ToDoItem(id: id, text: text, priority: priority, deadline: deadline, isCompleted: isComleted, createdAt: createdAt, updatedAt: updatedAt, isDirty: isDirty)
+    var asNetModel: NetworkingModel {
+        return NetworkingModel(id: id, text: text, importance: priority.rawValue, done: isCompleted, deadline: (deadline?.timeIntervalSince1970).map(Int64.init), createdAt: createdAt, updatedAt: (updatedAt?.timeIntervalSince1970).map(Int64.init)
+        )
     }
 
-    var json: Any {
-        var params: [String: Any] = [:]
-        params[Keys.id] = id
-        params[Keys.text] = text
-        params[Keys.deadline] = deadline?.timeIntervalSince1970
-        params[Keys.isComleted] = isCompleted
-        params[Keys.createdAt] = createdAt
-        params[Keys.updatedAt] = updatedAt
-        params[Keys.isDirty] = isDirty
-        if priority != .basic {
-            params[Keys.priority] = priority.rawValue
+    init(with netModel: NetworkingModel) throws {
+        guard let priority = Priority(rawValue: netModel.importance) else {
+            throw TodoItemError.failedToCreateImportance(netModel.importance)
         }
-        return params
+
+        self.id = netModel.id
+        self.text = netModel.text
+        self.priority = priority
+        self.isCompleted = netModel.done
+
+        if let deadlineTimestamp = netModel.deadline {
+            self.deadline = Date(timeIntervalSince1970: Double(deadlineTimestamp))
+        } else {
+            self.deadline = nil
+        }
+
+        if let updateDate = netModel.updatedAt {
+            self.updatedAt = Date(timeIntervalSince1970: Double(updateDate))
+        } else {
+            self.updatedAt = nil
+        }
+
+        self.createdAt = netModel.createdAt
+        self.isDirty = false
+    }
+
+    init(withLocal localModel: TodoItem) throws {
+
+        self.id = localModel.id
+        self.text = localModel.text
+        self.priority = localModel.importance
+        self.isCompleted = localModel.isCompleted
+        self.deadline = localModel.deadline
+
+
+        self.createdAt = localModel.createdAt
+        self.updatedAt = localModel.updatedAt
+        self.isDirty = localModel.isDirty
     }
 }
