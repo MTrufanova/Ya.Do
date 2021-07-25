@@ -7,5 +7,5 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: pod install
-      - run: xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
-      - run: xcodebuild test -scheme SampleTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4'
+      - run: xcodebuild -workspace CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+      - run: xcodebuild test -scheme Ya.DoTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4'
