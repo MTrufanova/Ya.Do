@@ -9,3 +9,8 @@ mkdir builder/TheApp.app
 cp builder/TheApp builder/TheApp.app/TheApp
 cp Info.plist builder/TheApp.app/Info.plist
 cp builder/Assets.car builder/TheApp.app/Assets.car
+simulator_id="$(xcrun simctl list devices | grep -v unavailable | grep -m 1 -o '[0-9A-F\-]\{36\}')"
+xcrun simctl boot "$simulator_id"
+xcrun simctl install booted ./builder/TheApp.app/
+xcrun simctl launch booted Marina.TheApp
+
