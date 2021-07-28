@@ -153,8 +153,6 @@ class NetworkService: NetworkServiceProtocol {
             urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
             urlRequest.setValue( "Bearer \(self.token)", forHTTPHeaderField: "Authorization")
 
-
-
             let task = self.session.dataTask(with: urlRequest) { data, response, error in
                 if let error = error {
                     complete(.failure(.networkingError(error)))

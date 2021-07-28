@@ -15,6 +15,7 @@
 			dependencies = (
 			);
 			name = SwiftLint;
+			productName = SwiftLint;
 		};
 /* End PBXAggregateTarget section */
 
@@ -82,7 +83,7 @@
 		15F757FFA989C8B5870737E9BC62C979 /* Pods-Ya.Do-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Ya.Do-frameworks.sh"; sourceTree = "<group>"; };
 		22DD9FEA83225A1C75951142392E0777 /* Pods-Ya.Do-Ya.DoUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Ya.Do-Ya.DoUITests-dummy.m"; sourceTree = "<group>"; };
 		274C309B1E3EF9F8A2E0A45D2BBC031D /* DevToDoPod-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "DevToDoPod-Info.plist"; sourceTree = "<group>"; };
-		29D4E977C201B8767E0E29B33895C4E7 /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Ya_Do_Ya_DoUITests.framework; path = "Pods-Ya.Do-Ya.DoUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		29D4E977C201B8767E0E29B33895C4E7 /* Pods_Ya_Do_Ya_DoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do_Ya_DoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A7FB997455E98A7D555E41534F61F65 /* DevToDoPod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DevToDoPod.debug.xcconfig; sourceTree = "<group>"; };
 		3E03C167192AC0EC7124B8D11CF08CA2 /* Pods-Ya.Do-Ya.DoUITests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.Do-Ya.DoUITests-Info.plist"; sourceTree = "<group>"; };
 		3EC0124719FE8EF5FDDD72C26F8A2F57 /* SwiftLint.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.debug.xcconfig; sourceTree = "<group>"; };
@@ -92,7 +93,7 @@
 		54F567CE8F0ECDFCD108E55642E5DFA3 /* Pods-Ya.Do-Ya.DoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do-Ya.DoUITests.release.xcconfig"; sourceTree = "<group>"; };
 		5860133742EE1600F7B26B8A18F76329 /* Media.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = DevToDoPod/Resources/Media.xcassets; sourceTree = "<group>"; };
 		660B7FF4C01C8BC9D2A14E98FAA6D748 /* Pods-Ya.Do-Ya.DoUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.Do-Ya.DoUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		6BD94129C5EF9F4C090BC4A4CD995AC0 /* MIT.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = MIT.txt; sourceTree = "<group>"; };
+		6BD94129C5EF9F4C090BC4A4CD995AC0 /* MIT.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = MIT.txt; sourceTree = "<group>"; };
 		7854E9A8DBCA8E9DFDAFF8A448DA2296 /* Pods-Ya.DoTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Ya.DoTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7ABED41340D58C0F3D3D6B5F3CE3E053 /* Pods-Ya.DoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.DoTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		7C85C3846FBCD269C4F0958A79F26E16 /* Pods-Ya.DoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.DoTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -100,22 +101,22 @@
 		85BB3B770424F390E74AAE7F9C06A328 /* Pods-Ya.Do-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Ya.Do-umbrella.h"; sourceTree = "<group>"; };
 		8B77C9820803A3343FCB5B95EFEB4AEF /* Pods-Ya.Do-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Ya.Do-acknowledgements.markdown"; sourceTree = "<group>"; };
 		975B6B36A243242F2204C19BA3452A72 /* Pods-Ya.Do-Ya.DoUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Ya.Do-Ya.DoUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A2F4283817B75C767FD2216AFA3C14A3 /* Pods-Ya.DoTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Ya.DoTests-Info.plist"; sourceTree = "<group>"; };
-		A41233C436795370631D7AF9762C2D14 /* DevToDoPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = DevToDoPod.framework; path = DevToDoPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A41233C436795370631D7AF9762C2D14 /* DevToDoPod.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DevToDoPod.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABAC660531FB86AB348408C5D505FA12 /* DevToDoPod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DevToDoPod.release.xcconfig; sourceTree = "<group>"; };
 		AD6C86FF7963D3ED08EBF6661874AA02 /* DevToDoPod-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DevToDoPod-dummy.m"; sourceTree = "<group>"; };
 		B454BBA17767B19A63A6B261C5C8E139 /* Pods-Ya.Do-Ya.DoUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Ya.Do-Ya.DoUITests-umbrella.h"; sourceTree = "<group>"; };
 		B63558C708F4F617924A34F0EA92CED3 /* Pods-Ya.Do-Ya.DoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do-Ya.DoUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		B6893A6B61B7CED68250510EE7497EEF /* Pods_Ya_DoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Ya_DoTests.framework; path = "Pods-Ya.DoTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6893A6B61B7CED68250510EE7497EEF /* Pods_Ya_DoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_DoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0FEB917FB21DECC6E76114F4CE26719 /* Pods-Ya.Do.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Ya.Do.release.xcconfig"; sourceTree = "<group>"; };
 		D217AB301A5D60BD821D86C99515EE60 /* ToDoItemModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToDoItemModel.swift; path = DevToDoPod/Models/ToDoItemModel.swift; sourceTree = "<group>"; };
 		D245E0514AAC1A2B9A6D5EA2F383E90F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		D4B89D3128855CFF81815BEE8421CE7D /* DevToDoPod.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = DevToDoPod.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D4B89D3128855CFF81815BEE8421CE7D /* DevToDoPod.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = DevToDoPod.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D91C9598F47D6AD3E65A645B8D133FB6 /* Pods-Ya.DoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Ya.DoTests.modulemap"; sourceTree = "<group>"; };
 		DF96825966F8325AEC24221CF83ABE22 /* Pods-Ya.Do-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Ya.Do-dummy.m"; sourceTree = "<group>"; };
 		E4417117476B8E46166F5E8097BB3F2B /* Pods-Ya.Do-Ya.DoUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Ya.Do-Ya.DoUITests-frameworks.sh"; sourceTree = "<group>"; };
-		E4AEB69C767EBCC80528105F43425E0C /* Pods_Ya_Do.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Ya_Do.framework; path = "Pods-Ya.Do.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4AEB69C767EBCC80528105F43425E0C /* Pods_Ya_Do.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ya_Do.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E777F53DFC324535CAA5121880CBBF01 /* DevToDoPod-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DevToDoPod-prefix.pch"; sourceTree = "<group>"; };
 		EAB6F611E86A4758835A715E4B4184F6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		EE285A6D4131E8D6DC4466635831BACB /* Pods-Ya.Do-Ya.DoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Ya.Do-Ya.DoUITests.modulemap"; sourceTree = "<group>"; };
@@ -295,7 +296,6 @@
 			children = (
 				7FDA596DBE0337ACDFE55A210D54EF26 /* Support Files */,
 			);
-			name = SwiftLint;
 			path = SwiftLint;
 			sourceTree = "<group>";
 		};
@@ -453,7 +453,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1240;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -595,7 +595,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DevToDoPod/DevToDoPod-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DevToDoPod/DevToDoPod-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -844,7 +844,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/DevToDoPod/DevToDoPod-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/DevToDoPod/DevToDoPod-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -972,7 +972,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1026,7 +1026,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

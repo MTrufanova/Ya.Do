@@ -151,7 +151,7 @@ class DataManager: DataManagerProtocol {
     func addServerItem(item: ToDoItem) {
         netService.postItem(item: item) { (result) in
             switch result {
-            case .success(_):
+            case .success:
                 print("Ok")
             case .failure(let error):
                 print("Failure put item", error)
@@ -162,8 +162,8 @@ class DataManager: DataManagerProtocol {
     func updateServerItem(item: ToDoItem) {
         netService.updateItem(item: item) { (result) in
             switch result {
-            case .success(_):
-                print("ok")
+            case .success(let item):
+                print(item.updatedAt as Any)
             case .failure(let error):
                 print("Failure updating item", error)
             }
@@ -173,7 +173,7 @@ class DataManager: DataManagerProtocol {
     func deleteServerItem(item: ToDoItem) {
         netService.deleteItem(at: item.id) { (result) in
             switch result {
-            case .success(_):
+            case .success:
                 print("ok")
             case .failure(let error):
                 print("Failure deleting item", error)
