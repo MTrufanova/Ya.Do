@@ -8,6 +8,6 @@
 import Foundation
 
 struct Tombstone {
-   let itemId: String
-   let deletedAt: Date
+    let itemId: String
+    let deletedAt: Date
 }

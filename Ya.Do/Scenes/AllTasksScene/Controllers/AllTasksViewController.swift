@@ -16,7 +16,7 @@ class AllTasksViewController: UIViewController {
     private var isFiltering: Bool {
         return hiddenButton.titleLabel?.text == Title.show
     }
-    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: "", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
+    lazy var counterLabel = UILabel.createLabel(font: Fonts.system15, textLabel: Title.done + "0", textAlignment: .left, color: Colors.grayTitle ?? UIColor())
 
     lazy var hiddenButton: UIButton = {
         let button = UIButton()
@@ -64,15 +64,7 @@ class AllTasksViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         view.backgroundColor = Colors.background
         setupLayout()
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
 
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        counterLabel.text = "\(self.countDone())"
     }
 
     @objc private func showDone() {
@@ -92,7 +84,7 @@ class AllTasksViewController: UIViewController {
 
     private func doneAction(at indexPath: IndexPath) -> UIContextualAction {
         let action = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, completion) in
-            var task: TodoItem
+            var task: ToDoItem
             if isFiltering {
                 presenter.returnUncompleted()
                 task = presenter.filterData[indexPath.row]
@@ -103,7 +95,6 @@ class AllTasksViewController: UIViewController {
             }
             presenter.turnCompleted(item: task)
             counterLabel.text = "\(self.countDone())"
-            tableView.reloadData()
             completion(true)
         }
         action.backgroundColor = .systemGreen
@@ -113,7 +104,7 @@ class AllTasksViewController: UIViewController {
 
     private func deleteSwipeAction(at indexPath: IndexPath) -> UIContextualAction {
         let delete = UIContextualAction(style: .destructive, title: nil) { [self] (_, _, _) in
-            var task: TodoItem
+            var task: ToDoItem
             if isFiltering {
                 task = presenter.filterData[indexPath.row]
             } else {
@@ -137,7 +128,7 @@ class AllTasksViewController: UIViewController {
             case lastRowIndex - 1:
                 addNewItem()
             default:
-                var task: TodoItem
+                var task: ToDoItem
                 if isFiltering {
                     let completed = presenter.filterData[indexPath.row].id
                     guard let index = presenter.data.firstIndex(where: { $0.id == completed
@@ -221,7 +212,7 @@ extension AllTasksViewController: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MainTaskCell.identifier, for: indexPath) as? MainTaskCell else {
                 return UITableViewCell()
             }
-            var task: TodoItem
+            var task: ToDoItem
 
             if isFiltering {
                 task = presenter.filterData[indexPath.row]
@@ -234,9 +225,7 @@ extension AllTasksViewController: UITableViewDataSource {
                     return
                 }
                 self.presenter.turnCompleted(item: task)
-
                 self.counterLabel.text = "\(self.countDone())"
-                tableView.reloadData()
                 switch task.isCompleted {
                 case true:
                     cell.checkButton.setImage(Images.fillCircle, for: .normal)
@@ -245,11 +234,7 @@ extension AllTasksViewController: UITableViewDataSource {
                 case false:
                     cell.checkButton.setImage(Images.circle, for: .normal)
                     cell.taskTitleLabel.textColor = Colors.blackTitle
-                    guard task.importance == .important else {
-                        cell.checkButton.tintColor = Colors.grayLines
-                        return
-                    }
-                    cell.checkButton.tintColor = Colors.red
+                    task.priority == .important ? (cell.checkButton.tintColor = Colors.red) : (cell.checkButton.tintColor = Colors.grayLines)
                 }
             }
             return cell
@@ -262,7 +247,7 @@ extension AllTasksViewController: UITableViewDataSource {
         case lastRowIndex - 1:
             addNewItem()
         default:
-            var task: TodoItem
+            var task: ToDoItem
             if isFiltering {
                 let completed = presenter.filterData[indexPath.row].id
                 guard let index = presenter.data.firstIndex(where: { $0.id == completed }) else {return}
@@ -298,9 +283,9 @@ extension AllTasksViewController: UITableViewDelegate {
     }
 }
 
-extension AllTasksViewController: DetailTaskViewControllerDelegate {
+extension AllTasksViewController: DetailTaskPresenterDelegate {
 
-    func removeItem(item: TodoItem) {
+    func removeItem(item: ToDoItem) {
         self.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             self.presenter.deleteItem(item: item)
@@ -308,7 +293,7 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
         }
     }
 
-    func addItem(item: TodoItem) {
+    func addItem(item: ToDoItem) {
         self.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
             if let selectedIndexPath = self.tableView.indexPathForSelectedRow {
@@ -318,7 +303,6 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                     self.presenter.addItem(item: item)
 
                 default:
-
                     if self.isFiltering {
                         self.presenter.updateItem(item: item)
                     } else {
@@ -329,12 +313,12 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 self.presenter.addItem(item: item)
             }
             self.tableView.reloadData()
-
         }
     }
 }
 
 extension AllTasksViewController: AllTasksProtocol {
+
     func succes() {
         tableView.reloadData()
     }
@@ -342,4 +326,9 @@ extension AllTasksViewController: AllTasksProtocol {
     func failure(error: Error) {
         print(error.localizedDescription)
     }
+
+    func setNumOfDoneItems(counterText: String) {
+        counterLabel.text = counterText
+    }
+
 }

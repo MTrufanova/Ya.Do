@@ -7,77 +7,85 @@
 
 import Foundation
 
-protocol AllTasksProtocol: class {
+protocol AllTasksProtocol: AnyObject {
     func succes()
     func failure(error: Error)
+    func setNumOfDoneItems(counterText: String)
 }
 
-protocol AllTasksPresenterProtocol: class {
-    init(view: AllTasksProtocol, localData: CoreDataStackProtocol)
-    var data: [TodoItem] { get }
-    var filterData: [TodoItem] { get }
+protocol AllTasksPresenterProtocol: AnyObject {
+
+    var data: [ToDoItem] { get }
+    var filterData: [ToDoItem] { get }
     func loadItems()
     func returnUncompleted()
-    func turnCompleted(item: TodoItem)
-    func deleteItem(item: TodoItem)
-    func updateItem(item: TodoItem)
-    func addItem(item: TodoItem)
+    func turnCompleted(item: ToDoItem)
+    func deleteItem(item: ToDoItem)
+    func updateItem(item: ToDoItem)
+    func addItem(item: ToDoItem)
+    func countDoneItems() -> String
 }
 
 class AllTasksPresenter: AllTasksPresenterProtocol {
     weak var view: AllTasksProtocol?
-    let localData: CoreDataStackProtocol
-    private(set) var data = [TodoItem]()
-    private(set) var filterData = [TodoItem]()
-    
-    required init(view: AllTasksProtocol, localData: CoreDataStackProtocol) {
+    let manager: DataManagerProtocol
+    private(set) var data = [ToDoItem]()
+    private(set) var filterData = [ToDoItem]()
+    private let queue = DispatchQueue(label: "ItemPresenter", attributes: .concurrent)
+
+    required init(view: AllTasksProtocol, manager: DataManagerProtocol) {
         self.view = view
-        self.localData = localData
+        self.manager = manager
     }
-    
+
     func loadItems() {
-        localData.fetchItems { [weak self] (result) in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let items):
-                    self.data = items
-                    self.view?.succes()
-                case .failure(let error):
-                    self.view?.failure(error: error)
-                }
-            }
-        }
-    }
-
-   func returnUncompleted() {
-        filterData = data.filter { $0.isCompleted == false}
-    }
-
-    func turnCompleted(item: TodoItem) {
-        localData.turnCompleted(item: item)
-    }
-
-    func deleteItem(item: TodoItem) {
-        guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
-        data.remove(at: index)
-        localData.deleteItem(item: item)
-    }
-
-    func updateItem(item: TodoItem) {
-        localData.updateItem(item: item)
-    }
-
-    func addItem(item: TodoItem) {
-
-        localData.addItem(item: item) { [weak self] (result) in
+        manager.loadData { [weak self] (result) in
             guard let self = self else { return }
             switch result {
-            case .success(let item):
-                self.data.append(item)
+            case .success(let items):
+                self.data = items
+                self.view?.succes()
+                self.view?.setNumOfDoneItems(counterText: self.countDoneItems())
             case .failure(let error):
-                print(error.localizedDescription)
+                self.view?.failure(error: error)
             }
         }
+
+    }
+
+    func returnUncompleted() {
+        filterData = data.filter { $0.isCompleted == false}
+    }
+    func countDoneItems() -> String {
+        let count = self.data.filter { $0.isCompleted == true }.count
+        return Title.done + "\(count)"
+
+    }
+
+    func turnCompleted(item: ToDoItem) {
+        var newItem = item
+        newItem.isCompleted = !item.isCompleted
+        newItem.updatedAt = Date()
+        manager.turnCompleted(item: newItem)
+        guard let index = self.data.firstIndex(where: { $0.id == item.id }) else { return }
+        self.data[index] = newItem
+        self.view?.succes()
+    }
+
+    func deleteItem(item: ToDoItem) {
+        manager.deleteItem(item: item)
+        guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
+        data.remove(at: index)
+    }
+
+    func updateItem(item: ToDoItem) {
+        manager.updateItem(item: item)
+        guard let index = data.firstIndex(where: { $0.id == item.id }) else { return }
+        data[index] = item
+    }
+
+    func addItem(item: ToDoItem) {
+        manager.addItem(item: item)
+        data.append(item)
     }
 }
