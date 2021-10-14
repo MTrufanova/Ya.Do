@@ -1,0 +1,11 @@
+name: "todoBuild"
+on: pull_request
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: pod install
+      - run: xcodebuild -workspace Ya.Do.xcworkspace -scheme Ya.Do CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED="NO" CODE_SIGN_ENTITLEMENTS="" CODE_SIGNING_ALLOWED="NO"
+      - run: xcodebuild test -workspace Ya.Do.xcworkspace -scheme Ya.DoTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 8,OS=14.4'
