@@ -9,7 +9,7 @@ import UIKit
 
 protocol ModuleBuilderProtocol {
     static func configuredTasksListModule() -> UIViewController
-    static func configuredDetailTaskModule(task: ToDoItem?, delegate: DetailTaskViewControllerDelegate?) -> UIViewController
+    static func configuredDetailTaskModule(task: ToDoItem?, delegate: DetailTaskPresenterDelegate?) -> UIViewController
 
 }
 
@@ -22,7 +22,7 @@ class ModuleBuilder: ModuleBuilderProtocol {
         view.presenter = presenter
         return view
     }
-    static func configuredDetailTaskModule(task: ToDoItem?, delegate: DetailTaskViewControllerDelegate?) -> UIViewController {
+    static func configuredDetailTaskModule(task: ToDoItem?, delegate: DetailTaskPresenterDelegate?) -> UIViewController {
         let view = DetailTaskViewController()
         let localService = CoreDataStack()
         let presenter = DetailTaskPresenter(view: view, localData: localService, task: task, delegate: delegate)

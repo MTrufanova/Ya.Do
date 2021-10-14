@@ -19,7 +19,7 @@ class MainTaskCell: UITableViewCell {
     }()
 
     lazy var screamerImageView: UIImageView = {
-       let imageView = UIImageView()
+        let imageView = UIImageView()
         imageView.image = Images.markImage
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
@@ -61,7 +61,7 @@ class MainTaskCell: UITableViewCell {
         setupCheckButtonLayout()
         setupTitleDateStack()
     }
-   private func setupTitleDateStack() {
+    private func setupTitleDateStack() {
         titleDateStackView = UIStackView(arrangedSubviews: [taskTitleStack, deadlineStack])
         titleDateStackView.axis = .vertical
         titleDateStackView.spacing = 5

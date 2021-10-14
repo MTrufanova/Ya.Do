@@ -283,7 +283,7 @@ extension AllTasksViewController: UITableViewDelegate {
     }
 }
 
-extension AllTasksViewController: DetailTaskViewControllerDelegate {
+extension AllTasksViewController: DetailTaskPresenterDelegate {
 
     func removeItem(item: ToDoItem) {
         self.dismiss(animated: true) { [weak self] in
@@ -313,7 +313,6 @@ extension AllTasksViewController: DetailTaskViewControllerDelegate {
                 self.presenter.addItem(item: item)
             }
             self.tableView.reloadData()
-
         }
     }
 }
