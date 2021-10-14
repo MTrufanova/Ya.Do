@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol AllTasksProtocol: class {
+protocol AllTasksProtocol: AnyObject {
     func succes()
     func failure(error: Error)
     func setNumOfDoneItems(counterText: String)
 }
 
-protocol AllTasksPresenterProtocol: class {
-    init(view: AllTasksProtocol, manager: DataManagerProtocol)
+protocol AllTasksPresenterProtocol: AnyObject {
+
     var data: [ToDoItem] { get }
     var filterData: [ToDoItem] { get }
     func loadItems()

@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension TodoItem {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<TodoItem> {
@@ -36,7 +35,7 @@ extension TodoItem {
             }
             return ToDoItem.Priority(rawValue: prior) ?? .basic }
 
-         set { self.priority = newValue.rawValue }
+        set { self.priority = newValue.rawValue }
 
-       }
+    }
 }

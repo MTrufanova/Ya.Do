@@ -36,7 +36,14 @@ public struct ToDoItem {
 
 extension ToDoItem {
     var asNetModel: NetworkingModel {
-        return NetworkingModel(id: id, text: text, importance: priority.rawValue, done: isCompleted, deadline: (deadline?.timeIntervalSince1970).map(Int64.init), createdAt: createdAt, updatedAt: (updatedAt?.timeIntervalSince1970).map(Int64.init)
+
+        return NetworkingModel(id: id,
+                               text: text,
+                               importance: priority.rawValue,
+                               done: isCompleted,
+                               deadline: (deadline?.timeIntervalSince1970).map(Int64.init),
+                               createdAt: createdAt,
+                               updatedAt: (updatedAt?.timeIntervalSince1970).map(Int64.init)
         )
     }
 
@@ -73,8 +80,6 @@ extension ToDoItem {
         self.priority = localModel.importance
         self.isCompleted = localModel.isCompleted
         self.deadline = localModel.deadline
-
-
         self.createdAt = localModel.createdAt
         self.updatedAt = localModel.updatedAt
         self.isDirty = localModel.isDirty

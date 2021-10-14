@@ -8,11 +8,6 @@
 import UIKit
 import CoreData
 
-protocol DetailTaskViewControllerDelegate: class {
-    func addItem(item: ToDoItem)
-    func removeItem(item: ToDoItem)
-}
-
 class DetailTaskViewController: UIViewController {
 
     var presenter: DetailTaskPresenterProtocol!
@@ -113,7 +108,7 @@ class DetailTaskViewController: UIViewController {
             return
         }
         if let itemToUpdate = presenter.itemToUpdate(id: task.id, text: taskText, priority: priority, deadline: deadline, createdAt: task.createdAt, updatedAt: Date()) {
-        presenter.addItem(item: itemToUpdate)
+            presenter.addItem(item: itemToUpdate)
         }
     }
     func cancelButtonAction() {
@@ -192,7 +187,7 @@ extension DetailTaskViewController {
     }
 }
 
-extension DetailTaskViewController: DetailTaskProtocol {
+extension DetailTaskViewController: DetailTaskViewProtocol {
     func setTask(task: ToDoItem?) {
         self.task = task
     }
